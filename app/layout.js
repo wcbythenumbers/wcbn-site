@@ -1,3 +1,5 @@
+import './globals.css';
+
 export const metadata = {
   title: 'West Chester by the Numbers',
   description: 'Data-driven coverage of West Chester Borough and WCASD governance. Non-partisan. Clarity-first.',
