@@ -196,8 +196,19 @@
   line-height: 1;
 }
 
-.heroRule {
-  max-width: 1200px;
-  margin: 3rem auto 0;
-  height: 1px;
-  background:
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 60px,
+    rgba(201, 168, 76, 0.04) 60px,
+    rgba(201, 168, 76, 0.04) 61px
+  );
+  pointer-events: none;
+}
