@@ -212,3 +212,57 @@
   );
   pointer-events: none;
 }
+
+.pillarTitle {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.75rem;
+}
+
+.pillarText {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #444;
+  font-weight: 300;
+}
+
+.newsletterTitle {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.newsletterSubtext {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(248, 246, 240, 0.7);
+  font-weight: 300;
+}
+
+@media (max-width: 768px) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .heroRight {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .pillarGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .newsletterInner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .navLinks a:not(.navCta) {
+    display: none;
+  }
+}
