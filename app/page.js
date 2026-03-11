@@ -12,7 +12,7 @@ export default function Home() {
         <div className={styles.navInner}>
           <span className={styles.navLogo}>WCBN</span>
           <div className={styles.navLinks}>
-            <a href="#">About</a>
+            <a href="/about">About</a>
             <a href="#">Articles</a>
             <a href="#newsletter" className={styles.navCta}>Subscribe</a>
           </div>
