@@ -63,34 +63,34 @@ export default function Home() {
             lead with numbers where possible.
           </blockquote>
         </div>
-      </section>
-      <section className={styles.pillars}>
+      </section><section className={styles.pillars}>
         <div className={styles.pillarsInner}>
           <h2 className={styles.sectionTitle}>What We Cover</h2>
           <div className={styles.pillarGrid}>
             <div className={styles.pillar}>
               <div className={styles.pillarNumber}>01</div>
-              <h3>School District</h3>
-              <p>WCASD budgets, board votes, enrollment trends, per-pupil spending, and school performance — all in one place.</p>
+              <h3 className={styles.pillarTitle}>School District</h3>
+              <p className={styles.pillarText}>WCASD budgets, board votes, enrollment trends, per-pupil spending, and school performance — all in one place.</p>
             </div>
             <div className={styles.pillar}>
               <div className={styles.pillarNumber}>02</div>
-              <h3>Borough Government</h3>
-              <p>West Chester Borough council meetings, budget breakdowns, development approvals, and public safety data.</p>
+              <h3 className={styles.pillarTitle}>Borough Government</h3>
+              <p className={styles.pillarText}>West Chester Borough council meetings, budget breakdowns, development approvals, and public safety data.</p>
             </div>
             <div className={styles.pillar}>
               <div className={styles.pillarNumber}>03</div>
-              <h3>Civic Education</h3>
-              <p>Plain-language explainers on how local government works, where your tax dollars go, and how to participate.</p>
+              <h3 className={styles.pillarTitle}>Civic Education</h3>
+              <p className={styles.pillarText}>Plain-language explainers on how local government works, where your tax dollars go, and how to participate.</p>
             </div>
           </div>
         </div>
       </section>
+
       <section className={styles.newsletter} id="newsletter">
         <div className={styles.newsletterInner}>
           <div className={styles.newsletterText}>
-            <h2>Stay informed.</h2>
-            <p>Get data-driven coverage of West Chester Borough and WCASD delivered to your inbox. Free, always.</p>
+            <h2 className={styles.newsletterTitle}>Stay informed.</h2>
+            <p className={styles.newsletterSubtext}>Get data-driven coverage of West Chester Borough and WCASD delivered to your inbox. Free, always.</p>
           </div>
           <div className={styles.newsletterForm}>
             <div className={styles.beehiivPlaceholder}>
