@@ -150,6 +150,12 @@
   padding-left: 1.55rem;
 }
 
+.dropdownDivider {
+  height: 1px;
+  background: var(--off-white);
+  margin: 0.25rem 0;
+}
+
 /* ── HAMBURGER BUTTON ── */
 .hamburger {
   display: none;
@@ -243,6 +249,12 @@
 
 .mobileSubLink:hover {
   color: var(--gold);
+}
+
+.mobileDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0.25rem 2rem 0.25rem 3rem;
 }
 
 /* ── RESPONSIVE ── */

@@ -1,4 +1,6 @@
 import styles from './page.module.css';
+import Link from 'next/link';
+import { MEETINGS, ENTITY_COLORS, formatDate } from './data/meetings';
 
 export const metadata = {
   title: 'West Chester by the Numbers',
@@ -73,6 +75,45 @@ export default function Home() {
               <h3 className={styles.pillarTitle}>Civic Education</h3>
               <p className={styles.pillarText}>Plain-language explainers on how local government works, where your tax dollars go, and how to participate.</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.meetings}>
+        <div className={styles.meetingsInner}>
+          <div className={styles.meetingsHeader}>
+            <h2 className={styles.meetingsTitle}>Upcoming Meetings</h2>
+            <Link href="/calendar" className={styles.meetingsViewAll}>Full calendar →</Link>
+          </div>
+          <ul className={styles.meetingsList}>
+            {MEETINGS.slice(0, 5).map((m) => {
+              const tag = ENTITY_COLORS[m.entityKey];
+              return (
+                <li key={m.id} className={styles.meetingEntry}>
+                  <div className={styles.meetingTop}>
+                    <div className={styles.meetingMeta}>
+                      <span
+                        className={styles.entityTag}
+                        style={{ background: tag.bg, color: tag.color }}
+                      >
+                        {m.entity}
+                      </span>
+                      <span className={styles.meetingType}>{m.type}</span>
+                      <span className={styles.meetingDateTime}>
+                        {formatDate(m.date)} · {m.time}
+                      </span>
+                      <span className={styles.meetingLocation}>{m.location}</span>
+                    </div>
+                    <a href={m.agendaHref} className={styles.meetingAgenda}>Agenda</a>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+          <div className={styles.meetingsFooter}>
+            <Link href="/calendar" className={styles.meetingsFooterLink}>
+              View full calendar →
+            </Link>
           </div>
         </div>
       </section>

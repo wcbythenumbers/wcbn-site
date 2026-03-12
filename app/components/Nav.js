@@ -6,16 +6,11 @@ import styles from './Nav.module.css';
 
 const NAV_ITEMS = [
   {
-    label: 'Taxes',
+    label: 'Taxes & Budget',
     items: [
       { label: 'Property Tax Explainer', href: '#' },
       { label: 'Tax Rate Comparisons', href: '#' },
       { label: 'Where Your Tax Dollars Go', href: '#' },
-    ],
-  },
-  {
-    label: 'Budget',
-    items: [
       { label: 'WCASD Budget', href: '#' },
       { label: 'Borough Budget', href: '#' },
       { label: 'Township Budgets', href: '#' },
@@ -41,6 +36,8 @@ const NAV_ITEMS = [
       { label: 'West Whiteland Township', href: '#' },
       { label: 'Westtown Township', href: '#' },
       { label: 'Thornbury Township', href: '#' },
+      { divider: true },
+      { label: 'Board & Council Meeting Recaps', href: '#' },
     ],
   },
   {
@@ -50,6 +47,10 @@ const NAV_ITEMS = [
       { label: 'Candidate Filings', href: '#' },
       { label: 'Voting Records', href: '#' },
     ],
+  },
+  {
+    label: 'Calendar',
+    href: '/calendar',
   },
   {
     label: 'About',
@@ -92,11 +93,15 @@ export default function Nav() {
                     <span className={styles.arrow}>▾</span>
                   </span>
                   <div className={styles.dropdown}>
-                    {item.items.map((sub) => (
-                      <a key={sub.label} href={sub.href} className={styles.dropdownLink}>
-                        {sub.label}
-                      </a>
-                    ))}
+                    {item.items.map((sub, i) =>
+                      sub.divider ? (
+                        <div key={`divider-${i}`} className={styles.dropdownDivider} />
+                      ) : (
+                        <a key={sub.label} href={sub.href} className={styles.dropdownLink}>
+                          {sub.label}
+                        </a>
+                      )
+                    )}
                   </div>
                 </>
               )}
@@ -141,11 +146,15 @@ export default function Nav() {
                   </button>
                   {openDropdown === item.label && (
                     <div className={styles.mobileDropdown}>
-                      {item.items.map((sub) => (
-                        <a key={sub.label} href={sub.href} className={styles.mobileSubLink}>
-                          {sub.label}
-                        </a>
-                      ))}
+                      {item.items.map((sub, i) =>
+                        sub.divider ? (
+                          <div key={`divider-${i}`} className={styles.mobileDivider} />
+                        ) : (
+                          <a key={sub.label} href={sub.href} className={styles.mobileSubLink}>
+                            {sub.label}
+                          </a>
+                        )
+                      )}
                     </div>
                   )}
                 </>
