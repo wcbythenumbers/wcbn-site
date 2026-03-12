@@ -8,17 +8,7 @@ export const metadata = {
 export default function Home() {
   return (
     <main className={styles.main}>
-      <nav className={styles.nav}>
-        <div className={styles.navInner}>
-          <span className={styles.navLogo}>WCBN</span>
-          <div className={styles.navLinks}>
-            <a href="/about">About</a>
-            <a href="#">Articles</a>
-            <a href="#newsletter" className={styles.navCta}>Subscribe</a>
-          </div>
-        </div>
-      </nav>
-      <section className={styles.hero}>
+<section className={styles.hero}>
         <div className={styles.heroGrid}>
           <div className={styles.heroLeft}>
             <div className={styles.eyebrow}>West Chester, PA</div>

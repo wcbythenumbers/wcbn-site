@@ -1,0 +1,263 @@
+/* ── NAV WRAPPER ── */
+.nav {
+  background: var(--navy);
+  border-bottom: 2px solid var(--gold);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ── LOGO ── */
+.logo {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--white);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── DESKTOP MENU ── */
+.menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navItem {
+  position: relative;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 0.85rem;
+  height: 64px;
+  color: var(--off-white);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+  user-select: none;
+}
+
+.navLink:hover,
+.navItem:hover > .navLink {
+  color: var(--gold);
+}
+
+.navCta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 1rem;
+  background: var(--gold);
+  color: var(--navy);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-radius: 2px;
+  margin-left: 1rem;
+  transition: background 0.2s;
+}
+
+.navCta:hover {
+  background: var(--gold-light);
+}
+
+.arrow {
+  display: inline-block;
+  font-size: 0.55rem;
+  line-height: 1;
+  margin-top: 1px;
+  transition: transform 0.2s;
+}
+
+.navItem:hover .arrow {
+  transform: rotate(180deg);
+}
+
+.arrowOpen {
+  transform: rotate(180deg);
+}
+
+/* ── DROPDOWN PANEL ── */
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--white);
+  border-top: 2px solid var(--gold);
+  box-shadow: 0 8px 32px rgba(10, 25, 49, 0.14);
+  min-width: 215px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.18s, transform 0.18s, visibility 0.18s;
+  z-index: 10;
+}
+
+.navItem:hover .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdownLink {
+  display: block;
+  padding: 0.65rem 1.25rem;
+  color: var(--navy);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--off-white);
+  transition: background 0.15s, padding-left 0.15s;
+  white-space: nowrap;
+}
+
+.dropdownLink:last-child {
+  border-bottom: none;
+}
+
+.dropdownLink:hover {
+  background: var(--off-white);
+  padding-left: 1.55rem;
+}
+
+/* ── HAMBURGER BUTTON ── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--off-white);
+  border-radius: 1px;
+  transition: transform 0.25s, opacity 0.25s;
+  transform-origin: center;
+}
+
+.barOpen1 {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.barOpen2 {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.barOpen3 {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ── MOBILE MENU ── */
+.mobileMenu {
+  background: var(--navy);
+  border-top: 1px solid rgba(201, 168, 76, 0.25);
+  padding-bottom: 0.75rem;
+}
+
+.mobileItem {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mobileLink,
+.mobileToggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.9rem 2rem;
+  color: var(--off-white);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s;
+}
+
+.mobileLink:hover,
+.mobileToggle:hover {
+  color: var(--gold);
+}
+
+.mobileDropdown {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.25rem 0;
+}
+
+.mobileSubLink {
+  display: block;
+  padding: 0.6rem 2rem 0.6rem 3rem;
+  color: rgba(248, 246, 240, 0.65);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.67rem;
+  letter-spacing: 0.06em;
+  transition: color 0.15s;
+}
+
+.mobileSubLink:hover {
+  color: var(--gold);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobileMenu {
+    display: none;
+  }
+}

@@ -8,16 +8,7 @@ export const metadata = {
 export default function ArticlesPage() {
       return (
               <main className={styles.main}>
-      <nav className={styles.nav}>
-        <div className={styles.navInner}>
-          <a href="/" className={styles.navLogo}>WCBN</a>
-              <div className={styles.navLinks}>
-            <a href="/articles">Articles</a>
-                <a href="/subscribe" className={styles.navCta}>Subscribe</a>
-          </div>
-          </div>
-          </nav>
-          <section className={styles.hero}>
+<section className={styles.hero}>
         <div className={styles.inner}>
           <div className={styles.label}>Articles</div>
               <h1 className={styles.heading}>Coming Soon</h1>

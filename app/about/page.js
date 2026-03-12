@@ -9,18 +9,8 @@ export default function AboutPage() {
       return (
               <main className={styles.main}>
 
-                <nav className={styles.nav}>
-        <div className={styles.navInner}>
-          <a href="/" className={styles.navLogo}>WCBN</a>
-              <div className={styles.navLinks}>
-            <a href="/about">About</a>
-                <a href="/articles">Articles</a>
-                <a href="/subscribe" className={styles.navCta}>Subscribe</a>
-          </div>
-          </div>
-          </nav>
 
-      <header className={styles.hero}>
+<header className={styles.hero}>
         <div className={styles.heroInner}>
           <div className={styles.label}>About</div>
               <h1 className={styles.heading}>West Chester<br />by the Numbers</h1>
