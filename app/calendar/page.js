@@ -45,7 +45,7 @@ export default function CalendarPage() {
                         </span>
                         <span className={styles.meetingLocation}>{m.location}</span>
                       </div>
-                      <a href={m.agendaHref} className={styles.meetingAgenda}>Agenda</a>
+                      <a href={m.moreInfoHref} className={styles.meetingAgenda} target="_blank" rel="noopener noreferrer">More Info & Webcast</a>
                     </div>
                   </li>
                 );

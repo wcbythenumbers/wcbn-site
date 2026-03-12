@@ -22,7 +22,7 @@ export const MEETINGS = [
     date: '2026-03-16',
     time: '7:00 PM',
     location: 'West Goshen Township Building, 1025 Paoli Pike, West Chester, PA 19380',
-    agendaHref: '#',
+    moreInfoHref: 'https://www.westgoshen.org/calendar.aspx',
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ export const MEETINGS = [
     date: '2026-03-17',
     time: '7:00 PM',
     location: 'WCASD Administration Building, 829 Paoli Pike, West Chester, PA 19380',
-    agendaHref: '#',
+    moreInfoHref: 'https://www.wcasd.net/school-board/meeting-schedule-at-a-glance',
   },
   {
     id: 3,
@@ -42,7 +42,7 @@ export const MEETINGS = [
     date: '2026-03-18',
     time: '7:30 PM',
     location: 'Municipal Building, 401 E Gay St, West Chester, PA 19380',
-    agendaHref: '#',
+    moreInfoHref: 'https://west-chester.com/790/Public-Meeting-Portal',
   },
   {
     id: 4,
@@ -52,7 +52,7 @@ export const MEETINGS = [
     date: '2026-03-19',
     time: '7:00 PM',
     location: 'East Goshen Township Building, 1580 Paoli Pike, West Chester, PA 19380',
-    agendaHref: '#',
+    moreInfoHref: 'https://eastgoshen.org/boards/',
   },
   {
     id: 5,
@@ -62,7 +62,7 @@ export const MEETINGS = [
     date: '2026-03-23',
     time: '7:00 PM',
     location: 'West Whiteland Township Building, 101 Commerce Dr, Exton, PA 19341',
-    agendaHref: '#',
+    moreInfoHref: 'https://www.westwhiteland.org/calendar.aspx',
   },
   {
     id: 6,
@@ -72,7 +72,7 @@ export const MEETINGS = [
     date: '2026-03-24',
     time: '7:00 PM',
     location: 'East Bradford Township Building, 666 Copeland School Rd, West Chester, PA 19380',
-    agendaHref: '#',
+    moreInfoHref: 'https://www.eastbradford.org/calendar.aspx',
   },
   {
     id: 7,
@@ -82,7 +82,7 @@ export const MEETINGS = [
     date: '2026-03-25',
     time: '7:00 PM',
     location: 'Westtown Township Building, 1039 Wilmington Pike, West Chester, PA 19382',
-    agendaHref: '#',
+    moreInfoHref: 'https://westtownpa.org/meetings/',
   },
   {
     id: 8,
@@ -92,7 +92,7 @@ export const MEETINGS = [
     date: '2026-03-31',
     time: '6:30 PM',
     location: 'WCASD Administration Building, 829 Paoli Pike, West Chester, PA 19380',
-    agendaHref: '#',
+    moreInfoHref: 'https://www.wcasd.net/school-board/meeting-schedule-at-a-glance',
   },
   {
     id: 9,
@@ -102,7 +102,7 @@ export const MEETINGS = [
     date: '2026-03-26',
     time: '7:00 PM',
     location: 'Thornbury Township Building, 8 Township Dr, Cheyney, PA 19319',
-    agendaHref: '#',
+    moreInfoHref: 'https://www.thornbury.org/meetings',
   },
 
   // ── April 2026 ──
@@ -114,7 +114,7 @@ export const MEETINGS = [
     date: '2026-04-06',
     time: '7:00 PM',
     location: 'West Goshen Township Building, 1025 Paoli Pike, West Chester, PA 19380',
-    agendaHref: '#',
+    moreInfoHref: 'https://www.westgoshen.org/calendar.aspx',
   },
   {
     id: 11,
@@ -124,7 +124,7 @@ export const MEETINGS = [
     date: '2026-04-09',
     time: '6:00 PM',
     location: 'Municipal Building, 401 E Gay St, West Chester, PA 19380',
-    agendaHref: '#',
+    moreInfoHref: 'https://west-chester.com/790/Public-Meeting-Portal',
   },
   {
     id: 12,
@@ -134,7 +134,7 @@ export const MEETINGS = [
     date: '2026-04-15',
     time: '7:30 PM',
     location: 'Municipal Building, 401 E Gay St, West Chester, PA 19380',
-    agendaHref: '#',
+    moreInfoHref: 'https://west-chester.com/790/Public-Meeting-Portal',
   },
   {
     id: 13,
@@ -144,7 +144,7 @@ export const MEETINGS = [
     date: '2026-04-16',
     time: '7:00 PM',
     location: 'East Goshen Township Building, 1580 Paoli Pike, West Chester, PA 19380',
-    agendaHref: '#',
+    moreInfoHref: 'https://eastgoshen.org/boards/',
   },
   {
     id: 14,
@@ -154,7 +154,7 @@ export const MEETINGS = [
     date: '2026-04-20',
     time: '7:00 PM',
     location: 'West Whiteland Township Building, 101 Commerce Dr, Exton, PA 19341',
-    agendaHref: '#',
+    moreInfoHref: 'https://www.westwhiteland.org/calendar.aspx',
   },
   {
     id: 15,
@@ -164,7 +164,7 @@ export const MEETINGS = [
     date: '2026-04-21',
     time: '7:00 PM',
     location: 'WCASD Administration Building, 829 Paoli Pike, West Chester, PA 19380',
-    agendaHref: '#',
+    moreInfoHref: 'https://www.wcasd.net/school-board/meeting-schedule-at-a-glance',
   },
   {
     id: 16,
@@ -174,7 +174,7 @@ export const MEETINGS = [
     date: '2026-04-22',
     time: '7:00 PM',
     location: 'Westtown Township Building, 1039 Wilmington Pike, West Chester, PA 19382',
-    agendaHref: '#',
+    moreInfoHref: 'https://westtownpa.org/meetings/',
   },
   {
     id: 17,
@@ -184,7 +184,7 @@ export const MEETINGS = [
     date: '2026-04-23',
     time: '7:00 PM',
     location: 'Thornbury Township Building, 8 Township Dr, Cheyney, PA 19319',
-    agendaHref: '#',
+    moreInfoHref: 'https://www.thornbury.org/meetings',
   },
   {
     id: 18,
@@ -194,7 +194,7 @@ export const MEETINGS = [
     date: '2026-04-28',
     time: '7:00 PM',
     location: 'East Bradford Township Building, 666 Copeland School Rd, West Chester, PA 19380',
-    agendaHref: '#',
+    moreInfoHref: 'https://www.eastbradford.org/calendar.aspx',
   },
 ];
 
