@@ -8,7 +8,7 @@ const NAV_ITEMS = [
   {
     label: 'Taxes & Budget',
     items: [
-      { label: 'Property Tax Explainer', href: '#' },
+      { label: 'Tax Explainer', href: '#' },
       { label: 'Tax Rate Comparisons', href: '#' },
       { label: 'Where Your Tax Dollars Go', href: '#' },
       { label: 'WCASD Budget', href: '#' },
