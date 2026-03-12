@@ -2,7 +2,7 @@ import styles from './about.module.css';
 
 export const metadata = {
       title: 'About — West Chester by the Numbers',
-      description: 'About West Chester by the Numbers — a data-driven, non-partisan publication covering West Chester Borough and WCASD governance.',
+      description: 'About West Chester by the Numbers — a data-driven, non-partisan publication covering WCASD and its member municipalities.',
 };
 
 export default function AboutPage() {
@@ -32,8 +32,8 @@ export default function AboutPage() {
 
         <section className={styles.section}>
           <h2 className={styles.sectionHeading}>What This Is</h2>
-              <p>West Chester by the Numbers is a data-driven publication covering local government in West Chester Borough and the West Chester Area School District (WCASD). We track budgets, board votes, spending trends, election results, and civic data — and present it in a way that's clear, accessible, and grounded in verifiable public records.</p>
-                    <p>The name signals an approach, not a format. Not every piece is a spreadsheet. But everything is rooted in documented facts, real numbers, and identified sources. We always show our work.</p>
+              <p>West Chester by the Numbers is a data-driven publication covering local government across the West Chester Area School District (WCASD) and its eight member municipalities: West Chester Borough, East Goshen Township, West Goshen Township, East Bradford Township, West Whiteland Township, Westtown Township, and both Thornbury Townships (Chester and Delaware Counties). We track budgets, board votes, spending trends, election results, and civic data — and present it in a way that's clear, accessible, and grounded in verifiable public records.</p>
+                    <p>The name signals an approach, not a format. Not every piece is a spreadsheet. But everything is rooted in documented facts, real numbers, and identified sources — cited transparently so readers can verify what we report.</p>
           </section>
 
         <section className={styles.section}>
@@ -41,9 +41,8 @@ export default function AboutPage() {
               <ul className={styles.list}>
             <li><strong>Non-partisan.</strong> We cover facts, not sides. We do not endorse candidates, parties, or political positions.</li>
                       <li><strong>Clarity first.</strong> Government data is often dense and inaccessible. Our job is to make it understandable without distorting it.</li>
-                      <li><strong>Always show the work.</strong> Every claim links to a source. Every number identifies where it came from and when it was accessed.</li>
+                      <li><strong>Cite everything.</strong> Every claim links to a source. Every number identifies where it came from and when it was accessed.</li>
                       <li><strong>Corrections matter.</strong> When we get something wrong, we correct it promptly and note it on the original post.</li>
-                      <li><strong>Sponsorships are clearly labeled.</strong> Any sponsored content is explicitly identified. Sponsors have no influence over editorial decisions.</li>
           </ul>
           </section>
 
@@ -57,8 +56,8 @@ export default function AboutPage() {
           </div>
                 <div className={styles.pillar}>
               <div className={styles.pillarNum}>02</div>
-                  <h3 className={styles.pillarTitle}>Borough Government</h3>
-                  <p className={styles.pillarText}>West Chester Borough council votes, budget breakdowns, development activity, public safety data, and property tax analysis.</p>
+                  <h3 className={styles.pillarTitle}>Municipal Government</h3>
+                  <p className={styles.pillarText}>Council and township supervisor votes, budget breakdowns, development activity, public safety data, and property tax analysis across WCASD's member municipalities.</p>
           </div>
                 <div className={styles.pillar}>
               <div className={styles.pillarNum}>03</div>
@@ -76,7 +75,9 @@ export default function AboutPage() {
                 <li>Open Book PA (Pennsylvania Treasury)</li>
                 <li>WCASD adopted budgets and BoardDocs meeting records</li>
                 <li>Borough of West Chester Agenda Center, CAFR, and annual budgets</li>
+                <li>Township meeting minutes, budgets, and CAFR filings for WCASD member municipalities</li>
                 <li>Chester County Open Data, GIS, and Elections Office</li>
+                <li>Delaware County Open Data and Elections Office</li>
                 <li>U.S. Census Bureau / American Community Survey</li>
                 <li>Chester County Court of Common Pleas public docket</li>
                 <li>Right-to-Know requests filed under Pennsylvania's RTKL</li>

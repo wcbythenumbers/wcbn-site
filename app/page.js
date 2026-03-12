@@ -2,7 +2,7 @@ import styles from './page.module.css';
 
 export const metadata = {
   title: 'West Chester by the Numbers',
-  description: 'Local government, by the numbers. Data-driven coverage of West Chester Borough and WCASD governance.',
+  description: 'Local government, by the numbers. Data-driven coverage of WCASD and its member municipalities.',
 };
 
 export default function Home() {
@@ -28,8 +28,8 @@ export default function Home() {
             </h1>
             <p className={styles.tagline}>Local government, by the numbers.</p>
             <p className={styles.subtext}>
-              Data-driven coverage of West Chester Borough and WCASD governance.
-              Non-partisan. Clarity-first. Always showing the work.
+              Data-driven coverage of West Chester and surrounding areas —
+              from borough hall to school board. Non-partisan. Clarity-first. Every claim cited, every source named.
             </p>
             <a href="#newsletter" className={styles.heroBtn}>Get the newsletter →</a>
           </div>
@@ -44,7 +44,7 @@ export default function Home() {
             </div>
             <div className={styles.statCard}>
               <div className={styles.statLabel}>School District Municipalities</div>
-              <div className={styles.statNumber}>8+</div>
+              <div className={styles.statNumber}>8</div>
             </div>
             <div className={styles.statCard}>
               <div className={styles.statLabel}>Annual School Budget</div>
@@ -60,7 +60,8 @@ export default function Home() {
           <blockquote className={styles.missionQuote}>
             "By the Numbers" signals an approach — not that every post is a spreadsheet,
             but that everything is grounded in verifiable data. Even qualitative posts
-            lead with numbers where possible.
+            lead with numbers where possible. Our goal is to make local government information
+            accessible to everyone, regardless of how closely they follow local politics.
           </blockquote>
         </div>
       </section><section className={styles.pillars}>
@@ -74,8 +75,8 @@ export default function Home() {
             </div>
             <div className={styles.pillar}>
               <div className={styles.pillarNumber}>02</div>
-              <h3 className={styles.pillarTitle}>Borough Government</h3>
-              <p className={styles.pillarText}>West Chester Borough council meetings, budget breakdowns, development approvals, and public safety data.</p>
+              <h3 className={styles.pillarTitle}>Municipal Government</h3>
+              <p className={styles.pillarText}>Council meetings, budget breakdowns, development approvals, and public safety data across West Chester Borough and WCASD's member townships.</p>
             </div>
             <div className={styles.pillar}>
               <div className={styles.pillarNumber}>03</div>
@@ -90,7 +91,7 @@ export default function Home() {
         <div className={styles.newsletterInner}>
           <div className={styles.newsletterText}>
             <h2 className={styles.newsletterTitle}>Stay informed.</h2>
-            <p className={styles.newsletterSubtext}>Get data-driven coverage of West Chester Borough and WCASD delivered to your inbox. Free, always.</p>
+            <p className={styles.newsletterSubtext}>Get data-driven coverage of WCASD and its member municipalities delivered to your inbox. Free, always.</p>
           </div>
           <div className={styles.newsletterForm}>
             <div className={styles.beehiivPlaceholder}>
