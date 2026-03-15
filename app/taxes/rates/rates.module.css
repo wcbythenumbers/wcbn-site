@@ -265,6 +265,24 @@
   min-width: 180px;
 }
 
+.assessedDisplay {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--navy);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.disclosureNote {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: #777;
+  font-weight: 300;
+  font-style: italic;
+  margin: 0;
+}
+
 .eitNote {
   font-family: var(--font-body);
   font-size: 0.78rem;

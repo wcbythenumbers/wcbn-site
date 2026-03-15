@@ -86,6 +86,10 @@ const MUNICIPALITIES = [
 
 const ALL_IDS = MUNICIPALITIES.map((m) => m.id);
 
+function getAssessmentRatio(m) {
+  return m.id === 'thornbury-delaware' ? 0.85 : 0.35;
+}
+
 function getTotalMillage(m) {
   if (m.municipal === null) return null;
   return +(m.county + m.municipal + m.school).toFixed(3);
@@ -147,7 +151,7 @@ const TOOLTIP_STYLE = {
 export default function RatesClient() {
   const [selected, setSelected] = useState(new Set(ALL_IDS));
   const [viewMode, setViewMode] = useState('millage');
-  const [assessedValue, setAssessedValue] = useState(150000);
+  const [marketValue, setMarketValue] = useState(400000);
   const [earnedIncome, setEarnedIncome] = useState(75000);
   const [calcOpen, setCalcOpen] = useState(false);
   const [marketInput, setMarketInput] = useState('');
@@ -176,12 +180,13 @@ export default function RatesClient() {
   const chartData = visible
     .map((m) => {
       const totalMillage = getTotalMillage(m);
+      const assessed = marketValue * getAssessmentRatio(m);
       const eitDollar = (parseFloat(m.eit) / 100) * earnedIncome;
       const value =
         viewMode === 'millage'
           ? totalMillage
           : totalMillage !== null
-          ? millToDollar(totalMillage, assessedValue) + eitDollar + 52
+          ? millToDollar(totalMillage, assessed) + eitDollar + 52
           : null;
       return { id: m.id, name: m.shortName, value };
     })
@@ -274,25 +279,42 @@ export default function RatesClient() {
         {viewMode === 'dollar' && (
           <section className={styles.assessedSection}>
             <div className={styles.dollarInputsRow}>
-              {/* Assessed value */}
+              {/* Market value */}
               <div className={styles.dollarInputGroup}>
-                <label className={styles.assessedLabel} htmlFor="assessed-input">
-                  Assessed property value
+                <label className={styles.assessedLabel} htmlFor="market-value-input">
+                  Estimated home market value
                 </label>
                 <div className={styles.assessedInputRow}>
                   <span className={styles.assessedDollarSign}>$</span>
                   <input
-                    id="assessed-input"
+                    id="market-value-input"
                     type="number"
                     min="0"
-                    step="1000"
+                    step="10000"
                     className={styles.assessedInput}
-                    value={assessedValue}
+                    value={marketValue}
                     onChange={(e) =>
-                      setAssessedValue(Math.max(0, Number(e.target.value) || 0))
+                      setMarketValue(Math.max(0, Number(e.target.value) || 0))
                     }
                   />
                 </div>
+                <p className={styles.assessedDisplay}>
+                  Chester Co. assessed value used:{' '}
+                  <strong>${Math.round(marketValue * 0.35).toLocaleString()}</strong>
+                  {' · '}
+                  Del. Co.:{' '}
+                  <strong>${Math.round(marketValue * 0.85).toLocaleString()}</strong>
+                </p>
+                <p className={styles.disclosureNote}>
+                  Assessment ratios are approximate. Chester County last reassessed
+                  in 2021; your assessed value may not reflect current market value.
+                </p>
+                <p className={styles.disclosureNote}>
+                  This tool is designed to compare relative tax rates across
+                  municipalities, not to calculate your exact tax bill. For your
+                  actual tax liability, refer to your county tax bill or contact
+                  the taxing authority.
+                </p>
               </div>
 
               {/* Earned income */}
@@ -439,6 +461,7 @@ export default function RatesClient() {
                     <th className={`${styles.thNum} ${styles.thTotal}`}>Total<br />Millage</th>
                     <th className={styles.thNum}>EIT Rate<br />(Residents)</th>
                     <th className={styles.thNum}>LST<br />(flat)</th>
+                    <th className={styles.thNum}>Effective Rate<br />(% of Market)</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -460,6 +483,11 @@ export default function RatesClient() {
                         </td>
                         <td className={styles.tdNum}>{m.eit}</td>
                         <td className={styles.tdNum}>$52</td>
+                        <td className={styles.tdNum}>
+                          {total !== null
+                            ? ((total * getAssessmentRatio(m)) / 10).toFixed(2) + '%'
+                            : <span className={styles.tbd}>N/A</span>}
+                        </td>
                       </tr>
                     );
                   })}
@@ -481,9 +509,10 @@ export default function RatesClient() {
                 </thead>
                 <tbody>
                   {visible.map((m) => {
-                    const countyTax = millToDollar(m.county, assessedValue);
-                    const muniTax = millToDollar(m.municipal, assessedValue);
-                    const schoolTax = millToDollar(m.school, assessedValue);
+                    const assessed = marketValue * getAssessmentRatio(m);
+                    const countyTax = millToDollar(m.county, assessed);
+                    const muniTax = millToDollar(m.municipal, assessed);
+                    const schoolTax = millToDollar(m.school, assessed);
                     const propTotal = countyTax + muniTax + schoolTax;
                     const eitDollar = (parseFloat(m.eit) / 100) * earnedIncome;
                     const grandTotal = propTotal + eitDollar + 52;
@@ -511,6 +540,14 @@ export default function RatesClient() {
               </table>
             )}
           </div>
+          {viewMode === 'millage' && (
+            <p className={styles.tableFootnote}>
+              <strong>Effective Rate</strong> = Total Combined Millage × County Assessment
+              Ratio ÷ 1,000. Chester County assesses property at approximately 35% of market
+              value; Delaware County at approximately 85%. This rate allows for a more
+              accurate comparison of property tax burden across county lines.
+            </p>
+          )}
           {visible.some((m) => m.municipalNote) && (
             <p className={styles.tableFootnote}>
               † Thornbury Township (Delaware Co.) levies no municipal property tax.
@@ -528,7 +565,7 @@ export default function RatesClient() {
             </h2>
             <p className={styles.chartSubtitle}>
               {viewMode === 'dollar'
-                ? `Property tax + EIT + LST. Assessed value ${fmt$(assessedValue)}, earned income ${fmt$(earnedIncome)}.`
+                ? `Property tax + EIT + LST. Market value ${fmt$(marketValue)}, earned income ${fmt$(earnedIncome)}.`
                 : 'Combined county, municipal, and school district millage.'}
             </p>
             <div style={{ width: '100%', height: chartHeight }}>
