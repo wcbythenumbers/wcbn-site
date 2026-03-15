@@ -53,6 +53,58 @@
   width: 100%;
 }
 
+/* ── PRINT BUTTON ── */
+.printRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.25rem;
+}
+
+.printBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 36px;
+  padding: 0 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid rgba(10, 25, 49, 0.3);
+  background: transparent;
+  color: #666;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.printBtn::before {
+  content: '⎙';
+  font-size: 0.8rem;
+}
+
+.printBtn:hover {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+/* ── SCROLL HINT (mobile only) ── */
+.scrollHint {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  padding: 0.4rem 0.25rem 0;
+  text-align: right;
+}
+
+@media (max-width: 760px) {
+  .scrollHint {
+    display: block;
+  }
+}
+
 /* ── FILTER / MUNICIPALITY TOGGLES ── */
 .filterSection {
   margin-bottom: 2rem;
@@ -814,4 +866,52 @@
     flex-direction: column;
     text-align: center;
   }
+}
+
+/* ── PRINT STYLES ── */
+@media print {
+  :global(nav) { display: none !important; }
+  :global(body) { background: white !important; color: black !important; }
+
+  .hero { background: white !important; border-bottom: 2px solid #888 !important; padding: 1rem 0 0.75rem !important; }
+  .heading { color: black !important; font-size: 1.5rem !important; }
+  .label { color: #555 !important; }
+  .intro { color: #333 !important; }
+
+  .printRow { display: none !important; }
+  .filterSection { display: none !important; }
+  .viewSection { display: none !important; }
+  .assessedSection { display: none !important; }
+  .chartSection { display: none !important; }
+  .scrollHint { display: none !important; }
+  .explainerLink { display: none !important; }
+  .footer { display: none !important; }
+
+  .content { padding: 1rem 0 2rem !important; }
+
+  .tableWrap {
+    overflow: visible !important;
+    border: none !important;
+  }
+
+  .table { min-width: unset !important; width: 100% !important; page-break-inside: avoid; }
+  .table thead { background: #f0f0f0 !important; }
+  .table thead th { color: black !important; }
+
+  .tableFootnote { color: #444 !important; }
+
+  .disclaimer {
+    border-left-color: #888 !important;
+    background: #f8f8f8 !important;
+  }
+  .disclaimer p { color: #333 !important; }
+
+  .sourcesSection { border-color: #ccc !important; page-break-inside: avoid; }
+  .sourcesToggle { display: none !important; }
+  .sourcesBody {
+    display: block !important;
+    border-top: 1px solid #ccc !important;
+  }
+  .sourcesCategoryLabel { color: #555 !important; }
+  .sourcesLink { color: black !important; }
 }

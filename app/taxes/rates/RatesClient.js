@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip,
@@ -154,6 +154,12 @@ export default function RatesClient() {
   const [marketValue, setMarketValue] = useState(400000);
   const [earnedIncome, setEarnedIncome] = useState(75000);
   const [sourcesOpen, setSourcesOpen] = useState(false);
+  const [tableScrolled, setTableScrolled] = useState(false);
+  const tableWrapRef = useRef(null);
+
+  useEffect(() => {
+    setTableScrolled(false);
+  }, [viewMode]);
 
   const allSelected = selected.size === MUNICIPALITIES.length;
 
@@ -219,6 +225,13 @@ export default function RatesClient() {
       </header>
 
       <div className={styles.content}>
+
+        {/* ── Print button ── */}
+        <div className={styles.printRow}>
+          <button className={styles.printBtn} onClick={() => window.print()}>
+            Print / Save as PDF
+          </button>
+        </div>
 
         {/* ── Municipality toggles ── */}
         <section className={styles.filterSection}>
@@ -345,7 +358,11 @@ export default function RatesClient() {
 
         {/* ── Table ── */}
         <section className={styles.tableSection}>
-          <div className={styles.tableWrap}>
+          <div
+            className={styles.tableWrap}
+            ref={tableWrapRef}
+            onScroll={() => setTableScrolled(true)}
+          >
             {viewMode === 'millage' ? (
               <table className={styles.table}>
                 <thead>
@@ -436,6 +453,11 @@ export default function RatesClient() {
               </table>
             )}
           </div>
+          {!tableScrolled && (
+            <p className={styles.scrollHint} aria-hidden="true">
+              Scroll right to see all columns →
+            </p>
+          )}
           {viewMode === 'millage' && (
             <p className={styles.tableFootnote}>
               <strong>Effective Rate</strong> = Total Combined Millage × County Assessment
@@ -449,6 +471,11 @@ export default function RatesClient() {
               † Thornbury Township (Delaware Co.) levies no municipal property tax.
             </p>
           )}
+          <p className={styles.tableFootnote}>
+            Chester County offers a Homestead Exclusion that reduces the assessed value of
+            primary residences for school tax purposes. Qualifying properties may have a
+            lower WCASD tax bill than shown.
+          </p>
         </section>
 
         {/* ── Bar chart ── */}
@@ -576,6 +603,16 @@ export default function RatesClient() {
           </span>
           <Link href="/taxes/explainer" className={styles.explainerLinkAnchor}>
             Read: How Local Taxes Work →
+          </Link>
+        </div>
+
+        {/* ── Link to dollars page ── */}
+        <div className={styles.explainerLink}>
+          <span className={styles.explainerLinkLabel}>
+            Now that you know the rates — see how the money is spent.
+          </span>
+          <Link href="/taxes/dollars" className={styles.explainerLinkAnchor}>
+            Read: Where Your Tax Dollars Go →
           </Link>
         </div>
 
