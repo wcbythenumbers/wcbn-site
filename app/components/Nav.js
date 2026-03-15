@@ -9,7 +9,7 @@ const NAV_ITEMS = [
     label: 'Taxes & Budget',
     items: [
       { label: 'Tax Explainer', href: '/taxes/explainer' },
-      { label: 'Tax Rate Comparisons', href: '#' },
+      { label: 'Tax Rate Comparisons', href: '/taxes/rates' },
       { label: 'Where Your Tax Dollars Go', href: '#' },
       { label: 'WCASD Budget', href: '#' },
       { label: 'Borough Budget', href: '#' },
