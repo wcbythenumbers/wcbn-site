@@ -2,6 +2,10 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import {
+  BarChart, Bar, XAxis, YAxis, Tooltip,
+  ResponsiveContainer, Cell, LabelList,
+} from 'recharts';
 import styles from './rates.module.css';
 
 const MUNICIPALITIES = [
@@ -13,7 +17,6 @@ const MUNICIPALITIES = [
     municipal: 8.09,
     school: 23.38,
     eit: '1.25%',
-    lst: '$52',
   },
   {
     id: 'east-goshen',
@@ -23,7 +26,6 @@ const MUNICIPALITIES = [
     municipal: 1.75,
     school: 23.38,
     eit: '1.00%',
-    lst: '$52',
   },
   {
     id: 'west-goshen',
@@ -33,7 +35,6 @@ const MUNICIPALITIES = [
     municipal: 2.00,
     school: 23.38,
     eit: '1.00%',
-    lst: '$52',
   },
   {
     id: 'east-bradford',
@@ -43,7 +44,6 @@ const MUNICIPALITIES = [
     municipal: 2.25,
     school: 23.38,
     eit: '1.25%',
-    lst: '$52',
   },
   {
     id: 'west-whiteland',
@@ -53,7 +53,6 @@ const MUNICIPALITIES = [
     municipal: 2.00,
     school: 23.38,
     eit: '1.00%',
-    lst: '$52',
   },
   {
     id: 'westtown',
@@ -63,7 +62,6 @@ const MUNICIPALITIES = [
     municipal: 3.92,
     school: 23.38,
     eit: '1.08%',
-    lst: '$52',
   },
   {
     id: 'thornbury-chester',
@@ -73,7 +71,6 @@ const MUNICIPALITIES = [
     municipal: 0.995,
     school: 23.38,
     eit: '1.00%',
-    lst: '$52',
   },
   {
     id: 'thornbury-delaware',
@@ -83,20 +80,48 @@ const MUNICIPALITIES = [
     municipal: null,
     school: 11.36,
     eit: '1.00%',
-    lst: '$52',
   },
 ];
 
-function getTotal(m) {
+const ALL_IDS = MUNICIPALITIES.map((m) => m.id);
+
+function getTotalMillage(m) {
   if (m.municipal === null) return null;
   return +(m.county + m.municipal + m.school).toFixed(3);
 }
 
-export default function RatesClient() {
-  const allIds = MUNICIPALITIES.map((m) => m.id);
-  const [selected, setSelected] = useState(new Set(allIds));
+function millToDollar(mills, assessed) {
+  return (mills * assessed) / 1000;
+}
 
-  const toggle = (id) => {
+function fmt$(n) {
+  return '$' + Math.round(n).toLocaleString();
+}
+
+function fmtMillage(n) {
+  return n.toFixed(3);
+}
+
+const TOOLTIP_STYLE = {
+  fontFamily: 'IBM Plex Mono, monospace',
+  fontSize: '0.72rem',
+  background: '#0A1931',
+  border: 'none',
+  color: '#F8F6F0',
+  borderRadius: 2,
+};
+
+export default function RatesClient() {
+  const [selected, setSelected] = useState(new Set(ALL_IDS));
+  const [viewMode, setViewMode] = useState('millage');
+  const [assessedValue, setAssessedValue] = useState(150000);
+  const [calcOpen, setCalcOpen] = useState(false);
+  const [marketInput, setMarketInput] = useState('');
+  const [calcCounty, setCalcCounty] = useState('chester');
+
+  const allSelected = selected.size === MUNICIPALITIES.length;
+
+  const toggleMuni = (id) => {
     setSelected((prev) => {
       const next = new Set(prev);
       if (next.has(id)) {
@@ -108,39 +133,79 @@ export default function RatesClient() {
     });
   };
 
+  const selectAll = () => setSelected(new Set(ALL_IDS));
+  const deselectAll = () => setSelected(new Set([ALL_IDS[0]]));
+
   const visible = MUNICIPALITIES.filter((m) => selected.has(m.id));
+
   const chartData = visible
-    .map((m) => ({ ...m, total: getTotal(m) }))
-    .filter((m) => m.total !== null);
-  const maxTotal = chartData.length > 0 ? Math.max(...chartData.map((m) => m.total)) : 1;
+    .map((m) => {
+      const totalMillage = getTotalMillage(m);
+      const value =
+        viewMode === 'millage'
+          ? totalMillage
+          : totalMillage !== null
+          ? millToDollar(totalMillage, assessedValue)
+          : null;
+      return { id: m.id, name: m.shortName, value };
+    })
+    .filter((d) => d.value !== null);
+
+  const maxValue = chartData.length > 0 ? Math.max(...chartData.map((d) => d.value)) : 1;
+
+  const chartHeight = Math.max(220, chartData.length * 54);
+
+  const marketNum = parseFloat(marketInput.replace(/,/g, '')) || 0;
+  const estimatedAssessed =
+    marketNum > 0
+      ? Math.round(marketNum * (calcCounty === 'chester' ? 0.35 : 0.85))
+      : null;
+
+  const labelFormatter = (val) =>
+    viewMode === 'millage' ? fmtMillage(val) : fmt$(val);
+
+  const tooltipFormatter = (val) =>
+    viewMode === 'millage'
+      ? [`${fmtMillage(val)} mills`, 'Total Millage']
+      : [fmt$(val), 'Est. Total Property Tax'];
 
   return (
     <main className={styles.main}>
+      {/* ── Hero ── */}
       <header className={styles.hero}>
         <div className={styles.heroInner}>
           <div className={styles.label}>Taxes &amp; Budget</div>
           <h1 className={styles.heading}>Tax Rate Comparisons</h1>
           <p className={styles.intro}>
-            This page lets you compare local tax rates across the municipalities
-            in the greater West Chester area. Rates shown are for the current
-            tax year. All three layers of local taxation are included: property
-            tax (county + municipal + school district millage), earned income
-            tax (EIT), and local services tax (LST).
+            Compare local tax rates across the municipalities in the greater
+            West Chester area. All three layers of local taxation are included:
+            property tax (county + municipal + school district millage), earned
+            income tax (EIT), and local services tax (LST).
           </p>
         </div>
       </header>
 
       <div className={styles.content}>
 
-        {/* Municipality toggles */}
+        {/* ── Municipality toggles ── */}
         <section className={styles.filterSection}>
-          <div className={styles.filterLabel}>Select municipalities to compare</div>
+          <div className={styles.filterRow}>
+            <div className={styles.filterLabel}>Select municipalities</div>
+            <div className={styles.selectAllRow}>
+              <button
+                className={styles.selectAllBtn}
+                onClick={allSelected ? deselectAll : selectAll}
+              >
+                {allSelected ? 'Deselect All' : 'Select All'}
+              </button>
+            </div>
+          </div>
           <div className={styles.toggleGrid}>
             {MUNICIPALITIES.map((m) => (
               <button
                 key={m.id}
                 className={`${styles.toggleBtn} ${selected.has(m.id) ? styles.toggleActive : ''}`}
-                onClick={() => toggle(m.id)}
+                onClick={() => toggleMuni(m.id)}
                 aria-pressed={selected.has(m.id)}
               >
                 {m.name}
@@ -149,86 +214,301 @@ export default function RatesClient() {
           </div>
         </section>
 
-        {/* Table */}
-        <section className={styles.tableSection}>
-          <div className={styles.tableWrap}>
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  <th className={styles.thMuni}>Municipality</th>
-                  <th className={styles.thNum}>County<br />Millage</th>
-                  <th className={styles.thNum}>Municipal<br />Millage</th>
-                  <th className={styles.thNum}>School<br />Millage</th>
-                  <th className={`${styles.thNum} ${styles.thTotal}`}>Total<br />Millage</th>
-                  <th className={styles.thNum}>EIT Rate<br />(Residents)</th>
-                  <th className={styles.thNum}>LST<br />(flat)</th>
-                </tr>
-              </thead>
-              <tbody>
-                {visible.map((m) => {
-                  const total = getTotal(m);
-                  return (
-                    <tr key={m.id} className={styles.tr}>
-                      <td className={styles.tdMuni}>{m.name}</td>
-                      <td className={styles.tdNum}>{m.county.toFixed(3)}</td>
-                      <td className={styles.tdNum}>
-                        {m.municipal !== null ? m.municipal.toFixed(3) : <span className={styles.tbd}>TBD</span>}
-                      </td>
-                      <td className={styles.tdNum}>{m.school.toFixed(2)}</td>
-                      <td className={`${styles.tdNum} ${styles.tdTotal}`}>
-                        {total !== null ? total.toFixed(3) : <span className={styles.tbd}>N/A</span>}
-                      </td>
-                      <td className={styles.tdNum}>{m.eit}</td>
-                      <td className={styles.tdNum}>{m.lst}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+        {/* ── View mode toggle ── */}
+        <section className={styles.viewSection}>
+          <div className={styles.viewToggleGroup} role="group" aria-label="View mode">
+            <button
+              className={`${styles.viewBtn} ${viewMode === 'millage' ? styles.viewActive : ''}`}
+              onClick={() => setViewMode('millage')}
+              aria-pressed={viewMode === 'millage'}
+            >
+              Millage Rates
+            </button>
+            <button
+              className={`${styles.viewBtn} ${viewMode === 'dollar' ? styles.viewActive : ''}`}
+              onClick={() => setViewMode('dollar')}
+              aria-pressed={viewMode === 'dollar'}
+            >
+              Dollar Amount
+            </button>
           </div>
         </section>
 
-        {/* Bar chart */}
-        {chartData.length > 0 && (
-          <section className={styles.chartSection}>
-            <h2 className={styles.chartTitle}>Total Combined Millage</h2>
-            <p className={styles.chartSubtitle}>
-              Property tax only (county + municipal + school district).
-              Excludes Thornbury Twp (Delaware Co.) — municipal millage pending.
-            </p>
-            <div className={styles.chart}>
-              {chartData.map((m) => {
-                const pct = (m.total / maxTotal) * 100;
-                const isHighest = m.total === maxTotal;
-                return (
-                  <div key={m.id} className={styles.chartRow}>
-                    <div className={styles.chartLabel}>{m.shortName}</div>
-                    <div className={styles.chartBarWrap}>
-                      <div
-                        className={`${styles.chartBar} ${isHighest ? styles.chartBarHighest : ''}`}
-                        style={{ width: `${pct}%` }}
-                        role="meter"
-                        aria-valuenow={m.total}
-                        aria-valuemin={0}
-                        aria-valuemax={maxTotal}
-                        aria-label={`${m.name}: ${m.total.toFixed(3)} mills`}
-                      >
-                        <span className={styles.chartValue}>{m.total.toFixed(3)}</span>
+        {/* ── Dollar mode: assessed value input + collapsible ── */}
+        {viewMode === 'dollar' && (
+          <section className={styles.assessedSection}>
+            <label className={styles.assessedLabel} htmlFor="assessed-input">
+              Assessed property value
+            </label>
+            <div className={styles.assessedInputRow}>
+              <span className={styles.assessedDollarSign}>$</span>
+              <input
+                id="assessed-input"
+                type="number"
+                min="0"
+                step="1000"
+                className={styles.assessedInput}
+                value={assessedValue}
+                onChange={(e) =>
+                  setAssessedValue(Math.max(0, Number(e.target.value) || 0))
+                }
+              />
+            </div>
+
+            {/* Collapsible */}
+            <div className={styles.collapsible}>
+              <button
+                className={styles.collapsibleToggle}
+                onClick={() => setCalcOpen(!calcOpen)}
+                aria-expanded={calcOpen}
+              >
+                <span>How do I find my assessed value?</span>
+                <span className={styles.collapsibleArrow}>
+                  {calcOpen ? '▲' : '▼'}
+                </span>
+              </button>
+
+              {calcOpen && (
+                <div className={styles.collapsibleBody}>
+                  <p>
+                    Chester County assesses property at approximately{' '}
+                    <strong>35% of market value</strong>. Delaware County
+                    assesses at approximately <strong>85% of market value</strong>.
+                    Your assessed value may differ from your home's current sale
+                    price or estimated market value.
+                  </p>
+
+                  <div className={styles.calcBox}>
+                    <div className={styles.calcBoxLabel}>Estimate your assessed value</div>
+                    <div className={styles.calcRow}>
+                      <div className={styles.calcField}>
+                        <label htmlFor="market-input" className={styles.calcFieldLabel}>
+                          Estimated market value
+                        </label>
+                        <div className={styles.calcInputWrap}>
+                          <span className={styles.assessedDollarSign}>$</span>
+                          <input
+                            id="market-input"
+                            type="number"
+                            min="0"
+                            step="10000"
+                            className={styles.assessedInput}
+                            placeholder="e.g. 400000"
+                            value={marketInput}
+                            onChange={(e) => setMarketInput(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      <div className={styles.calcField}>
+                        <label htmlFor="calc-county" className={styles.calcFieldLabel}>
+                          County
+                        </label>
+                        <select
+                          id="calc-county"
+                          className={styles.calcSelect}
+                          value={calcCounty}
+                          onChange={(e) => setCalcCounty(e.target.value)}
+                        >
+                          <option value="chester">Chester County</option>
+                          <option value="delaware">Delaware County</option>
+                        </select>
                       </div>
                     </div>
+                    {estimatedAssessed !== null && (
+                      <div className={styles.calcResult}>
+                        Estimated assessed value:{' '}
+                        <strong>${estimatedAssessed.toLocaleString()}</strong>
+                      </div>
+                    )}
                   </div>
-                );
-              })}
+
+                  <p className={styles.calcNote}>
+                    Actual assessed values are set by the county assessment
+                    office and may differ from this estimate. Look up your exact
+                    assessed value at the{' '}
+                    <a
+                      href="https://www.chesco.org/1290/Assessment"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.calcLink}
+                    >
+                      Chester County Assessment Office
+                    </a>{' '}
+                    or the{' '}
+                    <a
+                      href="https://www.delcopa.gov/assessment/index.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.calcLink}
+                    >
+                      Delaware County Assessment Office
+                    </a>
+                    .
+                  </p>
+                </div>
+              )}
             </div>
           </section>
         )}
 
-        {/* Disclaimer */}
+        {/* ── Table ── */}
+        <section className={styles.tableSection}>
+          <div className={styles.tableWrap}>
+            {viewMode === 'millage' ? (
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th className={styles.thMuni}>Municipality</th>
+                    <th className={styles.thNum}>County<br />Millage</th>
+                    <th className={styles.thNum}>Municipal<br />Millage</th>
+                    <th className={styles.thNum}>School<br />Millage</th>
+                    <th className={`${styles.thNum} ${styles.thTotal}`}>Total<br />Millage</th>
+                    <th className={styles.thNum}>EIT Rate<br />(Residents)</th>
+                    <th className={styles.thNum}>LST<br />(flat)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {visible.map((m) => {
+                    const total = getTotalMillage(m);
+                    return (
+                      <tr key={m.id} className={styles.tr}>
+                        <td className={styles.tdMuni}>{m.name}</td>
+                        <td className={styles.tdNum}>{fmtMillage(m.county)}</td>
+                        <td className={styles.tdNum}>
+                          {m.municipal !== null ? fmtMillage(m.municipal) : <span className={styles.tbd}>TBD</span>}
+                        </td>
+                        <td className={styles.tdNum}>{m.school.toFixed(2)}</td>
+                        <td className={`${styles.tdNum} ${styles.tdTotal}`}>
+                          {total !== null ? fmtMillage(total) : <span className={styles.tbd}>N/A</span>}
+                        </td>
+                        <td className={styles.tdNum}>{m.eit}</td>
+                        <td className={styles.tdNum}>$52</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : (
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th className={styles.thMuni}>Municipality</th>
+                    <th className={styles.thNum}>County Tax</th>
+                    <th className={styles.thNum}>Municipal Tax</th>
+                    <th className={styles.thNum}>School Tax</th>
+                    <th className={`${styles.thNum} ${styles.thTotal}`}>Total Property Tax</th>
+                    <th className={styles.thNum}>EIT Rate<br />(Residents)</th>
+                    <th className={styles.thNum}>LST<br />(flat)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {visible.map((m) => {
+                    const countyTax = millToDollar(m.county, assessedValue);
+                    const muniTax = m.municipal !== null ? millToDollar(m.municipal, assessedValue) : null;
+                    const schoolTax = millToDollar(m.school, assessedValue);
+                    const total = muniTax !== null ? countyTax + muniTax + schoolTax : null;
+                    return (
+                      <tr key={m.id} className={styles.tr}>
+                        <td className={styles.tdMuni}>{m.name}</td>
+                        <td className={styles.tdNum}>{fmt$(countyTax)}</td>
+                        <td className={styles.tdNum}>
+                          {muniTax !== null ? fmt$(muniTax) : <span className={styles.tbd}>TBD</span>}
+                        </td>
+                        <td className={styles.tdNum}>{fmt$(schoolTax)}</td>
+                        <td className={`${styles.tdNum} ${styles.tdTotal}`}>
+                          {total !== null ? fmt$(total) : <span className={styles.tbd}>N/A</span>}
+                        </td>
+                        <td className={styles.tdNum}>{m.eit}</td>
+                        <td className={styles.tdNum}>$52</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </section>
+
+        {/* ── Bar chart ── */}
+        {chartData.length > 0 && (
+          <section className={styles.chartSection}>
+            <h2 className={styles.chartTitle}>
+              {viewMode === 'millage'
+                ? 'Total Combined Millage'
+                : `Estimated Total Property Tax — assessed value ${fmt$(assessedValue)}`}
+            </h2>
+            {viewMode === 'dollar' && (
+              <p className={styles.chartSubtitle}>
+                Property tax only (county + municipal + school).
+                Excludes Thornbury Twp (Delaware Co.) — municipal millage pending.
+              </p>
+            )}
+            {viewMode === 'millage' && (
+              <p className={styles.chartSubtitle}>
+                Excludes Thornbury Twp (Delaware Co.) — municipal millage pending.
+              </p>
+            )}
+            <div style={{ width: '100%', height: chartHeight }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  layout="vertical"
+                  data={chartData}
+                  margin={{ top: 0, right: 72, left: 10, bottom: 0 }}
+                >
+                  <XAxis
+                    type="number"
+                    domain={[0, maxValue * 1.02]}
+                    tick={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: 10, fill: '#555' }}
+                    axisLine={false}
+                    tickLine={false}
+                    tickFormatter={labelFormatter}
+                  />
+                  <YAxis
+                    type="category"
+                    dataKey="name"
+                    width={128}
+                    tick={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: 11, fill: '#0A1931' }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <Tooltip
+                    contentStyle={TOOLTIP_STYLE}
+                    cursor={{ fill: 'rgba(10,25,49,0.05)' }}
+                    formatter={tooltipFormatter}
+                  />
+                  <Bar dataKey="value" radius={[0, 2, 2, 0]} isAnimationActive={false}>
+                    {chartData.map((entry) => (
+                      <Cell
+                        key={entry.id}
+                        fill={entry.value === maxValue ? '#C9A84C' : '#0A1931'}
+                      />
+                    ))}
+                    <LabelList
+                      dataKey="value"
+                      position="right"
+                      formatter={labelFormatter}
+                      style={{
+                        fontFamily: 'IBM Plex Mono, monospace',
+                        fontSize: 11,
+                        fill: '#0A1931',
+                      }}
+                    />
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </section>
+        )}
+
+        {/* ── Disclaimer ── */}
         <div className={styles.disclaimer}>
           <p>
             Tax rates change annually and this page may not reflect the most
             current figures. If you notice a discrepancy, please contact us at{' '}
-            <a href="mailto:hello@westchesterbythenumbers.com" className={styles.disclaimerLink}>
+            <a
+              href="mailto:hello@westchesterbythenumbers.com"
+              className={styles.disclaimerLink}
+            >
               hello@westchesterbythenumbers.com
             </a>{' '}
             — we appreciate the help keeping this accurate. Always verify
@@ -237,9 +517,11 @@ export default function RatesClient() {
           </p>
         </div>
 
-        {/* Link to explainer */}
+        {/* ── Link to explainer ── */}
         <div className={styles.explainerLink}>
-          <span className={styles.explainerLinkLabel}>Want to understand what these numbers mean?</span>
+          <span className={styles.explainerLinkLabel}>
+            Want to understand what these numbers mean?
+          </span>
           <Link href="/taxes/explainer" className={styles.explainerLinkAnchor}>
             Read: How Local Taxes Work →
           </Link>

@@ -53,9 +53,18 @@
   width: 100%;
 }
 
-/* ── FILTER / TOGGLES ── */
+/* ── FILTER / MUNICIPALITY TOGGLES ── */
 .filterSection {
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.filterRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .filterLabel {
@@ -64,7 +73,33 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: 1rem;
+}
+
+.selectAllRow {
+  display: flex;
+}
+
+.selectAllBtn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1.5px solid var(--gold);
+  background: transparent;
+  color: var(--gold);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.selectAllBtn:hover {
+  background: var(--gold);
+  color: var(--navy);
 }
 
 .toggleGrid {
@@ -80,28 +115,283 @@
   padding: 0 1rem;
   font-family: var(--font-mono);
   font-size: 0.68rem;
-  letter-spacing: 0.05em;
-  border: 1.5px solid var(--navy);
+  letter-spacing: 0.04em;
+  border: 1.5px solid rgba(10, 25, 49, 0.35);
   background: transparent;
   color: var(--navy);
   cursor: pointer;
   border-radius: 2px;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
   white-space: nowrap;
-  line-height: 1;
 }
 
 .toggleBtn:hover {
+  border-color: var(--navy);
   background: var(--off-white);
 }
 
 .toggleActive {
   background: var(--navy);
   color: var(--white);
+  border-color: var(--navy);
 }
 
 .toggleActive:hover {
   background: var(--navy-light);
+  border-color: var(--navy-light);
+}
+
+/* ── VIEW MODE TOGGLE ── */
+.viewSection {
+  margin-bottom: 1.75rem;
+}
+
+.viewToggleGroup {
+  display: inline-flex;
+  border: 1.5px solid var(--navy);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.viewBtn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  background: transparent;
+  color: var(--navy);
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.viewBtn + .viewBtn {
+  border-left: 1.5px solid var(--navy);
+}
+
+.viewBtn:hover {
+  background: var(--off-white);
+}
+
+.viewActive {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.viewActive:hover {
+  background: var(--navy-light);
+}
+
+/* ── ASSESSED VALUE INPUT ── */
+.assessedSection {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: var(--off-white);
+  border-radius: 2px;
+}
+
+.assessedLabel {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 0.6rem;
+}
+
+.assessedInputRow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 1rem;
+  max-width: 220px;
+}
+
+.assessedDollarSign {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 0.6rem;
+  background: var(--navy);
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  border-radius: 2px 0 0 2px;
+  flex-shrink: 0;
+}
+
+.assessedInput {
+  height: 44px;
+  padding: 0 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--navy);
+  background: var(--white);
+  border: 1.5px solid var(--navy);
+  border-left: none;
+  border-radius: 0 2px 2px 0;
+  width: 100%;
+  -moz-appearance: textfield;
+}
+
+.assessedInput::-webkit-inner-spin-button,
+.assessedInput::-webkit-outer-spin-button {
+  opacity: 0.4;
+}
+
+.assessedInput:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+/* ── COLLAPSIBLE ── */
+.collapsible {
+  border-top: 1px solid rgba(10, 25, 49, 0.15);
+  padding-top: 0;
+}
+
+.collapsibleToggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.5rem 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--navy);
+  text-align: left;
+  gap: 1rem;
+}
+
+.collapsibleToggle:hover {
+  color: var(--gold);
+}
+
+.collapsibleArrow {
+  font-size: 0.65rem;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.collapsibleBody {
+  padding: 1rem 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.collapsibleBody p {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #444;
+  margin: 0;
+}
+
+/* ── INLINE CALCULATOR ── */
+.calcBox {
+  background: var(--white);
+  border: 1px solid rgba(10, 25, 49, 0.12);
+  padding: 1.25rem;
+  border-radius: 2px;
+}
+
+.calcBoxLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.9rem;
+}
+
+.calcRow {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.calcField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+  min-width: 140px;
+}
+
+.calcFieldLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.calcInputWrap {
+  display: flex;
+  align-items: center;
+}
+
+.calcInputWrap .assessedDollarSign {
+  border-radius: 2px 0 0 2px;
+}
+
+.calcInputWrap .assessedInput {
+  min-width: 0;
+}
+
+.calcSelect {
+  height: 44px;
+  padding: 0 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--navy);
+  background: var(--white);
+  border: 1.5px solid var(--navy);
+  border-radius: 2px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.calcSelect:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.calcResult {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--navy);
+  padding: 0.6rem 0.75rem;
+  background: rgba(10, 25, 49, 0.05);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 2px 2px 0;
+}
+
+.calcNote {
+  font-size: 0.85rem !important;
+  color: #666 !important;
+}
+
+.calcLink {
+  color: var(--navy);
+  text-underline-offset: 2px;
+  font-weight: 600;
+}
+
+.calcLink:hover {
+  color: var(--gold);
 }
 
 /* ── TABLE ── */
@@ -135,7 +425,7 @@
   padding: 0.85rem 1rem;
   text-align: left;
   white-space: nowrap;
-  line-height: 1.4;
+  line-height: 1.45;
   vertical-align: bottom;
 }
 
@@ -145,7 +435,7 @@
 
 .thNum {
   text-align: right !important;
-  min-width: 80px;
+  min-width: 88px;
 }
 
 .thTotal {
@@ -154,7 +444,7 @@
 
 .tr {
   border-bottom: 1px solid rgba(10, 25, 49, 0.08);
-  transition: background 0.15s;
+  transition: background 0.12s;
 }
 
 .tr:last-child {
@@ -170,7 +460,7 @@
   font-size: 0.92rem;
   font-weight: 600;
   color: var(--navy);
-  padding: 1rem;
+  padding: 0.9rem 1rem;
   vertical-align: middle;
 }
 
@@ -178,7 +468,7 @@
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: #333;
-  padding: 1rem;
+  padding: 0.9rem 1rem;
   text-align: right;
   vertical-align: middle;
   white-space: nowrap;
@@ -190,7 +480,7 @@
 }
 
 .tbd {
-  color: #999;
+  color: #aaa;
   font-style: italic;
 }
 
@@ -201,10 +491,11 @@
 
 .chartTitle {
   font-family: var(--font-display);
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--navy);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.35rem;
+  line-height: 1.3;
 }
 
 .chartSubtitle {
@@ -212,69 +503,13 @@
   font-size: 0.85rem;
   color: #777;
   font-weight: 300;
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
-}
-
-.chart {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.chartRow {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.chartLabel {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.04em;
-  color: var(--navy);
-  white-space: nowrap;
-}
-
-.chartBarWrap {
-  height: 36px;
-  background: rgba(10, 25, 49, 0.07);
-  border-radius: 2px;
-  position: relative;
-}
-
-.chartBar {
-  height: 100%;
-  background: var(--navy);
-  border-radius: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 0.6rem;
-  transition: width 0.35s ease;
-  min-width: 4rem;
-}
-
-.chartBarHighest {
-  background: var(--gold);
-}
-
-.chartValue {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  color: var(--white);
-  letter-spacing: 0.03em;
-  white-space: nowrap;
-}
-
-.chartBarHighest .chartValue {
-  color: var(--navy);
+  margin-bottom: 1.25rem;
 }
 
 /* ── DISCLAIMER ── */
 .disclaimer {
   background: var(--off-white);
-  border-left: 3px solid rgba(10, 25, 49, 0.25);
+  border-left: 3px solid rgba(10, 25, 49, 0.2);
   padding: 1.25rem 1.5rem;
   margin-bottom: 2rem;
 }
@@ -386,6 +621,14 @@
   .toggleBtn {
     font-size: 0.65rem;
     padding: 0 0.75rem;
+  }
+
+  .assessedInputRow {
+    max-width: 100%;
+  }
+
+  .calcRow {
+    flex-direction: column;
   }
 
   .footerInner {
