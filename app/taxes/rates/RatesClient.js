@@ -177,11 +177,12 @@ export default function RatesClient() {
   const chartData = visible
     .map((m) => {
       const totalMillage = getTotalMillage(m);
-      const assessed = marketValue * getAssessmentRatio(m);
+      const ratio = getAssessmentRatio(m);
+      const assessed = marketValue * ratio;
       const eitDollar = (parseFloat(m.eit) / 100) * earnedIncome;
       const value =
         viewMode === 'millage'
-          ? totalMillage
+          ? (totalMillage !== null ? +((totalMillage * ratio) / 10).toFixed(4) : null)
           : totalMillage !== null
           ? millToDollar(totalMillage, assessed) + eitDollar + 52
           : null;
@@ -194,11 +195,11 @@ export default function RatesClient() {
   const chartHeight = Math.max(220, chartData.length * 54);
 
   const labelFormatter = (val) =>
-    viewMode === 'millage' ? fmtMillage(val) : fmt$(val);
+    viewMode === 'millage' ? val.toFixed(2) + '%' : fmt$(val);
 
   const tooltipFormatter = (val) =>
     viewMode === 'millage'
-      ? [`${fmtMillage(val)} mills`, 'Total Millage']
+      ? [val.toFixed(2) + '%', 'Effective Millage Rate']
       : [fmt$(val), 'Est. Total Annual Local Tax'];
 
   return (
@@ -455,13 +456,13 @@ export default function RatesClient() {
           <section className={styles.chartSection}>
             <h2 className={styles.chartTitle}>
               {viewMode === 'millage'
-                ? 'Total Combined Millage'
+                ? 'Effective Millage Rate (% of Market Value)'
                 : 'Total Estimated Annual Local Tax'}
             </h2>
             <p className={styles.chartSubtitle}>
               {viewMode === 'dollar'
                 ? `Property tax + EIT + LST. Market value ${fmt$(marketValue)}, earned income ${fmt$(earnedIncome)}.`
-                : 'Combined county, municipal, and school district millage.'}
+                : 'Total millage × county assessment ratio ÷ 1,000. Accounts for the difference in assessment ratios between Chester Co. (35%) and Delaware Co. (85%).'}
             </p>
             <div style={{ width: '100%', height: chartHeight }}>
               <ResponsiveContainer width="100%" height="100%">
