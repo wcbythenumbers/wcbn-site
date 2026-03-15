@@ -148,8 +148,7 @@ export default function TaxExplainerPage() {
             even though the Borough still provides services to the campus and
             its student population. Some municipalities negotiate Payment in
             Lieu of Taxes (PILOT) agreements with large tax-exempt institutions
-            to partially offset this gap. Whether such an agreement exists
-            between WCU and the Borough is a question worth asking.
+            to partially offset this gap.
           </p>
         </section>
 
