@@ -24,10 +24,10 @@ export default function TaxExplainerPage() {
           <div className={styles.label}>Taxes &amp; Budget</div>
           <h1 className={styles.heading}>How Local Taxes Work</h1>
           <p className={styles.intro}>
-            If you live in West Chester or one of the surrounding townships, you
-            pay local taxes to several different government bodies at the same
-            time — and most people have never had anyone explain exactly how
-            that works. This page does.
+            If you live in West Chester or one of the surrounding townships,
+            you're paying local taxes to several different government bodies at
+            the same time — and it's not always easy to find a clear explanation
+            of how it all fits together. We'll try to help with that here.
           </p>
         </div>
       </header>
