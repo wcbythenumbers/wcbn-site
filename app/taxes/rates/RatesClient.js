@@ -77,7 +77,8 @@ const MUNICIPALITIES = [
     name: 'Thornbury Twp (Delaware Co.)',
     shortName: 'Thornbury (Del. Co.)',
     county: 3.873,
-    municipal: null,
+    municipal: 0,
+    municipalNote: 'This municipality levies no municipal property tax.',
     school: 11.36,
     eit: '1.00%',
   },
@@ -102,6 +103,38 @@ function fmtMillage(n) {
   return n.toFixed(3);
 }
 
+const SOURCES = [
+  {
+    category: 'Property Tax',
+    links: [
+      { label: 'Chester County Tax Rates', href: 'https://www.chesco.org/1585/Tax-Rates' },
+      { label: 'Chester County Assessment Office', href: 'https://www.chesco.org/213/Assessment' },
+      { label: 'Delaware County Assessment Office', href: 'https://www.delcopa.gov/assessment/index.html' },
+      { label: 'WCASD Real Estate Taxes', href: 'https://www.wcasd.net/our-team/departments/business-finance/real-estate-taxes' },
+    ],
+  },
+  {
+    category: 'Earned Income Tax',
+    links: [
+      { label: 'Keystone Collections Group', href: 'https://keystonecollects.com' },
+      { label: 'PA DCED PSD Codes & EIT Rates', href: 'https://dced.pa.gov/local-government/local-income-tax-information/psd-codes-and-eit-rates/' },
+    ],
+  },
+  {
+    category: 'Municipal Tax Information',
+    links: [
+      { label: 'West Chester Borough Finance', href: 'https://www.west-chester.com/299/Finance' },
+      { label: 'East Goshen Township', href: 'https://eastgoshen.org' },
+      { label: 'West Goshen Township Tax Collector', href: 'https://www.westgoshen.org/169/Tax-Collector' },
+      { label: 'East Bradford Township Taxes', href: 'https://www.eastbradford.org/205/Taxes-Audits' },
+      { label: 'West Whiteland Township Taxes', href: 'https://www.westwhiteland.org/181/Taxes' },
+      { label: 'Westtown Township Taxes', href: 'https://westtownpa.org/taxes/' },
+      { label: 'Thornbury Township (Chester Co.)', href: 'https://www.thornburytwp.com' },
+      { label: 'Thornbury Township (Delaware Co.) Local Tax Information', href: 'https://www.thornbury.org/residents/page/local-tax-information' },
+    ],
+  },
+];
+
 const TOOLTIP_STYLE = {
   fontFamily: 'IBM Plex Mono, monospace',
   fontSize: '0.72rem',
@@ -118,6 +151,7 @@ export default function RatesClient() {
   const [calcOpen, setCalcOpen] = useState(false);
   const [marketInput, setMarketInput] = useState('');
   const [calcCounty, setCalcCounty] = useState('chester');
+  const [sourcesOpen, setSourcesOpen] = useState(false);
 
   const allSelected = selected.size === MUNICIPALITIES.length;
 
@@ -277,6 +311,13 @@ export default function RatesClient() {
                     Your assessed value may differ from your home's current sale
                     price or estimated market value.
                   </p>
+                  <p>
+                    All three taxing bodies — your county, your municipality,
+                    and your school district — use the same assessed value set
+                    by the county assessment office. There is only one assessed
+                    value per property. Each taxing body simply applies its own
+                    millage rate to that same number.
+                  </p>
 
                   <div className={styles.calcBox}>
                     <div className={styles.calcBoxLabel}>Estimate your assessed value</div>
@@ -375,7 +416,10 @@ export default function RatesClient() {
                         <td className={styles.tdMuni}>{m.name}</td>
                         <td className={styles.tdNum}>{fmtMillage(m.county)}</td>
                         <td className={styles.tdNum}>
-                          {m.municipal !== null ? fmtMillage(m.municipal) : <span className={styles.tbd}>TBD</span>}
+                          {fmtMillage(m.municipal)}
+                          {m.municipalNote && (
+                            <sup className={styles.noteRef} title={m.municipalNote}>†</sup>
+                          )}
                         </td>
                         <td className={styles.tdNum}>{m.school.toFixed(2)}</td>
                         <td className={`${styles.tdNum} ${styles.tdTotal}`}>
@@ -404,19 +448,22 @@ export default function RatesClient() {
                 <tbody>
                   {visible.map((m) => {
                     const countyTax = millToDollar(m.county, assessedValue);
-                    const muniTax = m.municipal !== null ? millToDollar(m.municipal, assessedValue) : null;
+                    const muniTax = millToDollar(m.municipal, assessedValue);
                     const schoolTax = millToDollar(m.school, assessedValue);
-                    const total = muniTax !== null ? countyTax + muniTax + schoolTax : null;
+                    const total = countyTax + muniTax + schoolTax;
                     return (
                       <tr key={m.id} className={styles.tr}>
                         <td className={styles.tdMuni}>{m.name}</td>
                         <td className={styles.tdNum}>{fmt$(countyTax)}</td>
                         <td className={styles.tdNum}>
-                          {muniTax !== null ? fmt$(muniTax) : <span className={styles.tbd}>TBD</span>}
+                          {fmt$(muniTax)}
+                          {m.municipalNote && (
+                            <sup className={styles.noteRef} title={m.municipalNote}>†</sup>
+                          )}
                         </td>
                         <td className={styles.tdNum}>{fmt$(schoolTax)}</td>
                         <td className={`${styles.tdNum} ${styles.tdTotal}`}>
-                          {total !== null ? fmt$(total) : <span className={styles.tbd}>N/A</span>}
+                          {fmt$(total)}
                         </td>
                         <td className={styles.tdNum}>{m.eit}</td>
                         <td className={styles.tdNum}>$52</td>
@@ -427,6 +474,11 @@ export default function RatesClient() {
               </table>
             )}
           </div>
+          {visible.some((m) => m.municipalNote) && (
+            <p className={styles.tableFootnote}>
+              † Thornbury Township (Delaware Co.) levies no municipal property tax.
+            </p>
+          )}
         </section>
 
         {/* ── Bar chart ── */}
@@ -437,17 +489,11 @@ export default function RatesClient() {
                 ? 'Total Combined Millage'
                 : `Estimated Total Property Tax — assessed value ${fmt$(assessedValue)}`}
             </h2>
-            {viewMode === 'dollar' && (
-              <p className={styles.chartSubtitle}>
-                Property tax only (county + municipal + school).
-                Excludes Thornbury Twp (Delaware Co.) — municipal millage pending.
-              </p>
-            )}
-            {viewMode === 'millage' && (
-              <p className={styles.chartSubtitle}>
-                Excludes Thornbury Twp (Delaware Co.) — municipal millage pending.
-              </p>
-            )}
+            <p className={styles.chartSubtitle}>
+              {viewMode === 'dollar'
+                ? 'Property tax only (county + municipal + school district).'
+                : 'Combined county, municipal, and school district millage.'}
+            </p>
             <div style={{ width: '100%', height: chartHeight }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -525,6 +571,42 @@ export default function RatesClient() {
           <Link href="/taxes/explainer" className={styles.explainerLinkAnchor}>
             Read: How Local Taxes Work →
           </Link>
+        </div>
+
+        {/* ── Sources & Additional Information ── */}
+        <div className={styles.sourcesSection}>
+          <button
+            className={styles.sourcesToggle}
+            onClick={() => setSourcesOpen(!sourcesOpen)}
+            aria-expanded={sourcesOpen}
+          >
+            <span>Sources &amp; Additional Information</span>
+            <span className={styles.sourcesArrow}>{sourcesOpen ? '▲' : '▼'}</span>
+          </button>
+
+          {sourcesOpen && (
+            <div className={styles.sourcesBody}>
+              {SOURCES.map((group) => (
+                <div key={group.category} className={styles.sourcesGroup}>
+                  <div className={styles.sourcesCategoryLabel}>{group.category}</div>
+                  <ul className={styles.sourcesList}>
+                    {group.links.map((link) => (
+                      <li key={link.href}>
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={styles.sourcesLink}
+                        >
+                          {link.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
       </div>
