@@ -355,7 +355,7 @@ export default function RatesClient() {
                     <th className={styles.thNum}>School<br />Millage</th>
                     <th className={`${styles.thNum} ${styles.thTotal}`}>Total<br />Millage</th>
                     <th className={styles.thNum}>Effective<br />Millage Rate</th>
-                    <th className={styles.thNum}>EIT Rate<br />(Residents)</th>
+                    <th className={`${styles.thNum} ${styles.thSeparatorLeft}`}>EIT Rate<br />(Residents)</th>
                     <th className={styles.thNum}>LST<br />(flat)</th>
                   </tr>
                 </thead>
@@ -376,12 +376,12 @@ export default function RatesClient() {
                         <td className={`${styles.tdNum} ${styles.tdTotal}`}>
                           {total !== null ? fmtMillage(total) : <span className={styles.tbd}>N/A</span>}
                         </td>
-                        <td className={styles.tdNum}>
+                        <td className={`${styles.tdNum} ${styles.tdTotal}`}>
                           {total !== null
                             ? ((total * getAssessmentRatio(m)) / 10).toFixed(2) + '%'
                             : <span className={styles.tbd}>N/A</span>}
                         </td>
-                        <td className={styles.tdNum}>{m.eit}</td>
+                        <td className={`${styles.tdNum} ${styles.tdSeparatorLeft}`}>{m.eit}</td>
                         <td className={styles.tdNum}>$52</td>
                       </tr>
                     );
@@ -397,7 +397,7 @@ export default function RatesClient() {
                     <th className={styles.thNum}>Municipal Tax</th>
                     <th className={styles.thNum}>School Tax</th>
                     <th className={styles.thNum}>Total<br />Property Tax</th>
-                    <th className={styles.thNum}>EIT ($)</th>
+                    <th className={`${styles.thNum} ${styles.thSeparatorLeft}`}>EIT ($)</th>
                     <th className={styles.thNum}>LST</th>
                     <th className={`${styles.thNum} ${styles.thTotal}`}>Total Est.<br />Annual Local Tax</th>
                   </tr>
@@ -423,7 +423,7 @@ export default function RatesClient() {
                         </td>
                         <td className={styles.tdNum}>{fmt$(schoolTax)}</td>
                         <td className={styles.tdNum}>{fmt$(propTotal)}</td>
-                        <td className={styles.tdNum}>{fmt$(eitDollar)}</td>
+                        <td className={`${styles.tdNum} ${styles.tdSeparatorLeft}`}>{fmt$(eitDollar)}</td>
                         <td className={styles.tdNum}>$52</td>
                         <td className={`${styles.tdNum} ${styles.tdTotal}`}>
                           {fmt$(grandTotal)}
