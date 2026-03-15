@@ -153,9 +153,6 @@ export default function RatesClient() {
   const [viewMode, setViewMode] = useState('millage');
   const [marketValue, setMarketValue] = useState(400000);
   const [earnedIncome, setEarnedIncome] = useState(75000);
-  const [calcOpen, setCalcOpen] = useState(false);
-  const [marketInput, setMarketInput] = useState('');
-  const [calcCounty, setCalcCounty] = useState('chester');
   const [sourcesOpen, setSourcesOpen] = useState(false);
 
   const allSelected = selected.size === MUNICIPALITIES.length;
@@ -195,12 +192,6 @@ export default function RatesClient() {
   const maxValue = chartData.length > 0 ? Math.max(...chartData.map((d) => d.value)) : 1;
 
   const chartHeight = Math.max(220, chartData.length * 54);
-
-  const marketNum = parseFloat(marketInput.replace(/,/g, '')) || 0;
-  const estimatedAssessed =
-    marketNum > 0
-      ? Math.round(marketNum * (calcCounty === 'chester' ? 0.35 : 0.85))
-      : null;
 
   const labelFormatter = (val) =>
     viewMode === 'millage' ? fmtMillage(val) : fmt$(val);
@@ -263,7 +254,7 @@ export default function RatesClient() {
               onClick={() => setViewMode('millage')}
               aria-pressed={viewMode === 'millage'}
             >
-              Millage Rates
+              Tax Rates
             </button>
             <button
               className={`${styles.viewBtn} ${viewMode === 'dollar' ? styles.viewActive : ''}`}
@@ -344,106 +335,10 @@ export default function RatesClient() {
               </div>
             </div>
 
-            {/* Collapsible */}
-            <div className={styles.collapsible}>
-              <button
-                className={styles.collapsibleToggle}
-                onClick={() => setCalcOpen(!calcOpen)}
-                aria-expanded={calcOpen}
-              >
-                <span>How do I find my assessed value?</span>
-                <span className={styles.collapsibleArrow}>
-                  {calcOpen ? '▲' : '▼'}
-                </span>
-              </button>
-
-              {calcOpen && (
-                <div className={styles.collapsibleBody}>
-                  <p>
-                    Chester County assesses property at approximately{' '}
-                    <strong>35% of market value</strong>. Delaware County
-                    assesses at approximately <strong>85% of market value</strong>.
-                    Your assessed value may differ from your home's current sale
-                    price or estimated market value.
-                  </p>
-                  <p>
-                    All three taxing bodies — your county, your municipality,
-                    and your school district — use the same assessed value set
-                    by the county assessment office. There is only one assessed
-                    value per property. Each taxing body simply applies its own
-                    millage rate to that same number.
-                  </p>
-
-                  <div className={styles.calcBox}>
-                    <div className={styles.calcBoxLabel}>Estimate your assessed value</div>
-                    <div className={styles.calcRow}>
-                      <div className={styles.calcField}>
-                        <label htmlFor="market-input" className={styles.calcFieldLabel}>
-                          Estimated market value
-                        </label>
-                        <div className={styles.calcInputWrap}>
-                          <span className={styles.assessedDollarSign}>$</span>
-                          <input
-                            id="market-input"
-                            type="number"
-                            min="0"
-                            step="10000"
-                            className={styles.assessedInput}
-                            placeholder="e.g. 400000"
-                            value={marketInput}
-                            onChange={(e) => setMarketInput(e.target.value)}
-                          />
-                        </div>
-                      </div>
-                      <div className={styles.calcField}>
-                        <label htmlFor="calc-county" className={styles.calcFieldLabel}>
-                          County
-                        </label>
-                        <select
-                          id="calc-county"
-                          className={styles.calcSelect}
-                          value={calcCounty}
-                          onChange={(e) => setCalcCounty(e.target.value)}
-                        >
-                          <option value="chester">Chester County</option>
-                          <option value="delaware">Delaware County</option>
-                        </select>
-                      </div>
-                    </div>
-                    {estimatedAssessed !== null && (
-                      <div className={styles.calcResult}>
-                        Estimated assessed value:{' '}
-                        <strong>${estimatedAssessed.toLocaleString()}</strong>
-                      </div>
-                    )}
-                  </div>
-
-                  <p className={styles.calcNote}>
-                    Actual assessed values are set by the county assessment
-                    office and may differ from this estimate. Look up your exact
-                    assessed value at the{' '}
-                    <a
-                      href="https://www.chesco.org/1290/Assessment"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.calcLink}
-                    >
-                      Chester County Assessment Office
-                    </a>{' '}
-                    or the{' '}
-                    <a
-                      href="https://www.delcopa.gov/assessment/index.html"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.calcLink}
-                    >
-                      Delaware County Assessment Office
-                    </a>
-                    .
-                  </p>
-                </div>
-              )}
-            </div>
+            <p className={styles.assessmentRatioNote}>
+              Chester County properties are assessed at approximately 35% of
+              market value; Delaware County at approximately 85%.
+            </p>
           </section>
         )}
 
@@ -459,9 +354,9 @@ export default function RatesClient() {
                     <th className={styles.thNum}>Municipal<br />Millage</th>
                     <th className={styles.thNum}>School<br />Millage</th>
                     <th className={`${styles.thNum} ${styles.thTotal}`}>Total<br />Millage</th>
+                    <th className={styles.thNum}>Effective<br />Millage Rate</th>
                     <th className={styles.thNum}>EIT Rate<br />(Residents)</th>
                     <th className={styles.thNum}>LST<br />(flat)</th>
-                    <th className={styles.thNum}>Effective Rate<br />(% of Market)</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -481,13 +376,13 @@ export default function RatesClient() {
                         <td className={`${styles.tdNum} ${styles.tdTotal}`}>
                           {total !== null ? fmtMillage(total) : <span className={styles.tbd}>N/A</span>}
                         </td>
-                        <td className={styles.tdNum}>{m.eit}</td>
-                        <td className={styles.tdNum}>$52</td>
                         <td className={styles.tdNum}>
                           {total !== null
                             ? ((total * getAssessmentRatio(m)) / 10).toFixed(2) + '%'
                             : <span className={styles.tbd}>N/A</span>}
                         </td>
+                        <td className={styles.tdNum}>{m.eit}</td>
+                        <td className={styles.tdNum}>$52</td>
                       </tr>
                     );
                   })}
@@ -637,16 +532,6 @@ export default function RatesClient() {
           </p>
         </div>
 
-        {/* ── Link to explainer ── */}
-        <div className={styles.explainerLink}>
-          <span className={styles.explainerLinkLabel}>
-            Want to understand what these numbers mean?
-          </span>
-          <Link href="/taxes/explainer" className={styles.explainerLinkAnchor}>
-            Read: How Local Taxes Work →
-          </Link>
-        </div>
-
         {/* ── Sources & Additional Information ── */}
         <div className={styles.sourcesSection}>
           <button
@@ -681,6 +566,16 @@ export default function RatesClient() {
               ))}
             </div>
           )}
+        </div>
+
+        {/* ── Link to explainer ── */}
+        <div className={styles.explainerLink}>
+          <span className={styles.explainerLinkLabel}>
+            Want to understand what these numbers mean?
+          </span>
+          <Link href="/taxes/explainer" className={styles.explainerLinkAnchor}>
+            Read: How Local Taxes Work →
+          </Link>
         </div>
 
       </div>

@@ -265,6 +265,15 @@
   min-width: 180px;
 }
 
+.assessmentRatioNote {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: #666;
+  font-weight: 300;
+  margin: 0;
+}
+
 .assessedDisplay {
   font-family: var(--font-mono);
   font-size: 0.72rem;
