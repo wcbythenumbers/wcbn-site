@@ -13,6 +13,7 @@ const TOC = [
   { href: '#eit', label: 'Earned Income Tax (EIT)' },
   { href: '#lst', label: 'Local Services Tax (LST)' },
   { href: '#realty-transfer', label: 'Realty Transfer Tax' },
+  { href: '#other-taxes', label: 'What About Other Taxes?' },
   { href: '#adds-up', label: 'How It All Adds Up' },
 ];
 
@@ -243,6 +244,28 @@ export default function TaxExplainerPage() {
         </section>
 
         {/* ── Section 6 ── */}
+        <section id="other-taxes" className={styles.section}>
+          <h2 className={styles.sectionHeading}>What About Other Taxes?</h2>
+          <p>
+            The taxes covered on this page are all local — but they're not the
+            only taxes you pay. Pennsylvania levies a flat{' '}
+            <strong>3.07% state income tax</strong> on earned income, and a{' '}
+            <strong>6% sales tax</strong> on most goods and services. Those
+            dollars go to Harrisburg and fund state-level services: roads and
+            highways, the state police, public universities, and social services
+            programs, among others.
+          </p>
+          <p>
+            State taxes are real and worth understanding, but they're a
+            separate system from what's described here. The local taxes on this
+            page — property tax, EIT, LST — are what pay for the things closest
+            to home: your schools, your local roads, your police and fire
+            departments, your parks, and the day-to-day operations of your
+            borough or township government.
+          </p>
+        </section>
+
+        {/* ── Section 7 ── */}
         <section id="adds-up" className={styles.section}>
           <h2 className={styles.sectionHeading}>How It All Adds Up</h2>
           <p>
