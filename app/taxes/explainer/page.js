@@ -139,6 +139,18 @@ export default function TaxExplainerPage() {
             your behalf. But the bills are still issued to you, and it's worth
             understanding what you're paying.
           </p>
+          <h3 className={styles.subheading}>Not all property is taxable</h3>
+          <p>
+            Not all property generates tax revenue. Institutions like West
+            Chester University — a state-owned university — are exempt from
+            local property taxes. That means a significant amount of land and
+            buildings in the Borough contributes nothing to the local tax base,
+            even though the Borough still provides services to the campus and
+            its student population. Some municipalities negotiate Payment in
+            Lieu of Taxes (PILOT) agreements with large tax-exempt institutions
+            to partially offset this gap. Whether such an agreement exists
+            between WCU and the Borough is a question worth asking.
+          </p>
         </section>
 
         {/* ── Section 3 ── */}
