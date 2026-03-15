@@ -226,13 +226,6 @@ export default function RatesClient() {
 
       <div className={styles.content}>
 
-        {/* ── Print button ── */}
-        <div className={styles.printRow}>
-          <button className={styles.printBtn} onClick={() => window.print()}>
-            Print / Save as PDF
-          </button>
-        </div>
-
         {/* ── Municipality toggles ── */}
         <section className={styles.filterSection}>
           <div className={styles.filterRow}>
@@ -358,6 +351,11 @@ export default function RatesClient() {
 
         {/* ── Table ── */}
         <section className={styles.tableSection}>
+          <div className={styles.printRow}>
+            <button className={styles.printBtn} onClick={() => window.print()}>
+              Print / Save as PDF
+            </button>
+          </div>
           <div
             className={styles.tableWrap}
             ref={tableWrapRef}
@@ -596,21 +594,12 @@ export default function RatesClient() {
           )}
         </div>
 
-        {/* ── Link to explainer ── */}
-        <div className={styles.explainerLink}>
-          <span className={styles.explainerLinkLabel}>
-            Want to understand what these numbers mean?
-          </span>
+        {/* ── Explore more callout ── */}
+        <div className={styles.exploreBlock}>
+          <div className={styles.exploreLabel}>Explore more</div>
           <Link href="/taxes/explainer" className={styles.explainerLinkAnchor}>
             Read: How Local Taxes Work →
           </Link>
-        </div>
-
-        {/* ── Link to dollars page ── */}
-        <div className={styles.explainerLink}>
-          <span className={styles.explainerLinkLabel}>
-            Now that you know the rates — see how the money is spent.
-          </span>
           <Link href="/taxes/dollars" className={styles.explainerLinkAnchor}>
             Read: Where Your Tax Dollars Go →
           </Link>

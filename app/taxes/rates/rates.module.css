@@ -57,22 +57,22 @@
 .printRow {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.5rem;
 }
 
 .printBtn {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  min-height: 36px;
-  padding: 0 1rem;
+  gap: 0.3rem;
+  min-height: 28px;
+  padding: 0 0.65rem;
   font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.08em;
+  font-size: 0.58rem;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-  border: 1px solid rgba(10, 25, 49, 0.3);
+  border: 1px solid rgba(10, 25, 49, 0.18);
   background: transparent;
-  color: #666;
+  color: #999;
   cursor: pointer;
   border-radius: 2px;
   transition: border-color 0.15s, color 0.15s;
@@ -80,12 +80,12 @@
 
 .printBtn::before {
   content: '⎙';
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }
 
 .printBtn:hover {
-  border-color: var(--navy);
-  color: var(--navy);
+  border-color: rgba(10, 25, 49, 0.4);
+  color: #555;
 }
 
 /* ── SCROLL HINT (mobile only) ── */
@@ -673,6 +673,26 @@
   border-radius: 2px;
 }
 
+/* ── EXPLORE MORE CALLOUT ── */
+.exploreBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--navy);
+  border-radius: 2px;
+  margin-top: 2.5rem;
+}
+
+.exploreLabel {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(248, 246, 240, 0.5);
+  margin-bottom: 0.25rem;
+}
+
 .explainerLinkLabel {
   font-family: var(--font-mono);
   font-size: 0.65rem;
@@ -885,6 +905,7 @@
   .chartSection { display: none !important; }
   .scrollHint { display: none !important; }
   .explainerLink { display: none !important; }
+  .exploreBlock { display: none !important; }
   .footer { display: none !important; }
 
   .content { padding: 1rem 0 2rem !important; }
