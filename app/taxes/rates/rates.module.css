@@ -249,6 +249,32 @@
   border-color: var(--gold);
 }
 
+/* ── TWO-INPUT ROW (dollar mode) ── */
+.dollarInputsRow {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 0;
+}
+
+.dollarInputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 180px;
+}
+
+.eitNote {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: #777;
+  font-weight: 300;
+  font-style: italic;
+  margin: 0;
+}
+
 /* ── COLLAPSIBLE ── */
 .collapsible {
   border-top: 1px solid rgba(10, 25, 49, 0.15);
@@ -409,7 +435,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 660px;
+  min-width: 760px;
 }
 
 .table thead {

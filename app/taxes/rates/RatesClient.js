@@ -148,6 +148,7 @@ export default function RatesClient() {
   const [selected, setSelected] = useState(new Set(ALL_IDS));
   const [viewMode, setViewMode] = useState('millage');
   const [assessedValue, setAssessedValue] = useState(150000);
+  const [earnedIncome, setEarnedIncome] = useState(75000);
   const [calcOpen, setCalcOpen] = useState(false);
   const [marketInput, setMarketInput] = useState('');
   const [calcCounty, setCalcCounty] = useState('chester');
@@ -175,11 +176,12 @@ export default function RatesClient() {
   const chartData = visible
     .map((m) => {
       const totalMillage = getTotalMillage(m);
+      const eitDollar = (parseFloat(m.eit) / 100) * earnedIncome;
       const value =
         viewMode === 'millage'
           ? totalMillage
           : totalMillage !== null
-          ? millToDollar(totalMillage, assessedValue)
+          ? millToDollar(totalMillage, assessedValue) + eitDollar + 52
           : null;
       return { id: m.id, name: m.shortName, value };
     })
@@ -201,7 +203,7 @@ export default function RatesClient() {
   const tooltipFormatter = (val) =>
     viewMode === 'millage'
       ? [`${fmtMillage(val)} mills`, 'Total Millage']
-      : [fmt$(val), 'Est. Total Property Tax'];
+      : [fmt$(val), 'Est. Total Annual Local Tax'];
 
   return (
     <main className={styles.main}>
@@ -268,25 +270,56 @@ export default function RatesClient() {
           </div>
         </section>
 
-        {/* ── Dollar mode: assessed value input + collapsible ── */}
+        {/* ── Dollar mode: inputs + collapsible ── */}
         {viewMode === 'dollar' && (
           <section className={styles.assessedSection}>
-            <label className={styles.assessedLabel} htmlFor="assessed-input">
-              Assessed property value
-            </label>
-            <div className={styles.assessedInputRow}>
-              <span className={styles.assessedDollarSign}>$</span>
-              <input
-                id="assessed-input"
-                type="number"
-                min="0"
-                step="1000"
-                className={styles.assessedInput}
-                value={assessedValue}
-                onChange={(e) =>
-                  setAssessedValue(Math.max(0, Number(e.target.value) || 0))
-                }
-              />
+            <div className={styles.dollarInputsRow}>
+              {/* Assessed value */}
+              <div className={styles.dollarInputGroup}>
+                <label className={styles.assessedLabel} htmlFor="assessed-input">
+                  Assessed property value
+                </label>
+                <div className={styles.assessedInputRow}>
+                  <span className={styles.assessedDollarSign}>$</span>
+                  <input
+                    id="assessed-input"
+                    type="number"
+                    min="0"
+                    step="1000"
+                    className={styles.assessedInput}
+                    value={assessedValue}
+                    onChange={(e) =>
+                      setAssessedValue(Math.max(0, Number(e.target.value) || 0))
+                    }
+                  />
+                </div>
+              </div>
+
+              {/* Earned income */}
+              <div className={styles.dollarInputGroup}>
+                <label className={styles.assessedLabel} htmlFor="income-input">
+                  Annual earned income
+                </label>
+                <div className={styles.assessedInputRow}>
+                  <span className={styles.assessedDollarSign}>$</span>
+                  <input
+                    id="income-input"
+                    type="number"
+                    min="0"
+                    step="1000"
+                    className={styles.assessedInput}
+                    value={earnedIncome}
+                    onChange={(e) =>
+                      setEarnedIncome(Math.max(0, Number(e.target.value) || 0))
+                    }
+                  />
+                </div>
+                <p className={styles.eitNote}>
+                  EIT estimate assumes all earned income is subject to local
+                  EIT. Actual liability may vary based on your work location,
+                  employer withholding, and other factors.
+                </p>
+              </div>
             </div>
 
             {/* Collapsible */}
@@ -440,9 +473,10 @@ export default function RatesClient() {
                     <th className={styles.thNum}>County Tax</th>
                     <th className={styles.thNum}>Municipal Tax</th>
                     <th className={styles.thNum}>School Tax</th>
-                    <th className={`${styles.thNum} ${styles.thTotal}`}>Total Property Tax</th>
-                    <th className={styles.thNum}>EIT Rate<br />(Residents)</th>
-                    <th className={styles.thNum}>LST<br />(flat)</th>
+                    <th className={styles.thNum}>Total<br />Property Tax</th>
+                    <th className={styles.thNum}>EIT ($)</th>
+                    <th className={styles.thNum}>LST</th>
+                    <th className={`${styles.thNum} ${styles.thTotal}`}>Total Est.<br />Annual Local Tax</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -450,7 +484,9 @@ export default function RatesClient() {
                     const countyTax = millToDollar(m.county, assessedValue);
                     const muniTax = millToDollar(m.municipal, assessedValue);
                     const schoolTax = millToDollar(m.school, assessedValue);
-                    const total = countyTax + muniTax + schoolTax;
+                    const propTotal = countyTax + muniTax + schoolTax;
+                    const eitDollar = (parseFloat(m.eit) / 100) * earnedIncome;
+                    const grandTotal = propTotal + eitDollar + 52;
                     return (
                       <tr key={m.id} className={styles.tr}>
                         <td className={styles.tdMuni}>{m.name}</td>
@@ -462,11 +498,12 @@ export default function RatesClient() {
                           )}
                         </td>
                         <td className={styles.tdNum}>{fmt$(schoolTax)}</td>
-                        <td className={`${styles.tdNum} ${styles.tdTotal}`}>
-                          {fmt$(total)}
-                        </td>
-                        <td className={styles.tdNum}>{m.eit}</td>
+                        <td className={styles.tdNum}>{fmt$(propTotal)}</td>
+                        <td className={styles.tdNum}>{fmt$(eitDollar)}</td>
                         <td className={styles.tdNum}>$52</td>
+                        <td className={`${styles.tdNum} ${styles.tdTotal}`}>
+                          {fmt$(grandTotal)}
+                        </td>
                       </tr>
                     );
                   })}
@@ -487,11 +524,11 @@ export default function RatesClient() {
             <h2 className={styles.chartTitle}>
               {viewMode === 'millage'
                 ? 'Total Combined Millage'
-                : `Estimated Total Property Tax — assessed value ${fmt$(assessedValue)}`}
+                : 'Total Estimated Annual Local Tax'}
             </h2>
             <p className={styles.chartSubtitle}>
               {viewMode === 'dollar'
-                ? 'Property tax only (county + municipal + school district).'
+                ? `Property tax + EIT + LST. Assessed value ${fmt$(assessedValue)}, earned income ${fmt$(earnedIncome)}.`
                 : 'Combined county, municipal, and school district millage.'}
             </p>
             <div style={{ width: '100%', height: chartHeight }}>
