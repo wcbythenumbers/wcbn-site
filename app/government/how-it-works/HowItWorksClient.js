@@ -474,6 +474,244 @@ const ENTITIES = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
+// WHO'S RESPONSIBLE — DATA
+// ─────────────────────────────────────────────────────────────────────────────
+
+const TAG_CONFIG = {
+  school:   { label: 'School district', cls: styles.srvTagSchool },
+  borough:  { label: 'Borough',         cls: styles.srvTagBorough },
+  township: { label: 'Township',        cls: styles.srvTagTownship },
+  county:   { label: 'County',          cls: styles.srvTagCounty },
+  state:    { label: 'State',           cls: styles.srvTagState },
+};
+
+const FILTERS = [
+  { id: 'all',      label: 'All services' },
+  { id: 'township', label: 'Township' },
+  { id: 'borough',  label: 'Borough' },
+  { id: 'county',   label: 'County' },
+  { id: 'state',    label: 'State' },
+  { id: 'school',   label: 'School district' },
+];
+
+const SERVICES = [
+  // ── School district ──
+  {
+    id: 'k12-education',
+    icon: '🎓',
+    name: 'Public K\u201312 education',
+    tags: ['school'],
+    responsible: 'WCASD Board of Education',
+    howItWorks:
+      'Public K-12 education across all 8 municipalities is entirely the responsibility of WCASD. The elected nine-member Board sets policy, approves the ~$334M budget, and hires the Superintendent. Individual municipalities have no authority over schools.',
+    contact: 'WCASD district office: 484-266-1000',
+    note: 'The school board is elected by region \u2014 all WCASD residents vote in school board elections regardless of which municipality they live in.',
+  },
+  {
+    id: 'school-property-taxes',
+    icon: '\uD83D\uDCCB',
+    name: 'School property taxes',
+    tags: ['school'],
+    responsible: 'WCASD / Tax Collector',
+    howItWorks:
+      'Your school district portion of the property tax bill is collected by your elected local Tax Collector. WCASD sets the millage rate each year when it adopts its budget. WCASD has the lowest millage rates in both Chester and Delaware Counties.',
+    contact: 'Your elected local Tax Collector.',
+    note: 'School taxes are the largest portion of most residents\u2019 property tax bills \u2014 typically over 60% of the total.',
+  },
+  // ── Borough ──
+  {
+    id: 'borough-police',
+    icon: '\uD83D\uDE94',
+    name: 'Borough police',
+    tags: ['borough'],
+    responsible: 'Mayor / Police Chief',
+    howItWorks:
+      'West Chester Borough has its own police department, directed by the Mayor through the Chief of Police. The Mayor\u2019s primary executive role is overseeing the police department \u2014 all other Borough departments report to the Borough Manager appointed by Council.',
+    contact: 'West Chester Borough Police (non-emergency): 610-696-7797',
+    note: 'East Bradford Township contracts with the Borough for police services under a municipal agreement.',
+  },
+  {
+    id: 'borough-zoning',
+    icon: '\uD83C\uDFD7\uFE0F',
+    name: 'Zoning & permits (Borough)',
+    tags: ['borough'],
+    responsible: 'Borough of West Chester',
+    howItWorks:
+      'Zoning ordinances, building permits, and land use decisions within the Borough are set and issued by Borough Council and staff.',
+    contact: 'Borough Planning & Zoning: 610-696-4971',
+    note: 'Zoning rules vary significantly between the Borough and surrounding townships.',
+  },
+  {
+    id: 'borough-trash',
+    icon: '\u267B\uFE0F',
+    name: 'Trash & recycling (Borough)',
+    tags: ['borough'],
+    responsible: 'Borough of West Chester',
+    howItWorks:
+      'Trash and recycling collection in the Borough is managed through contracts with private haulers, overseen by Borough staff.',
+    contact: 'Borough Public Works: 610-696-4971',
+    note: null,
+  },
+  // ── Township ──
+  {
+    id: 'township-police',
+    icon: '\uD83D\uDE94',
+    name: 'Township police',
+    tags: ['township'],
+    responsible: 'Board of Supervisors',
+    howItWorks:
+      'Most townships have their own police departments or share one. West Goshen has its own department. Westtown and East Goshen share the Westtown-East Goshen Police Department. Some townships contract with other agencies. The Board of Supervisors oversees the police chief.',
+    contact: 'Your township\u2019s non-emergency police line.',
+    note: 'Police coverage and structure varies across the townships. Check with your specific township.',
+  },
+  {
+    id: 'township-zoning',
+    icon: '\uD83C\uDFD7\uFE0F',
+    name: 'Zoning & permits (townships)',
+    tags: ['township'],
+    responsible: 'Board of Supervisors',
+    howItWorks:
+      'Each township sets its own zoning ordinances and issues its own building permits. Supervisors approve major land use decisions. Zoning rules vary significantly from township to township.',
+    contact: 'Your township\u2019s zoning office.',
+    note: null,
+  },
+  {
+    id: 'local-parks',
+    icon: '\uD83C\uDF33',
+    name: 'Local parks',
+    tags: ['township', 'county'],
+    responsible: 'Board of Supervisors / Chester County',
+    howItWorks:
+      'Township parks and recreation programs are operated by each township. Chester County also operates regional parks and trails. East Bradford is notable for preserving over 60% of its land as open space.',
+    contact: 'Your township\u2019s parks department. Chester County Parks: 610-344-6415.',
+    note: null,
+  },
+  {
+    id: 'township-trash',
+    icon: '\u267B\uFE0F',
+    name: 'Trash & recycling (townships)',
+    tags: ['township'],
+    responsible: 'Board of Supervisors',
+    howItWorks:
+      'Trash and recycling in townships is managed by each township, typically through contracts with private haulers. Programs and accepted materials vary by township.',
+    contact: 'Your township\u2019s municipal office.',
+    note: null,
+  },
+  {
+    id: 'water-sewer',
+    icon: '\uD83D\uDCA7',
+    name: 'Water & sewer',
+    tags: ['township'],
+    responsible: 'Township or municipal authority',
+    howItWorks:
+      'Water and sewer is operated by a municipal authority or directly by the township, depending on location. Some areas are served by Pennsylvania American Water. Coverage varies widely.',
+    contact: 'Check your water bill for your service provider.',
+    note: 'Contact your township to find out who provides water and sewer at your address.',
+  },
+  {
+    id: 'fire-ems',
+    icon: '\uD83D\uDE92',
+    name: 'Fire & EMS',
+    tags: ['township', 'borough'],
+    responsible: 'Township / Volunteer fire companies',
+    howItWorks:
+      'Fire protection is primarily provided by volunteer fire companies, supported financially by townships and the Borough. EMS is provided by Good Fellowship Ambulance and similar regional organizations.',
+    contact: '911 for all emergencies.',
+    note: 'Volunteer fire companies are independent nonprofits but rely on municipal funding.',
+  },
+  // ── County ──
+  {
+    id: 'criminal-prosecution',
+    icon: '\u2696\uFE0F',
+    name: 'Criminal prosecution',
+    tags: ['county'],
+    responsible: 'District Attorney',
+    howItWorks:
+      'The elected District Attorney decides whether and how to prosecute criminal cases in Chester County. The DA operates independently of local police and the commissioners. Local police make arrests; the DA decides what happens in court.',
+    contact: 'Chester County DA\u2019s Office: 610-344-6801',
+    note: 'Local police make arrests. The DA decides what happens in court. These are completely separate functions.',
+  },
+  {
+    id: 'courts',
+    icon: '\uD83C\uDFDB\uFE0F',
+    name: 'Courts',
+    tags: ['county'],
+    responsible: 'Court of Common Pleas judges',
+    howItWorks:
+      'Civil, criminal, and family court cases are heard by elected Common Pleas judges. Magisterial District Judges handle minor civil matters, traffic violations, and preliminary hearings.',
+    contact: 'Chester County Justice Center: 610-344-6000',
+    note: null,
+  },
+  {
+    id: 'elections',
+    icon: '\uD83D\uDDF3\uFE0F',
+    name: 'Elections & voting',
+    tags: ['county'],
+    responsible: 'Chester County Voter Services',
+    howItWorks:
+      'All elections \u2014 federal, state, county, and local \u2014 are administered by Chester County Voter Services. This includes voter registration, polling places, mail-in ballots, and certifying results. Your municipality has no role in running elections.',
+    contact: 'Chester County Voter Services: 610-344-6410',
+    note: 'Register to vote and request mail-in ballots through Chester County Voter Services, not your township or borough.',
+  },
+  {
+    id: 'public-health',
+    icon: '\uD83C\uDFE5',
+    name: 'Public health',
+    tags: ['county'],
+    responsible: 'Chester County Health Dept.',
+    howItWorks:
+      'Public health services including disease surveillance, environmental health inspections, and health programs are provided by the Chester County Health Department. Individual municipalities have no public health departments.',
+    contact: 'Chester County Health: 610-344-6225',
+    note: null,
+  },
+  {
+    id: 'library',
+    icon: '\uD83D\uDCDA',
+    name: 'Public library',
+    tags: ['county'],
+    responsible: 'Chester County Library System',
+    howItWorks:
+      'Public libraries are part of the Chester County Library System, funded through county taxes and state aid.',
+    contact: 'Chester County Library: 610-280-2600',
+    note: null,
+  },
+  {
+    id: 'county-taxes',
+    icon: '\uD83D\uDCCB',
+    name: 'County property taxes',
+    tags: ['county'],
+    responsible: 'County Commissioners / Treasurer',
+    howItWorks:
+      'Chester County sets its own property tax millage rate (5.164 mills for 2025). The county tax bill is separate from your municipal and school district bills, collected by the Chester County Treasurer.',
+    contact: 'Chester County Treasurer: 610-344-6370',
+    note: 'Chester County has maintained a AAA bond rating from all three major rating agencies \u2014 the only county in Pennsylvania to do so.',
+  },
+  // ── State ──
+  {
+    id: 'state-roads',
+    icon: '\uD83D\uDEE3\uFE0F',
+    name: 'State roads & highways',
+    tags: ['state'],
+    responsible: 'PennDOT',
+    howItWorks:
+      'PennDOT owns and maintains state routes including Route 202, Route 30, Route 926, and other numbered highways. County and local governments handle roads they own separately.',
+    contact: 'PennDOT issue reporting: 1-800-FIX-ROAD',
+    note: 'Many residents don\u2019t know that the road in front of their house may be owned by a different government than their township. PennDOT, the county, and the township each maintain different roads.',
+  },
+  {
+    id: 'snow-removal',
+    icon: '\u2744\uFE0F',
+    name: 'Snow removal',
+    tags: ['state', 'county', 'township', 'borough'],
+    responsible: 'PennDOT / County / Township or Borough',
+    howItWorks:
+      'Snow removal responsibility follows road ownership. PennDOT plows state routes. Chester County plows county roads. Your township or borough plows local streets. Response time varies because these are different crews with different priorities.',
+    contact: 'PennDOT: 1-800-FIX-ROAD for state routes. Your township or borough for local roads.',
+    note: 'PennDOT prioritizes state routes first in major storms, which can leave local roads unplowed longer than residents expect.',
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
 // COMPONENT
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -482,6 +720,8 @@ export default function HowItWorksClient() {
   const [activeCategoryId, setActiveCategoryId] = useState(null);
   const [activeEntityId, setActiveEntityId] = useState(null);
   const [openPositions, setOpenPositions] = useState(new Set());
+  const [activeServiceId, setActiveServiceId] = useState(null);
+  const [serviceFilter, setServiceFilter] = useState('all');
 
   const activeCategory = CATEGORIES.find((c) => c.id === activeCategoryId);
   const activeEntity = ENTITIES.find((e) => e.id === activeEntityId);
@@ -523,6 +763,20 @@ export default function HowItWorksClient() {
       return next;
     });
   }
+
+  function toggleService(id) {
+    setActiveServiceId((prev) => (prev === id ? null : id));
+  }
+
+  function changeServiceFilter(filterId) {
+    setServiceFilter(filterId);
+    setActiveServiceId(null);
+  }
+
+  const visibleServices =
+    serviceFilter === 'all'
+      ? SERVICES
+      : SERVICES.filter((s) => s.tags.includes(serviceFilter));
 
   return (
     <main className={styles.main}>
@@ -738,6 +992,101 @@ export default function HowItWorksClient() {
         )}
 
       </div>
+
+      {/* ── Who's Responsible Section ── */}
+      <section className={styles.srvSection} aria-labelledby="srv-heading">
+        <div className={styles.srvSectionInner}>
+          <h2 className={styles.srvSectionHeading} id="srv-heading">
+            Who&#8217;s responsible for what?
+          </h2>
+          <p className={styles.srvSectionIntro}>
+            Tap any service to see who handles it and how to get help.
+          </p>
+
+          {/* Filter buttons */}
+          <div
+            className={styles.srvFilters}
+            role="group"
+            aria-label="Filter by government level"
+          >
+            {FILTERS.map((f) => (
+              <button
+                key={f.id}
+                className={`${styles.srvFilterBtn} ${
+                  serviceFilter === f.id ? styles.srvFilterActive : ''
+                }`}
+                onClick={() => changeServiceFilter(f.id)}
+                aria-pressed={serviceFilter === f.id}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Service cards */}
+          <div className={styles.srvList}>
+            {visibleServices.map((svc) => {
+              const isOpen = activeServiceId === svc.id;
+              return (
+                <div key={svc.id} className={styles.srvCard}>
+                  <button
+                    className={styles.srvToggle}
+                    onClick={() => toggleService(svc.id)}
+                    aria-expanded={isOpen}
+                  >
+                    <span className={styles.srvIcon} aria-hidden="true">
+                      {svc.icon}
+                    </span>
+                    <div className={styles.srvInfo}>
+                      <div className={styles.srvName}>{svc.name}</div>
+                      <div className={styles.srvTags}>
+                        {svc.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className={`${styles.srvTag} ${TAG_CONFIG[tag].cls}`}
+                          >
+                            {TAG_CONFIG[tag].label}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <span
+                      className={`${styles.srvArrow} ${isOpen ? styles.srvArrowOpen : ''}`}
+                      aria-hidden="true"
+                    >
+                      &#9662;
+                    </span>
+                  </button>
+
+                  <div
+                    className={`${styles.srvBody} ${isOpen ? styles.srvBodyOpen : ''}`}
+                  >
+                    <div className={styles.srvBodyInner}>
+                      <div className={styles.srvBodyContent}>
+                        <div className={styles.srvDetail}>
+                          <div className={styles.srvDetailLabel}>Responsible party</div>
+                          <p className={styles.srvDetailText}>{svc.responsible}</p>
+                        </div>
+                        <div className={styles.srvDetail}>
+                          <div className={styles.srvDetailLabel}>How it works</div>
+                          <p className={styles.srvDetailText}>{svc.howItWorks}</p>
+                        </div>
+                        <div className={styles.srvDetail}>
+                          <div className={styles.srvDetailLabel}>Who to contact</div>
+                          <p className={styles.srvDetailText}>{svc.contact}</p>
+                        </div>
+                        {svc.note && (
+                          <div className={styles.srvNote}>{svc.note}</div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
       {/* ── Footer ── */}
       <footer className={styles.footer}>
