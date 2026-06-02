@@ -646,8 +646,18 @@
   font-size: 1rem;
   color: #666;
   font-weight: 300;
-  margin-bottom: 2rem;
+  margin-bottom: 0.6rem;
   line-height: 1.6;
+}
+
+.srvDisclaimer {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: #999;
+  font-weight: 300;
+  font-style: italic;
+  margin-bottom: 1.75rem;
+  line-height: 1.55;
 }
 
 /* Filter buttons */

@@ -946,6 +946,9 @@ export default function HowItWorksClient() {
           <p className={styles.srvSectionIntro}>
             Tap any service to see who handles it and how to get help.
           </p>
+          <p className={styles.srvDisclaimer}>
+            This covers the most common services residents interact with &mdash; it is not a comprehensive list of every government function.
+          </p>
 
           {/* Filter buttons */}
           <div
