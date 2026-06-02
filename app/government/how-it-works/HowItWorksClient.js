@@ -518,61 +518,27 @@ const SERVICES = [
     contact: 'Your elected local Tax Collector.',
     note: 'School taxes are the largest portion of most residents\u2019 property tax bills \u2014 typically over 60% of the total.',
   },
-  // ── Borough ──
+  // ── Borough & Township ──
   {
-    id: 'borough-police',
+    id: 'local-police',
     icon: '\uD83D\uDE94',
-    name: 'Borough police',
-    tags: ['borough'],
-    responsible: 'Mayor / Police Chief',
+    name: 'Local police',
+    tags: ['borough', 'township', 'county'],
+    responsible: 'Mayor (Borough) / Board of Supervisors (townships)',
     howItWorks:
-      'West Chester Borough has its own police department, directed by the Mayor through the Chief of Police. The Mayor\u2019s primary executive role is overseeing the police department \u2014 all other Borough departments report to the Borough Manager appointed by Council.',
-    contact: 'West Chester Borough Police (non-emergency): 610-696-7797',
-    note: 'East Bradford Township contracts with the Borough for police services under a municipal agreement.',
+      'West Chester Borough has its own police department directed by the Mayor. Most townships have their own departments or share one \u2014 West Goshen has its own, Westtown and East Goshen share the Westtown-East Goshen Police Department, and East Bradford contracts with West Chester Borough. The County Sheriff handles court security and civil process, not day-to-day policing.',
+    contact: '911 for emergencies. Your borough or township non-emergency line for local issues.',
+    note: 'Police coverage varies by municipality \u2014 check with your specific township.',
   },
   {
-    id: 'borough-zoning',
+    id: 'zoning-permits',
     icon: '\uD83C\uDFD7\uFE0F',
-    name: 'Zoning & permits (Borough)',
-    tags: ['borough'],
-    responsible: 'Borough of West Chester',
+    name: 'Zoning & permits',
+    tags: ['borough', 'township'],
+    responsible: 'Your municipality (borough or township)',
     howItWorks:
-      'Zoning ordinances, building permits, and land use decisions within the Borough are set and issued by Borough Council and staff.',
-    contact: 'Borough Planning & Zoning: 610-696-4971',
-    note: 'Zoning rules vary significantly between the Borough and surrounding townships.',
-  },
-  {
-    id: 'borough-trash',
-    icon: '\u267B\uFE0F',
-    name: 'Trash & recycling (Borough)',
-    tags: ['borough'],
-    responsible: 'Borough of West Chester',
-    howItWorks:
-      'Trash and recycling collection in the Borough is managed through contracts with private haulers, overseen by Borough staff.',
-    contact: 'Borough Public Works: 610-696-4971',
-    note: null,
-  },
-  // ── Township ──
-  {
-    id: 'township-police',
-    icon: '\uD83D\uDE94',
-    name: 'Township police',
-    tags: ['township'],
-    responsible: 'Board of Supervisors',
-    howItWorks:
-      'Most townships have their own police departments or share one. West Goshen has its own department. Westtown and East Goshen share the Westtown-East Goshen Police Department. Some townships contract with other agencies. The Board of Supervisors oversees the police chief.',
-    contact: 'Your township\u2019s non-emergency police line.',
-    note: 'Police coverage and structure varies across the townships. Check with your specific township.',
-  },
-  {
-    id: 'township-zoning',
-    icon: '\uD83C\uDFD7\uFE0F',
-    name: 'Zoning & permits (townships)',
-    tags: ['township'],
-    responsible: 'Board of Supervisors',
-    howItWorks:
-      'Each township sets its own zoning ordinances and issues its own building permits. Supervisors approve major land use decisions. Zoning rules vary significantly from township to township.',
-    contact: 'Your township\u2019s zoning office.',
+      'Zoning ordinances and building permits are set and issued by your municipality \u2014 the borough or township where your property is located. Each municipality has its own zoning map and code. What\u2019s permitted in one township may not be permitted in another.',
+    contact: 'West Chester Borough Planning & Zoning: 610-696-4971. For townships, contact your township office directly.',
     note: null,
   },
   {
@@ -587,14 +553,14 @@ const SERVICES = [
     note: null,
   },
   {
-    id: 'township-trash',
+    id: 'trash-recycling',
     icon: '\u267B\uFE0F',
-    name: 'Trash & recycling (townships)',
-    tags: ['township'],
-    responsible: 'Board of Supervisors',
+    name: 'Trash & recycling',
+    tags: ['borough', 'township'],
+    responsible: 'Your municipality (borough or township)',
     howItWorks:
-      'Trash and recycling in townships is managed by each township, typically through contracts with private haulers. Programs and accepted materials vary by township.',
-    contact: 'Your township\u2019s municipal office.',
+      'Trash and recycling collection is managed by your borough or township, typically through contracts with private haulers. Programs, pickup schedules, and accepted materials vary by municipality.',
+    contact: 'Your township or borough public works department.',
     note: null,
   },
   {
