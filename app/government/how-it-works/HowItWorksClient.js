@@ -503,7 +503,7 @@ const SERVICES = [
     tags: ['school'],
     responsible: 'WCASD Board of Education',
     howItWorks:
-      'Public K-12 education across all 8 municipalities is entirely the responsibility of WCASD. The elected nine-member Board sets policy, approves the ~$334M budget, and hires the Superintendent. Individual municipalities have no authority over schools.',
+      'Public K-12 education across all 8 municipalities is entirely the responsibility of WCASD. The elected nine-member Board sets policy, approves a multi-hundred-million dollar annual budget, and hires the Superintendent. Individual municipalities have no authority over schools.',
     contact: 'WCASD district office: 484-266-1000',
     note: 'The school board is elected by region \u2014 all WCASD residents vote in school board elections regardless of which municipality they live in.',
   },
@@ -514,7 +514,7 @@ const SERVICES = [
     tags: ['school', 'county', 'borough', 'township'],
     responsible: 'WCASD / Chester County / Your municipality',
     howItWorks:
-      'You receive three separate property tax bills from three different taxing bodies \u2014 your municipality (borough or township), Chester County, and WCASD. Each is set independently by its governing body and collected separately. WCASD taxes are typically the largest portion \u2014 over 60% of most residents\u2019 total bill. WCASD has the lowest millage rates in both Chester and Delaware Counties. Chester County\u2019s 2025 rate is 5.164 mills. Municipal rates vary by municipality.',
+      'You receive three separate property tax bills from three different taxing bodies \u2014 your municipality (borough or township), Chester County, and WCASD. Each is set independently by its governing body and collected separately. School district taxes are typically the largest portion of a resident\u2019s total property tax bill. Chester County sets its own millage rate annually. Municipal rates vary by municipality.',
     contact: 'Your elected local Tax Collector for municipal and school taxes. Chester County Treasurer: 610-344-6370 for county taxes.',
     note: 'The three bills arrive at different times of year from different collectors. They are completely separate obligations.',
   },
@@ -548,7 +548,7 @@ const SERVICES = [
     tags: ['township', 'county'],
     responsible: 'Board of Supervisors / Chester County',
     howItWorks:
-      'Township parks and recreation programs are operated by each township. Chester County also operates regional parks and trails. East Bradford is notable for preserving over 60% of its land as open space.',
+      'Township parks and recreation programs are operated by each township. Chester County also operates regional parks and trails. East Bradford is notable for its significant open space preservation efforts.',
     contact: 'Your township\u2019s parks department. Chester County Parks: 610-344-6415.',
     note: null,
   },
