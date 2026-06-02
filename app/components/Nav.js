@@ -28,6 +28,8 @@ const NAV_ITEMS = [
   {
     label: 'Government',
     items: [
+      { label: 'How Local Government Works', href: '/government/how-it-works' },
+      { divider: true },
       { label: 'Borough of West Chester', href: '#' },
       { label: 'WCASD', href: '#' },
       { label: 'East Goshen Township', href: '#' },
