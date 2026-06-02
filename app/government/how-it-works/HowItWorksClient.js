@@ -508,15 +508,15 @@ const SERVICES = [
     note: 'The school board is elected by region \u2014 all WCASD residents vote in school board elections regardless of which municipality they live in.',
   },
   {
-    id: 'school-property-taxes',
+    id: 'property-taxes',
     icon: '\uD83D\uDCCB',
-    name: 'School property taxes',
-    tags: ['school'],
-    responsible: 'WCASD / Tax Collector',
+    name: 'Property taxes',
+    tags: ['school', 'county', 'borough', 'township'],
+    responsible: 'WCASD / Chester County / Your municipality',
     howItWorks:
-      'Your school district portion of the property tax bill is collected by your elected local Tax Collector. WCASD sets the millage rate each year when it adopts its budget. WCASD has the lowest millage rates in both Chester and Delaware Counties.',
-    contact: 'Your elected local Tax Collector.',
-    note: 'School taxes are the largest portion of most residents\u2019 property tax bills \u2014 typically over 60% of the total.',
+      'You receive three separate property tax bills from three different taxing bodies \u2014 your municipality (borough or township), Chester County, and WCASD. Each is set independently by its governing body and collected separately. WCASD taxes are typically the largest portion \u2014 over 60% of most residents\u2019 total bill. WCASD has the lowest millage rates in both Chester and Delaware Counties. Chester County\u2019s 2025 rate is 5.164 mills. Municipal rates vary by municipality.',
+    contact: 'Your elected local Tax Collector for municipal and school taxes. Chester County Treasurer: 610-344-6370 for county taxes.',
+    note: 'The three bills arrive at different times of year from different collectors. They are completely separate obligations.',
   },
   // ── Borough & Township ──
   {
@@ -641,39 +641,17 @@ const SERVICES = [
     contact: 'Chester County Library: 610-280-2600',
     note: null,
   },
-  {
-    id: 'county-taxes',
-    icon: '\uD83D\uDCCB',
-    name: 'County property taxes',
-    tags: ['county'],
-    responsible: 'County Commissioners / Treasurer',
-    howItWorks:
-      'Chester County sets its own property tax millage rate (5.164 mills for 2025). The county tax bill is separate from your municipal and school district bills, collected by the Chester County Treasurer.',
-    contact: 'Chester County Treasurer: 610-344-6370',
-    note: 'Chester County has maintained a AAA bond rating from all three major rating agencies \u2014 the only county in Pennsylvania to do so.',
-  },
   // ── State ──
   {
-    id: 'state-roads',
+    id: 'roads-snow',
     icon: '\uD83D\uDEE3\uFE0F',
-    name: 'State roads & highways',
-    tags: ['state'],
-    responsible: 'PennDOT',
-    howItWorks:
-      'PennDOT owns and maintains state routes including Route 202, Route 30, Route 926, and other numbered highways. County and local governments handle roads they own separately.',
-    contact: 'PennDOT issue reporting: 1-800-FIX-ROAD',
-    note: 'Many residents don\u2019t know that the road in front of their house may be owned by a different government than their township. PennDOT, the county, and the township each maintain different roads.',
-  },
-  {
-    id: 'snow-removal',
-    icon: '\u2744\uFE0F',
-    name: 'Snow removal',
+    name: 'Roads & snow removal',
     tags: ['state', 'county', 'township', 'borough'],
-    responsible: 'PennDOT / County / Township or Borough',
+    responsible: 'PennDOT / Chester County / Your municipality',
     howItWorks:
-      'Snow removal responsibility follows road ownership. PennDOT plows state routes. Chester County plows county roads. Your township or borough plows local streets. Response time varies because these are different crews with different priorities.',
+      'Road maintenance and snow removal responsibility follows road ownership \u2014 and there are three layers. PennDOT owns and maintains state routes like Route 202, Route 30, and Route 926. Chester County maintains county roads. Your township or borough maintains local streets. Snow removal follows the same ownership \u2014 which is why some roads get plowed faster than others during storms.',
     contact: 'PennDOT: 1-800-FIX-ROAD for state routes. Your township or borough for local roads.',
-    note: 'PennDOT prioritizes state routes first in major storms, which can leave local roads unplowed longer than residents expect.',
+    note: 'Many residents don\u2019t realize the road in front of their house may be owned by a different government than their township. PennDOT prioritizes state routes first in major storms.',
   },
 ];
 
