@@ -1,0 +1,457 @@
+.main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--navy);
+  padding: 4rem 2rem 3.5rem;
+  border-bottom: 2px solid var(--gold);
+}
+
+.heroInner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.25rem;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.intro {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: rgba(248, 246, 240, 0.75);
+  font-weight: 300;
+  max-width: 640px;
+}
+
+/* ── CONTENT ── */
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 5rem;
+  flex: 1;
+  width: 100%;
+}
+
+.sectionHeading {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid var(--gold);
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #444;
+  margin-bottom: 1.25rem;
+  max-width: 620px;
+}
+
+/* ── COUNTY NOTE ── */
+.countyNote {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: var(--off-white);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 2px 2px 0;
+}
+
+.countyNoteLabel {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+}
+
+.countyNoteBody {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #444;
+  margin-bottom: 1.25rem;
+  max-width: 560px;
+}
+
+/* ── OUTBOUND LINK BUTTON ── */
+.linkBtn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 1.25rem;
+  border: 1.5px solid var(--gold);
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--navy);
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.linkBtn:hover {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+/* ── FILTERS ── */
+.filterBar {
+  margin-bottom: 2.5rem;
+}
+
+.filterBarHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.filterBarTitle {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(10, 25, 49, 0.12);
+  flex: 1;
+}
+
+.clearFilters {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(10, 25, 49, 0.45);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s;
+  white-space: nowrap;
+}
+
+.clearFilters:hover {
+  color: var(--navy);
+}
+
+.filterSection {
+  margin-bottom: 1.25rem;
+}
+
+.filterSection:last-child {
+  margin-bottom: 0;
+}
+
+.filterLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(10, 25, 49, 0.5);
+  margin-bottom: 0.6rem;
+}
+
+.filterGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filterBtn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 1rem;
+  background: var(--off-white);
+  border: 1.5px solid rgba(10, 25, 49, 0.18);
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(10, 25, 49, 0.55);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.filterBtn:hover {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.filterBtnActive {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--gold);
+}
+
+.filterBtnActive:hover {
+  background: var(--navy-light);
+  border-color: var(--navy-light);
+  color: var(--gold);
+}
+
+.noResults {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #777;
+  font-style: italic;
+  padding: 2.5rem 0;
+  text-align: center;
+  border-top: 1px solid rgba(10, 25, 49, 0.1);
+  border-bottom: 1px solid rgba(10, 25, 49, 0.1);
+  margin-bottom: 2rem;
+}
+
+/* ── BALLOT MEASURES ── */
+.electionGroup {
+  margin-bottom: 3rem;
+}
+
+.electionGroupLabel {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(10, 25, 49, 0.12);
+}
+
+.measure {
+  background: var(--off-white);
+  border: 1.5px solid rgba(10, 25, 49, 0.12);
+  border-radius: 2px;
+  padding: 1.75rem;
+}
+
+.measureMunicipality {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.measureTitle {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.25;
+  margin-bottom: 1.5rem;
+}
+
+.measureField {
+  margin-bottom: 1.25rem;
+}
+
+.measureFieldLabel {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(10, 25, 49, 0.5);
+  margin-bottom: 0.35rem;
+}
+
+.measureFieldText {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--navy);
+  margin: 0;
+}
+
+.outcomeGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 540px) {
+  .outcomeGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.outcomeBox {
+  padding: 1rem 1.1rem;
+  background: var(--white);
+  border-radius: 2px;
+  border-left: 3px solid;
+}
+
+.outcomeYes {
+  border-left-color: #256641;
+}
+
+.outcomeNo {
+  border-left-color: #B83A11;
+}
+
+.outcomeTag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.outcomeYes .outcomeTag {
+  color: #256641;
+}
+
+.outcomeNo .outcomeTag {
+  color: #B83A11;
+}
+
+.outcomeText {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #444;
+  margin: 0;
+}
+
+.measureSource {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #666;
+  margin: 0;
+}
+
+.measureSourceLink {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+}
+
+.measureSourceLink:hover {
+  color: var(--navy);
+}
+
+.pageNote {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: #999;
+  font-style: italic;
+  margin-top: 2rem;
+  max-width: 620px;
+}
+
+@media (max-width: 600px) {
+  .measure {
+    padding: 1.25rem;
+  }
+}
+
+/* ── FOOTER ── */
+.footer {
+  background: var(--navy);
+  border-top: 1px solid rgba(201, 168, 76, 0.3);
+  padding: 1.5rem 2rem;
+}
+
+.footerInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer span {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: rgba(248, 246, 240, 0.4);
+  letter-spacing: 0.05em;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footerLinks a {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(248, 246, 240, 0.4);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footerLinks a:hover {
+  color: var(--gold);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .hero {
+    padding: 3rem 1.25rem 2.5rem;
+  }
+
+  .content {
+    padding: 2.5rem 1rem 4rem;
+  }
+
+  .filterBtn {
+    font-size: 0.62rem;
+    padding: 0 0.85rem;
+  }
+
+  .footerInner {
+    flex-direction: column;
+    text-align: center;
+  }
+}
