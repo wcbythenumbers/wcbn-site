@@ -21,6 +21,12 @@ const ROLE_INFO = {
     keyDecisions:
       'collection procedures, payment plans for delinquent taxpayers, referral of delinquent accounts for legal action.',
   },
+  'Board of Auditors': {
+    description:
+      "An independently elected board responsible for auditing the township's financial records each year. Auditors review township accounts, verify expenditures, and certify that public funds were spent appropriately. They operate independently of the Board of Supervisors. Note: some townships use hired accounting firms instead of elected auditors — check with your township.",
+    keyDecisions:
+      "approval or rejection of the township's annual financial audit, flagging discrepancies or irregularities in township spending.",
+  },
   'Mayor (Borough of West Chester)': {
     description:
       "The Borough's chief executive and the only elected official with direct authority over the Police Department. The Mayor directs the Police Chief, presides over Borough Council meetings, and serves as the public face of Borough government. The Mayor does not vote on Borough Council legislation.",
@@ -112,14 +118,11 @@ const ROLE_INFO = {
   },
 };
 
-const DELAWARE_PLACEHOLDER_NOTE =
-  'Role descriptions for Delaware County elected positions will be added once current officeholders are verified. For information on Delaware County government, visit delcopa.gov.';
+/* Names that mark an unverified officeholder — rendered muted/italic with a Verify link. */
+const PLACEHOLDER_NAMES = ['TBD', 'Not confirmed'];
+/* Term values that mark unknown/unpublished terms — rendered muted/italic. */
+const UNKNOWN_TERMS = ['TBD', 'Not confirmed', 'Not published'];
 
-/*
- * Each official: { name, position, term, href, note }
- * A name of 'TBD' renders as an unverified placeholder — muted, italic, unlinked,
- * with a "Verify" link out to the entity's own page instead.
- */
 const ENTITIES = [
   {
     id: 'wcasd',
@@ -131,20 +134,20 @@ const ENTITIES = [
       {
         title: 'Board President (School Board)',
         officials: [
-          { name: 'Daryl Durnell', position: 'President', term: 'TBD', href: 'https://wcasd.net/school-board/meet-the-board' },
+          { name: 'Daryl Durnell', position: 'President', tag: 'Region 2', term: 'Dec 2027', href: 'https://www.wcasd.net/school-board' },
         ],
       },
       {
         title: 'School Board Director',
         officials: [
-          { name: 'Gary Bevilacqua', position: 'Vice President', term: 'TBD', href: 'https://wcasd.net/school-board/meet-the-board' },
-          { name: 'Karen Fleming', position: 'Director', term: 'TBD', href: 'https://wcasd.net/school-board/meet-the-board' },
-          { name: 'Dr. Beth Campbell', position: 'Director', term: 'TBD', href: 'https://wcasd.net/school-board/meet-the-board' },
-          { name: 'Dr. Laura Detre', position: 'Director', term: 'TBD', href: 'https://wcasd.net/school-board/meet-the-board' },
-          { name: 'Katy Frey', position: 'Director', term: 'TBD', href: 'https://wcasd.net/school-board/meet-the-board' },
-          { name: 'Ramon Jackson', position: 'Director', term: 'TBD', href: 'https://wcasd.net/school-board/meet-the-board' },
-          { name: 'Ashley Lahm', position: 'Director', term: 'TBD', href: 'https://wcasd.net/school-board/meet-the-board' },
-          { name: 'Jewell Parkinson', position: 'Director', term: 'TBD', href: 'https://wcasd.net/school-board/meet-the-board' },
+          { name: 'Gary Bevilacqua', position: 'Vice President', tag: 'Region 3', term: 'Dec 2027', href: 'https://www.wcasd.net/school-board' },
+          { name: 'Karen Fleming', position: 'Director', tag: 'Region 2', term: 'Dec 2029', href: 'https://www.wcasd.net/school-board' },
+          { name: 'Dr. Beth Campbell', position: 'Director', tag: 'Region 3', term: 'Dec 2029', href: 'https://www.wcasd.net/school-board' },
+          { name: 'Dr. Laura Detre', position: 'Director', tag: 'Region 3', term: 'Dec 2029', href: 'https://www.wcasd.net/school-board' },
+          { name: 'Katy Frey', position: 'Director', tag: 'Region 1', term: 'Dec 2027', href: 'https://www.wcasd.net/school-board' },
+          { name: 'Ramon Jackson', position: 'Director', tag: 'Region 1', term: 'Dec 2027', href: 'https://www.wcasd.net/school-board' },
+          { name: 'Ashley Lahm', position: 'Director', tag: 'Region 2', term: 'Dec 2027', href: 'https://www.wcasd.net/school-board' },
+          { name: 'Jewell Parkinson', position: 'Director', tag: 'Region 1', term: 'Dec 2029', href: 'https://www.wcasd.net/school-board' },
         ],
       },
     ],
@@ -159,25 +162,37 @@ const ENTITIES = [
       {
         title: 'Mayor (Borough of West Chester)',
         officials: [
-          { name: 'Lillian L. DeBaptiste', position: 'Mayor', term: 'TBD — verify at west-chester.com/227', href: 'https://west-chester.com/227' },
+          { name: 'Lillian L. DeBaptiste', position: 'Mayor', term: '~January 2030', href: 'https://www.west-chester.com/213/Mayor' },
         ],
       },
       {
         title: 'Borough Council Member',
         officials: [
-          { name: 'Jerry Szczepaniak', position: 'Ward 1 Council Member', term: 'Expires Dec 31, 2029', href: 'https://west-chester.com/227' },
-          { name: 'Bryan Travis', position: 'Ward 2 Council Member', term: 'Expires Dec 31, 2027', href: 'https://west-chester.com/227' },
-          { name: 'Brian McGinnis', position: 'Ward 3 Council Member', term: 'Expires Dec 31, 2029', href: 'https://west-chester.com/227' },
-          { name: 'Nicole Scimone', position: 'Ward 4 Council Member', term: 'Expires Dec 31, 2027', href: 'https://west-chester.com/227' },
-          { name: 'Stephen Marvin', position: 'Ward 5 Council Member', term: 'TBD', href: 'https://west-chester.com/227' },
-          { name: 'Bernie Flynn', position: 'Ward 6 Council Member', term: 'Expires Dec 31, 2027', href: 'https://west-chester.com/227' },
-          { name: 'Lisa Kearns', position: 'Ward 7 Council Member', term: 'Expires Dec 31, 2029', href: 'https://west-chester.com/227' },
-        ],
-      },
-      {
-        title: 'Tax Collector',
-        officials: [
-          { name: 'TBD', position: 'Tax Collector', term: 'TBD', href: 'https://west-chester.com' },
+          { name: 'Jerry Szczepaniak', position: 'Ward 1 Council Member', term: '~2029', href: 'https://www.west-chester.com/227' },
+          {
+            name: 'Bryan Travis',
+            position: 'Ward 2 Council Member',
+            term: '~2027',
+            href: 'https://www.west-chester.com/227',
+            infoNote: 'To verify, contact West Chester Borough at 610-696-4971 or visit west-chester.com/227',
+          },
+          { name: 'Brian J. McGinnis', position: 'Ward 3 Council Member', term: '~2029', href: 'https://www.west-chester.com/227' },
+          {
+            name: 'Nicole Scimone',
+            position: 'Ward 4 Council Member',
+            term: '~2027',
+            href: 'https://www.west-chester.com/227',
+            infoNote: 'To verify, contact West Chester Borough at 610-696-4971 or visit west-chester.com/227',
+          },
+          { name: 'Stephen Marvin', position: 'Ward 5 Council Member', term: '~2029', href: 'https://www.west-chester.com/227' },
+          {
+            name: 'Bernie Flynn',
+            position: 'Ward 6 Council Member',
+            term: '~2027',
+            href: 'https://www.west-chester.com/227',
+            infoNote: 'To verify, contact West Chester Borough at 610-696-4971 or visit west-chester.com/227',
+          },
+          { name: 'Lisa Kearns', position: 'Ward 7 Council Member', term: '~2029', href: 'https://www.west-chester.com/227' },
         ],
       },
     ],
@@ -191,17 +206,25 @@ const ENTITIES = [
       {
         title: 'Board of Supervisors',
         officials: [
-          { name: 'Cody Bright', position: 'Chair', term: 'TBD', href: 'https://eastgoshen.org/contact-us' },
-          { name: 'Barbara Emery', position: 'Vice Chair', term: 'TBD', href: 'https://eastgoshen.org/contact-us' },
-          { name: 'Ann Duffield', position: 'Supervisor', term: 'TBD', href: 'https://eastgoshen.org/contact-us' },
-          { name: 'Larry Massaro', position: 'Supervisor', term: 'TBD', href: 'https://eastgoshen.org/contact-us' },
-          { name: 'Peter Hicks', position: 'Supervisor', term: 'TBD', href: 'https://eastgoshen.org/contact-us' },
+          { name: 'Cody Bright', position: 'Chair', term: '2027', href: 'https://eastgoshen.org/boards/board-of-supervisors/' },
+          { name: 'Barbara Emery', position: 'Vice Chair', term: '2029', href: 'https://eastgoshen.org/boards/board-of-supervisors/' },
+          { name: 'Peter Hicks', position: 'Supervisor', term: '2029', href: 'https://eastgoshen.org/boards/board-of-supervisors/' },
+          { name: 'Ann Duffield', position: 'Supervisor', term: '2031', href: 'https://eastgoshen.org/boards/board-of-supervisors/' },
+          { name: 'Larry Massaro', position: 'Supervisor', term: '2031', href: 'https://eastgoshen.org/boards/board-of-supervisors/' },
         ],
       },
       {
         title: 'Tax Collector',
         officials: [
-          { name: 'TBD', position: 'Tax Collector', term: 'TBD', href: 'https://eastgoshen.org' },
+          { name: 'Carl W. Griffin', position: 'Tax Collector', term: '~2029', href: 'https://eastgoshen.org' },
+        ],
+      },
+      {
+        title: 'Board of Auditors',
+        officials: [
+          { name: 'Karen deSimone', position: 'Auditor', term: '2027', href: 'https://eastgoshen.org/boards/board-of-auditors/' },
+          { name: 'Diana Masha', position: 'Auditor', term: '2029', href: 'https://eastgoshen.org/boards/board-of-auditors/' },
+          { name: 'Clara Thorne', position: 'Auditor', term: '2031', href: 'https://eastgoshen.org/boards/board-of-auditors/' },
         ],
       },
     ],
@@ -209,21 +232,41 @@ const ENTITIES = [
   {
     id: 'west-goshen',
     name: 'West Goshen Township',
-    description: 'Three elected supervisors.',
+    description: 'Five elected supervisors.',
     site: 'westgoshen.org',
     positionGroups: [
       {
         title: 'Board of Supervisors',
         officials: [
-          { name: 'Shaun Walsh', position: 'Chair', term: 'TBD', href: 'https://westgoshen.org' },
-          { name: 'John Hellmann', position: 'Vice Chair', term: 'TBD', href: 'https://westgoshen.org' },
-          { name: 'Ashley Gagné', position: 'Supervisor', term: 'TBD', href: 'https://westgoshen.org' },
+          { name: 'Ashley Gagné', position: 'Chair', term: '2031', href: 'https://westgoshen.org/158/Board-of-Supervisors' },
+          { name: 'Tinamarie Smith', position: 'Vice Chair', term: '2027', href: 'https://westgoshen.org/158/Board-of-Supervisors' },
+          { name: 'Shaun Walsh', position: 'Supervisor', term: '2029', href: 'https://westgoshen.org/158/Board-of-Supervisors' },
+          { name: 'John Hellmann', position: 'Supervisor', term: '2027', href: 'https://westgoshen.org/158/Board-of-Supervisors' },
+          { name: 'Nate Wolman', position: 'Supervisor', term: '2029', href: 'https://westgoshen.org/158/Board-of-Supervisors' },
         ],
       },
       {
         title: 'Tax Collector',
         officials: [
-          { name: 'TBD', position: 'Tax Collector', term: 'TBD', href: 'https://westgoshen.org' },
+          { name: 'David Kahl', position: 'Tax Collector', term: '~2029', href: 'https://westgoshen.org/169/Tax-Collector' },
+        ],
+      },
+      {
+        title: 'Board of Auditors',
+        officials: [
+          { name: 'Carter Membrino', position: 'Auditor', term: 'Not confirmed', href: 'https://westgoshen.org/157/Boards-Commissions' },
+          {
+            name: 'Not confirmed',
+            position: 'Auditor (seat 2)',
+            href: 'https://westgoshen.org',
+            infoNote: 'To verify, contact West Goshen Township at westgoshen.org',
+          },
+          {
+            name: 'Not confirmed',
+            position: 'Auditor (seat 3)',
+            href: 'https://westgoshen.org',
+            infoNote: 'To verify, contact West Goshen Township at westgoshen.org',
+          },
         ],
       },
     ],
@@ -237,15 +280,23 @@ const ENTITIES = [
       {
         title: 'Board of Supervisors',
         officials: [
-          { name: 'TBD', position: 'Chair', term: 'TBD', href: 'https://eastbradford.org', note: 'Verify current chair at eastbradford.org.' },
-          { name: 'Debbie Maynard', position: 'Supervisor', term: 'Expires Dec 31, 2031', href: 'https://eastbradford.org' },
-          { name: 'Bruce W. Laverty', position: 'Supervisor', term: 'TBD', href: 'https://eastbradford.org' },
+          { name: 'Jeff Huckabee', position: 'Chair', term: 'Not confirmed', href: 'https://www.eastbradford.org' },
+          { name: 'Bruce W. Laverty', position: 'Vice Chair', term: 'Dec 31, 2027', href: 'https://www.eastbradford.org' },
+          { name: 'Debbie Maynard', position: 'Supervisor', term: 'Dec 31, 2031', href: 'https://www.eastbradford.org' },
         ],
       },
       {
         title: 'Tax Collector',
         officials: [
-          { name: 'TBD', position: 'Tax Collector', term: 'TBD', href: 'https://eastbradford.org' },
+          { name: 'David Cambridge', position: 'Tax Collector', term: 'Dec 31, 2029', href: 'https://www.eastbradford.org/180/Board-of-Auditors-Tax-Collector' },
+        ],
+      },
+      {
+        title: 'Board of Auditors',
+        officials: [
+          { name: 'James VanderWaal', position: 'Auditor', term: 'Dec 31, 2027', href: 'https://www.eastbradford.org/180/Board-of-Auditors-Tax-Collector' },
+          { name: 'Bill Phifer', position: 'Auditor', term: 'Dec 31, 2029', href: 'https://www.eastbradford.org/180/Board-of-Auditors-Tax-Collector' },
+          { name: 'Richard ("Rick") Davis', position: 'Auditor', term: 'Dec 31, 2031', href: 'https://www.eastbradford.org/180/Board-of-Auditors-Tax-Collector' },
         ],
       },
     ],
@@ -255,20 +306,33 @@ const ENTITIES = [
     name: 'West Whiteland Township',
     description: 'Three elected supervisors serving six-year staggered terms.',
     site: 'westwhiteland.org',
-    note: 'One seat was vacant as of October 2025.',
     positionGroups: [
       {
         title: 'Board of Supervisors',
         officials: [
-          { name: 'Rajesh Kumbhardare', position: 'Chair', term: 'TBD', href: 'https://westwhiteland.org' },
-          { name: 'Brian Dunn', position: 'Vice Chair', term: 'TBD', href: 'https://westwhiteland.org' },
-          { name: 'TBD', position: 'Supervisor', term: 'TBD', href: 'https://westwhiteland.org', note: 'Verify whether the third seat has been filled.' },
+          { name: 'Brian Dunn', position: 'Chair', term: 'Dec 31, 2027', href: 'https://westwhiteland.org/165/Board-of-Supervisors' },
+          { name: 'Rajesh Kumbhardare', position: 'Vice Chair', term: 'Dec 31, 2031', href: 'https://westwhiteland.org/165/Board-of-Supervisors' },
+          {
+            name: 'Libby Madarasz',
+            position: 'Supervisor',
+            term: 'Dec 31, 2027',
+            href: 'https://westwhiteland.org/165/Board-of-Supervisors',
+            note: "Filled vacancy left by Jo Ann Kelton's October 2025 resignation.",
+          },
         ],
       },
       {
         title: 'Tax Collector',
         officials: [
-          { name: 'TBD', position: 'Tax Collector', term: 'TBD', href: 'https://westwhiteland.org' },
+          { name: 'Arati Joshi', position: 'Tax Collector', term: '~2029', href: 'https://westwhiteland.org' },
+        ],
+      },
+      {
+        title: 'Board of Auditors',
+        officials: [
+          { name: 'Michael Kling', position: 'Chair', term: 'Jan 2, 2030', href: 'https://westwhiteland.org/164/Board-of-Auditors' },
+          { name: 'Deepak Gupta', position: 'Vice Chair', term: 'Jan 5, 2032', href: 'https://westwhiteland.org/164/Board-of-Auditors' },
+          { name: 'Vijay Vinayak Bedekar', position: 'Secretary', term: 'Jan 3, 2028', href: 'https://westwhiteland.org/164/Board-of-Auditors' },
         ],
       },
     ],
@@ -282,15 +346,33 @@ const ENTITIES = [
       {
         title: 'Board of Supervisors',
         officials: [
-          { name: 'Tom Foster', position: 'Chair', term: 'TBD', href: 'https://westtownpa.org/board-of-supervisors' },
-          { name: 'Ed Yost', position: 'Vice Chair', term: 'TBD', href: 'https://westtownpa.org/board-of-supervisors' },
-          { name: 'Jodi Nawrocki', position: 'Supervisor', term: 'TBD', href: 'https://westtownpa.org/board-of-supervisors' },
+          { name: 'Jodi Nawrocki', position: 'Chair', term: '2031', href: 'https://westtownpa.org/board-of-supervisors/' },
+          { name: 'Fred (Frederick) Magner', position: 'Vice Chair', term: '2027', href: 'https://westtownpa.org/board-of-supervisors/' },
+          { name: 'Tom Foster', position: 'Supervisor', term: '2027', href: 'https://westtownpa.org/board-of-supervisors/' },
         ],
       },
       {
         title: 'Tax Collector',
         officials: [
-          { name: 'TBD', position: 'Tax Collector', term: 'TBD', href: 'https://westtownpa.org' },
+          { name: 'Christopher Thomson', position: 'Tax Collector', term: 'Not confirmed', href: 'https://westtownpa.org' },
+        ],
+      },
+      {
+        title: 'Board of Auditors',
+        officials: [
+          { name: 'Jim Hanak', position: 'Auditor', term: 'Not confirmed', href: 'https://westtownpa.org' },
+          {
+            name: 'Not confirmed',
+            position: 'Auditor (seat 2)',
+            href: 'https://westtownpa.org',
+            infoNote: 'To verify, contact Westtown Township at westtownpa.org',
+          },
+          {
+            name: 'Not confirmed',
+            position: 'Auditor (seat 3)',
+            href: 'https://westtownpa.org',
+            infoNote: 'To verify, contact Westtown Township at westtownpa.org',
+          },
         ],
       },
     ],
@@ -304,17 +386,30 @@ const ENTITIES = [
       {
         title: 'Board of Supervisors',
         officials: [
-          { name: 'James Benoit', position: 'Chairman', term: 'TBD', href: 'https://thornburytwp.com' },
-          { name: 'Joseph Lisa', position: 'Vice Chairman', term: 'TBD', href: 'https://thornburytwp.com' },
-          { name: 'TBD', position: 'Supervisor', term: 'TBD', href: 'https://thornburytwp.com' },
-          { name: 'TBD', position: 'Supervisor', term: 'TBD', href: 'https://thornburytwp.com' },
-          { name: 'TBD', position: 'Supervisor', term: 'TBD', href: 'https://thornburytwp.com' },
+          { name: 'James Benoit', position: 'Chairman', term: '2031', href: 'https://www.thornburytwp.com/index.php/board-of-supervisors/' },
+          { name: 'Joseph Lisa', position: 'Vice Chairman', term: 'Not confirmed', href: 'https://www.thornburytwp.com/index.php/board-of-supervisors/' },
+          { name: 'Robert C. Wiggins', position: 'Supervisor', term: '2031', href: 'https://www.thornburytwp.com/index.php/board-of-supervisors/' },
+          { name: 'Paul Manidis', position: 'Supervisor', term: '2029', href: 'https://www.thornburytwp.com/index.php/board-of-supervisors/' },
+          { name: 'Eric C. Burling', position: 'Supervisor', term: 'Not confirmed', href: 'https://www.thornburytwp.com/index.php/board-of-supervisors/' },
         ],
       },
       {
         title: 'Tax Collector',
         officials: [
-          { name: 'TBD', position: 'Tax Collector', term: 'TBD', href: 'https://thornburytwp.com' },
+          { name: 'Audrey E. Hudak', position: 'Tax Collector', term: '2029', href: 'https://www.thornburytwp.com/index.php/taxes/' },
+        ],
+      },
+      {
+        title: 'Board of Auditors',
+        officials: [
+          { name: 'Grace Benoit', position: 'Auditor', term: '2031', href: 'https://www.thornburytwp.com/index.php/taxes/' },
+          { name: 'Joseph J. Spall III', position: 'Auditor', term: 'Not confirmed', href: 'https://www.thornburytwp.com/index.php/taxes/' },
+          {
+            name: 'Not confirmed',
+            position: 'Auditor (seat 3)',
+            href: 'https://www.thornburytwp.com/index.php/taxes/',
+            infoNote: 'To verify, contact Thornbury Township (Chester Co.) at 610-399-8383',
+          },
         ],
       },
     ],
@@ -329,15 +424,23 @@ const ENTITIES = [
       {
         title: 'Board of Supervisors',
         officials: [
-          { name: 'Michael J. Mattson', position: 'Chairman', term: 'TBD', href: 'https://thornbury.org/elected-officials' },
-          { name: 'Sheri L. Perkins', position: 'Vice Chair', term: 'TBD', href: 'https://thornbury.org/elected-officials' },
-          { name: 'Greg DeMarco', position: 'Supervisor', term: 'TBD', href: 'https://thornbury.org/elected-officials' },
+          { name: 'Michael J. Mattson', position: 'Chairman', term: 'Not published', href: 'https://www.thornbury.org/elected-officials' },
+          { name: 'Sheri L. Perkins', position: 'Vice Chair', term: 'Not published', href: 'https://www.thornbury.org/elected-officials' },
+          { name: 'Greg DeMarco', position: 'Supervisor', term: 'Not published', href: 'https://www.thornbury.org/elected-officials' },
         ],
       },
       {
         title: 'Tax Collector',
         officials: [
-          { name: 'TBD', position: 'Tax Collector', term: 'TBD', href: 'https://thornbury.org' },
+          { name: 'Katie Gricco', position: 'Tax Collector', term: 'Not published', href: 'https://www.thornbury.org/elected-officials' },
+        ],
+      },
+      {
+        title: 'Board of Auditors',
+        officials: [
+          { name: 'Albert DeFruscio', position: 'Auditor', term: 'Not published', href: 'https://www.thornbury.org/elected-officials' },
+          { name: 'Elizabeth Stefanide', position: 'Auditor', term: 'Not published', href: 'https://www.thornbury.org/elected-officials' },
+          { name: 'Joyce Price', position: 'Auditor', term: 'Not published', href: 'https://www.thornbury.org/elected-officials' },
         ],
       },
     ],
@@ -352,75 +455,119 @@ const ENTITIES = [
       {
         title: 'County Commissioner (Chester County)',
         officials: [
-          { name: 'Josh Maxwell', position: 'Commissioner (Chair)', term: 'Expires Dec 2027', href: 'https://www.chesco.org/203' },
-          { name: 'Marian Moskowitz', position: 'Commissioner (Vice Chair)', term: 'Expires Dec 2027', href: 'https://www.chesco.org/203' },
-          { name: 'Eric Roe', position: 'Commissioner', term: 'Expires Dec 2027', href: 'https://www.chesco.org/203' },
+          { name: 'Josh Maxwell', position: 'Commissioner (Chair)', tag: 'Democratic', term: '2027', href: 'https://www.chesco.org/203/Commissioners' },
+          { name: 'Marian D. Moskowitz', position: 'Commissioner (Vice Chair)', tag: 'Democratic', term: '2027', href: 'https://www.chesco.org/4364/Marian-D-Moskowitz' },
+          { name: 'Eric M. Roe', position: 'Commissioner', tag: 'Republican', term: '2027', href: 'https://www.chesco.org/5479/Eric-M-Roe' },
         ],
       },
       {
         title: 'District Attorney',
         officials: [
-          { name: 'Chris de Barrena-Sarobe', position: 'District Attorney', term: 'Expires Dec 2027', href: 'https://www.chesco.org/da' },
+          { name: 'Chris de Barrena-Sarobe', position: 'District Attorney', tag: 'Democratic', term: '2027', href: 'https://www.chesco.org/5480/District-Attorney-Chris-de-Barrena-Sarob' },
         ],
       },
       {
         title: 'Sheriff',
         officials: [
-          { name: 'Kevin Dykes', position: 'Sheriff', term: 'Expires Dec 2027', href: 'https://www.chesco.org/sheriff' },
+          { name: 'Kevin D. Dykes', position: 'Sheriff', tag: 'Democratic', term: '2027', href: 'https://www.chesco.org/167/Sheriff' },
         ],
       },
       {
         title: 'Controller',
         officials: [
-          { name: 'Nick Cherubino', position: 'Controller', term: 'Expires Dec 2029', href: 'https://www.chesco.org/controller' },
+          { name: 'Nick Cherubino', position: 'Controller', tag: 'Democratic', term: '2029', href: 'https://www.chesco.org/controller' },
         ],
       },
       {
         title: 'Treasurer',
         officials: [
-          { name: 'Patricia Maisano', position: 'Treasurer', term: 'Expires Dec 2029', href: 'https://www.chesco.org/treasurer' },
+          { name: 'Patricia Maisano', position: 'Treasurer', tag: 'Democratic', term: '2029', href: 'https://www.chesco.org/161/Treasurer' },
         ],
       },
       {
         title: 'Coroner',
         officials: [
-          { name: 'Sophia Garcia-Jackson', position: 'Coroner', term: 'Expires Dec 2029', href: 'https://www.chesco.org/coroner' },
+          { name: 'Sophia Garcia-Jackson', position: 'Coroner', tag: 'Democratic', term: '2029', href: 'https://www.chesco.org/coroner' },
         ],
       },
       {
         title: 'Recorder of Deeds',
         officials: [
-          { name: "Diane O'Dwyer", position: 'Recorder of Wills', term: 'Expires Dec 2027', href: 'https://www.chesco.org/recorder' },
+          { name: "Diane O'Dwyer", position: 'Recorder of Deeds', tag: 'Democratic', term: '2027', href: 'https://www.chesco.org/recorder' },
         ],
       },
       {
         title: 'Register of Wills',
         officials: [
-          { name: 'TBD', position: 'Register of Wills', term: 'TBD', href: 'https://www.chesco.org/register' },
+          { name: 'Michele Vaughn', position: 'Register of Wills', tag: 'Democratic', term: '2027', href: 'https://www.chesco.org/168/Register-of-Wills-Orphans-Court' },
         ],
       },
       {
         title: 'Clerk of Courts',
         officials: [
-          { name: 'Caroline Bradley', position: 'Clerk of Courts', term: 'Expires Dec 2029', href: 'https://www.chesco.org/clerk' },
+          { name: 'Caroline Bradley', position: 'Clerk of Courts', tag: 'Democratic', term: '2029', href: 'https://www.chesco.org/clerk' },
         ],
       },
       {
         title: 'Prothonotary',
         officials: [
-          { name: 'Alex Christy', position: 'Prothonotary', term: 'Expires Dec 2029', href: 'https://www.chesco.org/prothonotary' },
+          { name: 'Alex Christy', position: 'Prothonotary', tag: 'Democratic', term: '2027', href: 'https://www.chesco.org/prothonotary' },
         ],
       },
       {
         title: 'Court of Common Pleas Judge',
+        note: 'Chester County does not publish term expiration dates for sitting judges. For full judicial information visit chesco.org/184/Judges.',
         officials: [
-          { name: 'TBD', position: 'Court of Common Pleas Judges', term: 'TBD', href: 'https://www.chesco.org/judiciary', note: 'See chesco.org/judiciary.' },
+          { name: 'Hon. Ann Marie Wheatcraft', position: 'President Judge', href: 'https://www.chesco.org/604/Honorable-Ann-Marie-Wheatcraft' },
+          { name: 'John L. Hall', position: 'Judge', href: 'https://www.chesco.org/1333/County-Court-of-Common-Pleas' },
+          { name: 'Patrick Carmody', position: 'Judge', href: 'https://www.chesco.org/1333/County-Court-of-Common-Pleas' },
+          { name: 'Allison Bell Royer', position: 'Judge', href: 'https://www.chesco.org/1333/County-Court-of-Common-Pleas' },
+          { name: 'Bret M. Binder', position: 'Judge', href: 'https://www.chesco.org/1333/County-Court-of-Common-Pleas' },
+          { name: 'Analisa Sondergaard', position: 'Judge', href: 'https://www.chesco.org/1333/County-Court-of-Common-Pleas' },
+          { name: 'Anthony T. Verwey', position: 'Judge', href: 'https://www.chesco.org/1333/County-Court-of-Common-Pleas' },
+          { name: 'Alita A. Rovito', position: 'Judge', href: 'https://www.chesco.org/1333/County-Court-of-Common-Pleas' },
+          { name: 'Fredda Lewis Maddox', position: 'Judge', href: 'https://www.chesco.org/1333/County-Court-of-Common-Pleas' },
+          { name: 'Deborah S. Ryan', position: 'Judge', href: 'https://www.chesco.org/1333/County-Court-of-Common-Pleas' },
+          { name: 'Sarah B. Black', position: 'Judge', href: 'https://www.chesco.org/1333/County-Court-of-Common-Pleas' },
+          { name: 'Nicole R. Forzato', position: 'Judge', href: 'https://www.chesco.org/1333/County-Court-of-Common-Pleas' },
+          { name: 'Thomas P. McCabe', position: 'Judge', href: 'https://www.chesco.org/1333/County-Court-of-Common-Pleas' },
+          { name: 'Clay N. Cauley Sr.', position: 'Judge', href: 'https://www.chesco.org/1333/County-Court-of-Common-Pleas' },
+          { name: 'Mackenzie W. Smith', position: 'Judge', href: 'https://www.chesco.org/1333/County-Court-of-Common-Pleas' },
         ],
       },
       {
         title: 'Magisterial District Judge (MDJ)',
         officials: [
-          { name: 'TBD', position: 'Magisterial District Judges', term: 'TBD', href: 'https://www.chesco.org/judiciary', note: 'See chesco.org/judiciary.' },
+          {
+            name: 'Marc Lieberman',
+            position: 'MDJ 15-1-01',
+            covers: 'West Chester Borough (Wards 3, 6, 7), East Bradford Township',
+            href: 'https://www.chesco.org/BusinessDirectoryII.aspx?BID=104',
+          },
+          {
+            name: 'VACANT',
+            position: 'MDJ 15-1-02',
+            covers: 'East Goshen Township, Westtown Township (Voting District 2 only)',
+            href: 'https://www.chesco.org/BusinessDirectoryII.aspx?BID=105',
+          },
+          {
+            name: 'Marian T. Vito',
+            position: 'MDJ 15-1-04',
+            covers: 'West Chester Borough (Wards 1, 2, 4, 5)',
+            href: 'https://www.chesco.org/BusinessDirectoryII.aspx?BID=107',
+          },
+          {
+            name: 'Anthony ("Tony") DiFrancesca',
+            position: 'MDJ 15-2-03',
+            covers: 'West Goshen Township, Thornbury Township (Chester Co.), Westtown Township (Voting Districts 1, 3, 4, 5)',
+            href: 'https://www.chesco.org/BusinessDirectoryII.aspx?BID=110',
+          },
+          {
+            name: 'Erin Bruno',
+            position: 'MDJ 15-4-03',
+            covers: 'West Whiteland Township, East Whiteland Township',
+            href: 'https://www.chesco.org/BusinessDirectoryII.aspx?BID=120',
+          },
         ],
       },
     ],
@@ -431,10 +578,85 @@ const ENTITIES = [
     description:
       'Governed by an elected five-member County Council plus elected row offices. Relevant for Thornbury Township (Delaware Co.) residents.',
     site: 'delcopa.gov',
-    placeholderNote: DELAWARE_PLACEHOLDER_NOTE,
-    officials: [
-      { name: 'TBD', position: 'County Council Members (5)', term: 'TBD', href: 'https://delcopa.gov/council', note: 'Verify at delcopa.gov/council.' },
-      { name: 'TBD', position: 'Row office officials', term: 'TBD', href: 'https://delcopa.gov', note: 'Verify at delcopa.gov.' },
+    note:
+      'Delaware County does not have elected Coroner, Clerk of Courts, or Prothonotary positions. The county uses an appointed Chief Medical Examiner and a consolidated Office of Judicial Support for these functions.',
+    positionGroups: [
+      {
+        title: 'County Council Member',
+        officials: [
+          { name: 'Richard R. Womack', position: 'Council Chair', tag: 'Democratic', term: '~2030', href: 'https://www.delcopa.gov/council' },
+          { name: 'Christine A. Reuther', position: 'Council Vice Chair', tag: 'Democratic', term: '~2028', href: 'https://www.delcopa.gov/council' },
+          { name: 'Dr. Monica Taylor', position: 'Council Member', tag: 'Democratic', term: '~2028', href: 'https://www.delcopa.gov/council' },
+          { name: 'Elaine Paul Schaefer', position: 'Council Member', tag: 'Democratic', term: '~2028', href: 'https://www.delcopa.gov/council' },
+          { name: 'Joanne Phillips', position: 'Council Member', tag: 'Democratic', term: '~2030', href: 'https://www.delcopa.gov/council' },
+        ],
+      },
+      {
+        title: 'District Attorney',
+        officials: [
+          {
+            name: 'Tanner Rouse',
+            position: 'District Attorney',
+            term: '~2028',
+            href: 'https://www.delcopa.gov',
+            note: "Appointed to complete predecessor's term.",
+          },
+        ],
+      },
+      {
+        title: 'Sheriff',
+        officials: [
+          { name: 'Siddiq Kamara', position: 'Sheriff', tag: 'Democratic', term: '~2030', href: 'https://www.delcopa.gov' },
+        ],
+      },
+      {
+        title: 'Controller',
+        officials: [
+          { name: 'Louis F. Rosenthal', position: 'Controller', tag: 'Democratic', term: '~2030', href: 'https://www.delcopa.gov' },
+        ],
+      },
+      {
+        title: 'Treasurer',
+        officials: [
+          {
+            name: 'James P. ("Jim") Hackett',
+            position: 'Treasurer',
+            term: 'Not confirmed',
+            href: 'https://www.delcopa.gov/treasurer',
+            nameInfoNote: 'To verify, visit delcopa.gov/treasurer',
+          },
+        ],
+      },
+      {
+        title: 'Recorder of Deeds',
+        officials: [
+          {
+            name: 'Robert A. Auclair, Esq.',
+            position: 'Recorder of Deeds',
+            term: 'Not confirmed',
+            href: 'https://www.delcopa.gov',
+            nameInfoNote: 'To verify, visit delcopa.gov',
+          },
+        ],
+      },
+      {
+        title: "Register of Wills / Clerk of Orphans' Court",
+        officials: [
+          { name: 'Vincent Rongione, Esq.', position: "Register of Wills / Clerk of Orphans' Court", tag: 'Democratic', term: '~2030', href: 'https://www.delcopa.gov' },
+        ],
+      },
+      {
+        title: 'Magisterial District Judge (MDJ)',
+        officials: [
+          {
+            name: 'Wendy B. Roberts, Esq.',
+            position: 'MDJ 32-2-49',
+            covers: 'Thornbury Township (Delaware Co.), Bethel, Chadds Ford & Concord Townships',
+            term: 'Dec 31, 2027',
+            href: 'https://delcopa.gov/courts/district-judges/courts-list',
+          },
+        ],
+      },
     ],
   },
 ];
@@ -454,14 +676,18 @@ const FILTER_OPTIONS = [
 ];
 
 function Official({ official }) {
-  const isTbd = official.name === 'TBD';
+  const isVacant = official.name === 'VACANT';
+  const isPlaceholder = PLACEHOLDER_NAMES.includes(official.name);
+  const isUnknownTerm = UNKNOWN_TERMS.includes(official.term);
 
   return (
     <li className={styles.official}>
       <div className={styles.officialMain}>
-        {isTbd ? (
+        {isVacant ? (
+          <span className={styles.officialVacant}>VACANT</span>
+        ) : isPlaceholder ? (
           <span className={styles.officialTbd}>
-            TBD
+            {official.name}
             <a
               href={official.href}
               target="_blank"
@@ -472,24 +698,50 @@ function Official({ official }) {
             </a>
           </span>
         ) : (
-          <a
-            href={official.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.officialName}
-          >
-            {official.name}
-          </a>
+          <span className={styles.officialNameRow}>
+            <a
+              href={official.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.officialName}
+            >
+              {official.name}
+            </a>
+            {official.nameInfoNote && (
+              <details className={styles.nameInfoIndicator}>
+                <summary className={styles.nameInfoIcon} aria-label="More info">
+                  ⓘ
+                </summary>
+                <p className={styles.infoNoteText}>{official.nameInfoNote}</p>
+              </details>
+            )}
+          </span>
         )}
-        <span className={styles.officialPosition}>{official.position}</span>
-      </div>
-      <div className={styles.officialTerm}>
-        <span className={styles.termLabel}>Term</span>
-        <span className={official.term === 'TBD' ? styles.termTbd : styles.termValue}>
-          {official.term}
+        <span className={styles.officialPosition}>
+          {official.position}
+          {official.tag && <span className={styles.officialTag}> · {official.tag}</span>}
         </span>
       </div>
+      {official.term && (
+        <div className={styles.officialTerm}>
+          <span className={styles.termLabel}>Term</span>
+          <span className={isUnknownTerm ? styles.termTbd : styles.termValue}>
+            {official.term}
+          </span>
+        </div>
+      )}
+      {official.covers && (
+        <p className={styles.officialCovers}>Covers: {official.covers}</p>
+      )}
       {official.note && <p className={styles.officialNote}>{official.note}</p>}
+      {official.infoNote && (
+        <details className={styles.infoIndicator}>
+          <summary className={styles.infoIcon} aria-label="More info">
+            ⓘ
+          </summary>
+          <p className={styles.infoNoteText}>{official.infoNote}</p>
+        </details>
+      )}
     </li>
   );
 }
@@ -509,6 +761,7 @@ function PositionGroup({ group }) {
           </p>
         </>
       )}
+      {group.note && <p className={styles.sectionNote}>{group.note}</p>}
       <ul className={styles.officialsList}>
         {group.officials.map((official, i) => (
           <Official key={`${official.position}-${i}`} official={official} />
@@ -615,22 +868,9 @@ export default function DirectoryClient() {
               {entity.site} ↗
             </a>
 
-            {entity.positionGroups ? (
-              entity.positionGroups.map((group) => (
-                <PositionGroup key={group.title} group={group} />
-              ))
-            ) : (
-              <>
-                {entity.placeholderNote && (
-                  <p className={styles.groupDesc}>{entity.placeholderNote}</p>
-                )}
-                <ul className={styles.officialsList}>
-                  {entity.officials.map((official, i) => (
-                    <Official key={`${official.position}-${i}`} official={official} />
-                  ))}
-                </ul>
-              </>
-            )}
+            {entity.positionGroups.map((group) => (
+              <PositionGroup key={group.title} group={group} />
+            ))}
           </section>
         ))}
       </div>

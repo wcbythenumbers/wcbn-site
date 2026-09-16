@@ -324,6 +324,35 @@
   text-underline-offset: 3px;
 }
 
+.officialNameRow {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.15rem;
+}
+
+.nameInfoIndicator {
+  display: inline-block;
+}
+
+.nameInfoIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--gold);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.nameInfoIcon::-webkit-details-marker {
+  display: none;
+}
+
 .officialTbd {
   display: inline-flex;
   align-items: center;
@@ -365,6 +394,26 @@
   line-height: 1.45;
 }
 
+.officialTag {
+  color: rgba(10, 25, 49, 0.5);
+  font-weight: 400;
+}
+
+.officialVacant {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #B83A11;
+  background: rgba(184, 58, 17, 0.08);
+  border-radius: 2px;
+}
+
 .officialTerm {
   display: flex;
   align-items: baseline;
@@ -404,6 +453,49 @@
   max-width: 560px;
 }
 
+.officialCovers {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #666;
+  margin: 0;
+  max-width: 560px;
+}
+
+/* ── INFO INDICATOR ── */
+.infoIndicator {
+  display: inline-block;
+}
+
+.infoIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  margin: 0 0 0 -0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--gold);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.infoIcon::-webkit-details-marker {
+  display: none;
+}
+
+.infoNoteText {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  font-style: italic;
+  color: #888;
+  margin: 0.15rem 0 0;
+  max-width: 400px;
+}
+
 /* Two-column entry layout once there's room for it. */
 @media (min-width: 620px) {
   .official {
@@ -420,7 +512,9 @@
     gap: 0.6rem;
   }
 
-  .officialNote {
+  .officialNote,
+  .officialCovers,
+  .infoIndicator {
     grid-column: 1 / -1;
   }
 }
