@@ -1,13 +1,21 @@
 import styles from './page.module.css';
 import Link from 'next/link';
-import { MEETINGS, ENTITY_COLORS, formatDate } from './data/meetings';
+import { getMeetings } from '../lib/sheets';
+import { formatDate, isTodayOrFuture } from '../lib/format';
+import EntityTag from './components/EntityTag';
 
 export const metadata = {
   title: 'West Chester by the Numbers',
   description: 'Local government, by the numbers. Data-driven coverage of WCASD and its member municipalities.',
 };
 
-export default function Home() {
+export default async function Home() {
+  const meetings = await getMeetings();
+  const upcoming = meetings
+    .filter((m) => isTodayOrFuture(m.meeting_date))
+    .sort((a, b) => (a.meeting_date < b.meeting_date ? -1 : 1))
+    .slice(0, 5);
+
   return (
     <main className={styles.main}>
 <section className={styles.hero}>
@@ -85,31 +93,32 @@ export default function Home() {
             <h2 className={styles.meetingsTitle}>Upcoming Meetings</h2>
             <Link href="/calendar" className={styles.meetingsViewAll}>Full calendar →</Link>
           </div>
-          <ul className={styles.meetingsList}>
-            {MEETINGS.slice(0, 5).map((m) => {
-              const tag = ENTITY_COLORS[m.entityKey];
-              return (
-                <li key={m.id} className={styles.meetingEntry}>
+          {upcoming.length === 0 ? (
+            <p className={styles.meetingsEmpty}>No upcoming meetings scheduled. Check back soon.</p>
+          ) : (
+            <ul className={styles.meetingsList}>
+              {upcoming.map((m, i) => (
+                <li key={`${m.entity}-${m.meeting_date}-${i}`} className={styles.meetingEntry}>
                   <div className={styles.meetingTop}>
                     <div className={styles.meetingMeta}>
-                      <span
-                        className={styles.entityTag}
-                        style={{ background: tag.bg, color: tag.color }}
-                      >
-                        {m.entity}
-                      </span>
-                      <span className={styles.meetingType}>{m.type}</span>
+                      <EntityTag id={m.entity_id} name={m.entity} />
+                      <span className={styles.meetingType}>{m.meeting_type}</span>
                       <span className={styles.meetingDateTime}>
-                        {formatDate(m.date)} · {m.time}
+                        {formatDate(m.meeting_date)} · {m.meeting_time}
                       </span>
                       <span className={styles.meetingLocation}>{m.location}</span>
+                      {m.recap_status === 'Recap Published' && m.recap_url && (
+                        <a href={m.recap_url} className={styles.recapLink}>Read Recap →</a>
+                      )}
                     </div>
-                    <a href={m.moreInfoHref} className={styles.meetingAgenda} target="_blank" rel="noopener noreferrer">More Info & Webcast</a>
+                    {m.more_info_url && (
+                      <a href={m.more_info_url} className={styles.meetingAgenda} target="_blank" rel="noopener noreferrer">More Info & Webcast</a>
+                    )}
                   </div>
                 </li>
-              );
-            })}
-          </ul>
+              ))}
+            </ul>
+          )}
           <div className={styles.meetingsFooter}>
             <Link href="/calendar" className={styles.meetingsFooterLink}>
               View full calendar →

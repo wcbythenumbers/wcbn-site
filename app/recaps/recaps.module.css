@@ -229,6 +229,14 @@
   max-width: 700px;
 }
 
+.recapPendingText {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: #888;
+  font-weight: 300;
+  font-style: italic;
+}
+
 .readMore {
   align-self: flex-start;
   display: inline-flex;

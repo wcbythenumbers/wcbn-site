@@ -8,7 +8,7 @@ import { formatDate, isWithinPastYear } from '../../lib/format';
 import { isValidMunicipalityId } from '../../lib/entities';
 import styles from './recaps.module.css';
 
-export default function RecapsClient({ recaps, votes, initialEntity }) {
+export default function RecapsClient({ recaps, votes, pendingRecaps = [], initialEntity }) {
   const [selected, setSelected] = useState(() =>
     isValidMunicipalityId(initialEntity) ? [initialEntity] : []
   );
@@ -34,13 +34,13 @@ export default function RecapsClient({ recaps, votes, initialEntity }) {
     [votes, selected]
   );
 
-  const visibleRecaps = useMemo(
-    () =>
-      recaps
-        .filter((r) => matchesFilter(r.entity_slug))
-        .sort((a, b) => (a.meeting_date < b.meeting_date ? 1 : -1)),
-    [recaps, selected]
-  );
+  const visibleRecaps = useMemo(() => {
+    const published = recaps.map((r) => ({ ...r, pending: false }));
+    const pending = pendingRecaps.map((r) => ({ ...r, pending: true }));
+    return [...published, ...pending]
+      .filter((r) => matchesFilter(r.entity_slug))
+      .sort((a, b) => (a.meeting_date < b.meeting_date ? 1 : -1));
+  }, [recaps, pendingRecaps, selected]);
 
   const hasSummaryData = openMatters.length > 0 || keyDecisions.length > 0;
 
@@ -122,14 +122,20 @@ export default function RecapsClient({ recaps, votes, initialEntity }) {
                   <span className={styles.recapDateTime}>{formatDate(r.meeting_date)}</span>
                   <span className={styles.recapType}>{r.meeting_type}</span>
                 </div>
-                <h3 className={styles.recapTitle}>{r.title}</h3>
-                <p className={styles.recapSummary}>{r.summary}</p>
-                <Link
-                  href={`/recaps/${r.entity_slug}/${r.meeting_date}`}
-                  className={styles.readMore}
-                >
-                  Read full recap →
-                </Link>
+                {r.pending ? (
+                  <p className={styles.recapPendingText}>Recap coming soon</p>
+                ) : (
+                  <>
+                    <h3 className={styles.recapTitle}>{r.title}</h3>
+                    <p className={styles.recapSummary}>{r.summary}</p>
+                    <Link
+                      href={`/recaps/${r.entity_slug}/${r.meeting_date}`}
+                      className={styles.readMore}
+                    >
+                      Read full recap →
+                    </Link>
+                  </>
+                )}
               </li>
             ))}
           </ul>
