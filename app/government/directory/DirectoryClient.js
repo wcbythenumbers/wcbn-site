@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
+import { slugifyName } from '../../../lib/slug';
 import styles from './directory.module.css';
 
 /*
@@ -741,6 +743,11 @@ function Official({ official }) {
           </summary>
           <p className={styles.infoNoteText}>{official.infoNote}</p>
         </details>
+      )}
+      {!isVacant && !isPlaceholder && (
+        <Link href={`/votes/${slugifyName(official.name)}`} className={styles.voteLink}>
+          Voting record →
+        </Link>
       )}
     </li>
   );

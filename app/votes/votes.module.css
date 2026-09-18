@@ -1,0 +1,332 @@
+.main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--navy);
+  padding: 4rem 2rem 3.5rem;
+  border-bottom: 2px solid var(--gold);
+}
+
+.heroInner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.25rem;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.intro {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: rgba(248, 246, 240, 0.75);
+  font-weight: 300;
+  max-width: 660px;
+}
+
+/* ── CONTENT ── */
+.content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 5rem;
+  flex: 1;
+  width: 100%;
+}
+
+/* ── FILTERS ── */
+.filtersRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.yearFilter {
+  margin-bottom: 2rem;
+}
+
+.yearLabel {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.6rem;
+}
+
+.yearSelect {
+  min-height: 44px;
+  padding: 0 1rem;
+  background: var(--off-white);
+  border: 1.5px solid rgba(10, 25, 49, 0.18);
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--navy);
+  cursor: pointer;
+}
+
+/* ── TABLE ── */
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid rgba(10, 25, 49, 0.12);
+  border-radius: 2px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+.table th {
+  text-align: left;
+  padding: 0.9rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--navy);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 0.9rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: #333;
+  border-bottom: 1px solid rgba(10, 25, 49, 0.08);
+  vertical-align: top;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.table tr:hover td {
+  background: rgba(10, 25, 49, 0.02);
+}
+
+.dateCell {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.voteCell {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.recapLinkCell a {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--navy);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid var(--gold);
+  white-space: nowrap;
+}
+
+.recapLinkCell a:hover {
+  color: var(--gold-light);
+}
+
+.recapLinkCell span {
+  color: rgba(10, 25, 49, 0.35);
+}
+
+.outcomeTag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.outcomePassed {
+  background: #DDF0E1;
+  color: #1A5C2E;
+}
+
+.outcomeFailed {
+  background: #F5DEDC;
+  color: #7A231C;
+}
+
+.outcomeTabled {
+  background: #FBEACB;
+  color: #7A5A0A;
+}
+
+.scrollHint {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: rgba(10, 25, 49, 0.4);
+  margin-top: 0.5rem;
+}
+
+.emptyText {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: #666;
+  font-weight: 300;
+  font-style: italic;
+  padding: 2rem 0;
+}
+
+/* ── MEMBER VOTE PAGE ── */
+.memberHero {
+  background: var(--navy);
+  padding: 3rem 2rem 2.5rem;
+  border-bottom: 2px solid var(--gold);
+}
+
+.memberName {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4.5vw, 2.75rem);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 700px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.statCard {
+  padding: 0.9rem;
+  background: rgba(248, 246, 240, 0.06);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: 2px;
+  text-align: center;
+}
+
+.statValue {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--gold);
+}
+
+.statLabel {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(248, 246, 240, 0.6);
+  margin-top: 0.25rem;
+}
+
+.choiceTag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  white-space: nowrap;
+  background: var(--off-white);
+  color: var(--navy);
+}
+
+/* ── FOOTER ── */
+.footer {
+  background: var(--navy);
+  border-top: 1px solid rgba(201, 168, 76, 0.3);
+  padding: 1.5rem 2rem;
+}
+
+.footerInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer span {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: rgba(248, 246, 240, 0.4);
+  letter-spacing: 0.05em;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footerLinks a {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(248, 246, 240, 0.4);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footerLinks a:hover {
+  color: var(--gold);
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--navy);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 2px solid var(--gold);
+  margin-top: 2rem;
+}
+
+.backLink:hover {
+  color: var(--gold-light);
+}

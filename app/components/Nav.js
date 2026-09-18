@@ -19,7 +19,8 @@ const NAV_ITEMS = [
   {
     label: 'Schools',
     items: [
-      { label: 'Board Meeting Recaps', href: '#' },
+      { label: 'Board Meeting Recaps', href: '/recaps?entity=wcasd' },
+      { label: 'Voting Records', href: '/votes?entity=wcasd' },
       { label: 'Enrollment & Staffing', href: '#' },
       { label: 'Performance Data', href: '#' },
       { label: 'Board Member Directory', href: '#' },
@@ -30,7 +31,8 @@ const NAV_ITEMS = [
     items: [
       { label: 'How Local Government Works', href: '/government/how-it-works' },
       { label: 'Government Directory', href: '/government/directory' },
-      { label: 'Board & Council Meeting Recaps', href: '#' },
+      { label: 'Board & Council Meeting Recaps', href: '/recaps' },
+      { label: 'Voting Records', href: '/votes' },
     ],
   },
   {
