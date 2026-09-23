@@ -1,5 +1,6 @@
 import './globals.css';
 import Nav from './components/Nav';
+import DisclaimerBanner from './components/DisclaimerBanner';
 
 export const metadata = {
   title: 'West Chester by the Numbers',
@@ -18,6 +19,7 @@ export default function RootLayout({ children }) {
       <body>
         <Nav />
         {children}
+        <DisclaimerBanner />
       </body>
     </html>
   );
