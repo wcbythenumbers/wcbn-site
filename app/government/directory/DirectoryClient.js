@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { slugifyName } from '../../../lib/slug';
+import { isValidMunicipalityId } from '../../../lib/entities';
 import styles from './directory.module.css';
 
 /*
@@ -778,8 +779,10 @@ function PositionGroup({ group }) {
   );
 }
 
-export default function DirectoryClient() {
-  const [selected, setSelected] = useState([]);
+export default function DirectoryClient({ initialEntity } = {}) {
+  const [selected, setSelected] = useState(() =>
+    isValidMunicipalityId(initialEntity) ? [initialEntity] : []
+  );
 
   const isAllActive = selected.length === 0;
 
