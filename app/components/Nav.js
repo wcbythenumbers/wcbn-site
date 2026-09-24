@@ -22,7 +22,7 @@ const NAV_ITEMS = [
       { label: 'Board Meeting Recaps', href: '/recaps?entity=wcasd' },
       { label: 'Voting Records', href: '/votes?entity=wcasd' },
       { label: 'Enrollment & Staffing', href: '#' },
-      { label: 'Performance Data', href: '#' },
+      { label: 'Performance Data', href: '/schools/performance' },
       { label: 'Board Member Directory', href: '/government/directory?entity=wcasd' },
     ],
   },
