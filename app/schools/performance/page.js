@@ -1,6 +1,8 @@
 import { getSchoolPerformance } from '../../../lib/sheets';
 import PerformanceClient from './PerformanceClient';
 
+export const revalidate = 3600;
+
 export const metadata = {
   title: 'School Performance — West Chester by the Numbers',
   description: 'PSSA and Keystone proficiency results for WCASD compared with Pennsylvania statewide.',

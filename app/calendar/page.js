@@ -1,6 +1,8 @@
 import { getMeetings } from '../../lib/sheets';
 import CalendarClient from './CalendarClient';
 
+export const revalidate = 3600;
+
 export const metadata = {
   title: 'Meeting Calendar — West Chester by the Numbers',
   description: 'Upcoming public meetings for WCASD, West Chester Borough, and all member townships.',

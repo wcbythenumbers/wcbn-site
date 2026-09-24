@@ -4,6 +4,8 @@ import { getMeetings } from '../lib/sheets';
 import { formatDate, isTodayOrFuture } from '../lib/format';
 import EntityTag from './components/EntityTag';
 
+export const revalidate = 3600;
+
 export const metadata = {
   title: 'West Chester by the Numbers',
   description: 'Local government, by the numbers. Data-driven coverage of WCASD and its member municipalities.',
