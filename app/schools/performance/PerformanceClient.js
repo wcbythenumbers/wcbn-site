@@ -226,8 +226,25 @@ export default function PerformanceClient({ rows }) {
               <p>
                 “—” means the value is blank or suppressed by the state for privacy.
               </p>
-              <p>Source: Pennsylvania Department of Education.</p>
             </div>
+
+            <section className={styles.sources} aria-labelledby="performance-sources">
+              <h2 className={styles.sourcesHeading} id="performance-sources">Sources</h2>
+              <p>
+                Source:{' '}
+                <a
+                  className={styles.sourceLink}
+                  href="https://www.pa.gov/agencies/education/data-and-reporting/assessment-reporting"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Pennsylvania Department of Education
+                </a>
+                , PSSA and Keystone district-level results, 2021–2025, for West Chester Area
+                School District (AUN 124159002). PSSA is grades 3–8 combined; Keystone is
+                grade 11. Percentages are Proficient + Advanced.
+              </p>
+            </section>
           </>
         )}
       </div>
