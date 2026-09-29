@@ -445,9 +445,13 @@ export default function PerformanceClient({ rows, peers = [] }) {
                 >
                   Pennsylvania Department of Education
                 </a>
-                , PSSA and Keystone district-level results, 2021–2025, for West Chester Area
-                School District (AUN 124159002). PSSA is grades 3–8 combined; Keystone is
-                grade 11. Percentages are Proficient + Advanced.
+                , PSSA and Keystone results, 2021–2025. West Chester Area School District
+                (AUN 124159002) and peer district figures are from PDE&apos;s district-level
+                files; Pennsylvania figures are from PDE&apos;s state-level files. PSSA is grades
+                3–8 combined; Keystone is grade 11. Percentages are Proficient + Advanced.
+                Statewide results by student group are not published for 2021, and only for
+                Economically Disadvantaged and IEP students in 2022. PDE did not publish PSSA
+                Science results for 2025.
               </p>
             </section>
           </>
