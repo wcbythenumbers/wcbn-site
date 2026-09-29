@@ -72,13 +72,19 @@ const PEER_DISTRICTS = [
 ];
 
 // Horizontal bar chart + table comparing WCASD with peer districts for the
-// selected exam/subject, with the statewide average as a reference line.
-function PeerComparison({ peers, rows, exam, subject, scope }) {
+// selected exam/subject/group, with the statewide average as a reference line.
+function PeerComparison({ peers, rows, exam, subject, group, scope }) {
   const [year, setYear] = useState('');
 
   const subjectPeers = useMemo(
     () => peers.filter((p) => p.exam === exam && p.subject === subject),
     [peers, exam, subject]
+  );
+
+  // Rows from the tab's older format have no group; treat them as All Students.
+  const groupPeers = useMemo(
+    () => subjectPeers.filter((p) => (p.group || DEFAULT_GROUP) === group),
+    [subjectPeers, group]
   );
 
   const yearOptions = useMemo(
@@ -89,10 +95,10 @@ function PeerComparison({ peers, rows, exam, subject, scope }) {
   // Most recent year where at least one district has a numeric value.
   const latestYear = useMemo(() => {
     const withData = yearOptions.filter((y) =>
-      subjectPeers.some((p) => p.year === y && parsePct(p.pct_prof_adv) !== null)
+      groupPeers.some((p) => p.year === y && parsePct(p.pct_prof_adv) !== null)
     );
     return withData[withData.length - 1] ?? yearOptions[yearOptions.length - 1];
-  }, [yearOptions, subjectPeers]);
+  }, [yearOptions, groupPeers]);
 
   const activeYear = pick(year, yearOptions, latestYear);
 
@@ -102,7 +108,7 @@ function PeerComparison({ peers, rows, exam, subject, scope }) {
     const names = [...new Set([...PEER_DISTRICTS, ...uniqueValues(peers, 'district')])];
     return names
       .map((name) => {
-        const match = subjectPeers.find((p) => p.year === activeYear && p.district === name);
+        const match = groupPeers.find((p) => p.year === activeYear && p.district === name);
         return { name, value: match ? parsePct(match.pct_prof_adv) : null };
       })
       .sort((a, b) => {
@@ -110,7 +116,7 @@ function PeerComparison({ peers, rows, exam, subject, scope }) {
         if (b.value === null) return -1;
         return b.value - a.value;
       });
-  }, [peers, subjectPeers, activeYear]);
+  }, [peers, groupPeers, activeYear]);
 
   const paAverage = useMemo(() => {
     const match = rows.find(
@@ -118,19 +124,21 @@ function PeerComparison({ peers, rows, exam, subject, scope }) {
         r.exam === exam &&
         r.subject === subject &&
         r.year === activeYear &&
-        r.group === DEFAULT_GROUP &&
+        r.group === group &&
         (!scope || r.scope === scope)
     );
     return match ? parsePct(match.pa_pct_prof_adv) : null;
-  }, [rows, exam, subject, activeYear, scope]);
+  }, [rows, exam, subject, group, activeYear, scope]);
 
   const clampPct = (n) => Math.min(Math.max(n, 0), 100);
-  const caption = [exam, subject, activeYear, DEFAULT_GROUP].filter(Boolean).join(' · ');
+  const caption = [exam, subject, activeYear, group].filter(Boolean).join(' · ');
+  const hasEnoughData = districts.filter((d) => d.value !== null).length >= 2;
 
   return (
     <section className={styles.peerSection} aria-labelledby="peer-heading">
       <h2 className={styles.peerHeading} id="peer-heading">
         How WCASD compares with similar Chester County districts
+        {group !== DEFAULT_GROUP && ` — ${group}`}
       </h2>
 
       {yearOptions.length === 0 ? (
@@ -141,87 +149,93 @@ function PeerComparison({ peers, rows, exam, subject, scope }) {
             <OptionButtons label="Year" options={yearOptions} value={activeYear} onChange={setYear} />
           </div>
 
-          <div className={styles.chartCard}>
-            <h3 className={styles.chartTitle}>{caption}</h3>
-            <div className={styles.legend} aria-hidden="true">
-              <span className={styles.legendItem}>
-                <span className={`${styles.swatch} ${styles.swatchPa}`} /> West Chester Area
-              </span>
-              <span className={styles.legendItem}>
-                <span className={`${styles.swatch} ${styles.swatchWcasd}`} /> Peer districts
-              </span>
-              {paAverage !== null && (
-                <span className={styles.legendItem}>
-                  <span className={styles.swatchRef} /> Pennsylvania average
-                </span>
-              )}
-            </div>
-
-            {/* Visual only; the table below carries the same numbers for assistive tech. */}
-            <div
-              className={`${styles.hChart} ${paAverage !== null ? styles.hChartWithRef : ''}`}
-              style={paAverage !== null ? { '--pa': clampPct(paAverage) } : undefined}
-              aria-hidden="true"
-            >
-              {paAverage !== null && (
-                <>
-                  <span className={styles.refLabel}>PA avg {formatPct(paAverage)}</span>
-                  <span className={styles.refLine} />
-                </>
-              )}
-              {districts.map((d) => (
-                <div key={d.name} className={styles.hRow}>
-                  <div className={styles.hLabel}>
-                    <span className={d.name === WCASD_DISTRICT ? styles.hLabelWcasd : ''}>{d.name}</span>
-                  </div>
-                  <div className={styles.hPlot}>
-                    <div className={styles.hPlotArea}>
-                      {d.value !== null && (
-                        <div
-                          className={`${styles.hBar} ${d.name === WCASD_DISTRICT ? styles.hBarWcasd : styles.hBarPeer}`}
-                          style={{ width: `${clampPct(d.value)}%` }}
-                        />
-                      )}
-                      <span
-                        className={styles.hValue}
-                        style={{ left: d.value !== null ? `${clampPct(d.value)}%` : 0 }}
-                      >
-                        {formatPct(d.value)}
-                      </span>
-                    </div>
-                  </div>
+          {hasEnoughData ? (
+            <>
+              <div className={styles.chartCard}>
+                <h3 className={styles.chartTitle}>{caption}</h3>
+                <div className={styles.legend} aria-hidden="true">
+                  <span className={styles.legendItem}>
+                    <span className={`${styles.swatch} ${styles.swatchPa}`} /> West Chester Area
+                  </span>
+                  <span className={styles.legendItem}>
+                    <span className={`${styles.swatch} ${styles.swatchWcasd}`} /> Peer districts
+                  </span>
+                  {paAverage !== null && (
+                    <span className={styles.legendItem}>
+                      <span className={styles.swatchRef} /> Pennsylvania average
+                    </span>
+                  )}
                 </div>
-              ))}
-            </div>
-          </div>
 
-          <div className={styles.tableWrap}>
-            <table className={styles.table}>
-              <caption className={styles.tableCaption}>
-                % Proficient or Advanced by district — {caption}
-              </caption>
-              <thead>
-                <tr>
-                  <th scope="col">District</th>
-                  <th scope="col">% Prof./Adv.</th>
-                </tr>
-              </thead>
-              <tbody>
-                {districts.map((d) => (
-                  <tr key={d.name}>
-                    <th scope="row">{d.name}</th>
-                    <td>{formatPct(d.value)}</td>
-                  </tr>
-                ))}
-                {paAverage !== null && (
-                  <tr>
-                    <th scope="row">Pennsylvania average</th>
-                    <td>{formatPct(paAverage)}</td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+                {/* Visual only; the table below carries the same numbers for assistive tech. */}
+                <div
+                  className={`${styles.hChart} ${paAverage !== null ? styles.hChartWithRef : ''}`}
+                  style={paAverage !== null ? { '--pa': clampPct(paAverage) } : undefined}
+                  aria-hidden="true"
+                >
+                  {paAverage !== null && (
+                    <>
+                      <span className={styles.refLabel}>PA avg {formatPct(paAverage)}</span>
+                      <span className={styles.refLine} />
+                    </>
+                  )}
+                  {districts.map((d) => (
+                    <div key={d.name} className={styles.hRow}>
+                      <div className={styles.hLabel}>
+                        <span className={d.name === WCASD_DISTRICT ? styles.hLabelWcasd : ''}>{d.name}</span>
+                      </div>
+                      <div className={styles.hPlot}>
+                        <div className={styles.hPlotArea}>
+                          {d.value !== null && (
+                            <div
+                              className={`${styles.hBar} ${d.name === WCASD_DISTRICT ? styles.hBarWcasd : styles.hBarPeer}`}
+                              style={{ width: `${clampPct(d.value)}%` }}
+                            />
+                          )}
+                          <span
+                            className={styles.hValue}
+                            style={{ left: d.value !== null ? `${clampPct(d.value)}%` : 0 }}
+                          >
+                            {formatPct(d.value)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className={styles.tableWrap}>
+                <table className={styles.table}>
+                  <caption className={styles.tableCaption}>
+                    % Proficient or Advanced by district — {caption}
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">District</th>
+                      <th scope="col">% Prof./Adv.</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {districts.map((d) => (
+                      <tr key={d.name}>
+                        <th scope="row">{d.name}</th>
+                        <td>{formatPct(d.value)}</td>
+                      </tr>
+                    ))}
+                    {paAverage !== null && (
+                      <tr>
+                        <th scope="row">Pennsylvania average</th>
+                        <td>{formatPct(paAverage)}</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          ) : (
+            <p className={styles.emptyText}>Not enough district data for this group and year.</p>
+          )}
         </>
       )}
 
@@ -398,18 +412,16 @@ export default function PerformanceClient({ rows, peers = [] }) {
               </>
             )}
 
-            {peers.length > 0 &&
-              (activeGroup === DEFAULT_GROUP ? (
-                <PeerComparison
-                  peers={peers}
-                  rows={rows}
-                  exam={exam}
-                  subject={activeSubject}
-                  scope={scopeOptions.length > 1 ? activeScope : ''}
-                />
-              ) : (
-                <p className={styles.emptyText}>District comparisons are available for All Students only.</p>
-              ))}
+            {peers.length > 0 && (
+              <PeerComparison
+                peers={peers}
+                rows={rows}
+                exam={exam}
+                subject={activeSubject}
+                group={activeGroup}
+                scope={scopeOptions.length > 1 ? activeScope : ''}
+              />
+            )}
 
             <div className={styles.notes}>
               <p>
