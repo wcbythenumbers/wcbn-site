@@ -1,4 +1,4 @@
-import { getSchoolPerformance } from '../../../lib/sheets';
+import { getPeerPerformance, getSchoolPerformance } from '../../../lib/sheets';
 import PerformanceClient from './PerformanceClient';
 
 export const revalidate = 3600;
@@ -9,6 +9,6 @@ export const metadata = {
 };
 
 export default async function PerformancePage() {
-  const rows = await getSchoolPerformance();
-  return <PerformanceClient rows={rows} />;
+  const [rows, peers] = await Promise.all([getSchoolPerformance(), getPeerPerformance()]);
+  return <PerformanceClient rows={rows} peers={peers} />;
 }

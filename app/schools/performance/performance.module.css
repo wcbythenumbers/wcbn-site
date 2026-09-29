@@ -344,6 +344,124 @@
   color: var(--gold);
 }
 
+/* ── PEER COMPARISON ── */
+.peerSection {
+  margin: 1rem 0 2.5rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--navy);
+}
+
+.peerHeading {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--navy);
+  margin-bottom: 1.5rem;
+}
+
+.swatchRef {
+  display: inline-block;
+  width: 0;
+  height: 0.9rem;
+  border-left: 2px dashed var(--navy);
+}
+
+/* Label column collapses on mobile (names sit above their bars); --gutter
+   leaves room for the value label to the right of a full-width bar. The
+   reference line uses the same geometry so it lines up with every plot. */
+.hChart {
+  --label-w: 0px;
+  --gutter: 3.5rem;
+  position: relative;
+}
+
+.hChartWithRef {
+  padding-top: 1.75rem;
+}
+
+.hRow {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.hLabel {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--navy);
+  padding-top: 0.35rem;
+}
+
+.hLabel span {
+  position: relative;
+  z-index: 1;
+  background: var(--off-white);
+  padding-right: 0.35rem;
+}
+
+.hLabelWcasd {
+  font-weight: 700;
+}
+
+.hPlot {
+  padding-right: var(--gutter);
+}
+
+.hPlotArea {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 1.75rem;
+}
+
+.hBar {
+  height: 1.1rem;
+  min-width: 1px;
+}
+
+.hBarWcasd {
+  background: var(--gold);
+}
+
+.hBarPeer {
+  background: var(--navy);
+}
+
+.hValue {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+.refLine,
+.refLabel {
+  position: absolute;
+  left: calc(var(--label-w) + (100% - var(--label-w) - var(--gutter)) * var(--pa) / 100);
+}
+
+.refLine {
+  top: 1.75rem;
+  bottom: 0;
+  border-left: 2px dashed var(--navy);
+  pointer-events: none;
+}
+
+.refLabel {
+  top: 0;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
 /* ── LARGER SCREENS ── */
 @media (min-width: 601px) {
   .hero {
@@ -377,5 +495,26 @@
 
   .barValue {
     font-size: 0.7rem;
+  }
+
+  .peerHeading {
+    font-size: 1.75rem;
+  }
+
+  .hChart {
+    --label-w: 12rem;
+  }
+
+  .hRow {
+    grid-template-columns: var(--label-w) 1fr;
+    align-items: center;
+  }
+
+  .hLabel {
+    padding: 0 1rem 0 0;
+  }
+
+  .hPlotArea {
+    height: 2.25rem;
   }
 }
