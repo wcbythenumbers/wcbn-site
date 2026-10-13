@@ -1,0 +1,758 @@
+.main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--navy);
+  padding: 3rem 1rem 2.5rem;
+  border-bottom: 2px solid var(--gold);
+}
+
+.heroInner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.25rem;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.intro {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(248, 246, 240, 0.7);
+  font-weight: 300;
+  max-width: 600px;
+}
+
+/* ── CONTENT ── */
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+  flex: 1;
+  width: 100%;
+}
+
+.emptyText {
+  font-family: var(--font-body);
+  color: #666;
+  font-weight: 300;
+  font-style: italic;
+  padding: 2rem 0;
+}
+
+/* ── FILTERS ── */
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.filterLabel {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+}
+
+.filterGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filterBtn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 1rem;
+  background: var(--off-white);
+  border: 1.5px solid rgba(10, 25, 49, 0.18);
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(10, 25, 49, 0.55);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.filterBtn:hover {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.filterBtnActive,
+.filterBtnActive:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--gold);
+}
+
+.select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 0.75rem;
+  background: var(--off-white);
+  border: 1.5px solid rgba(10, 25, 49, 0.18);
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--navy);
+  cursor: pointer;
+}
+
+.select:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* ── CHART ── */
+.chartCard {
+  background: var(--off-white);
+  border-top: 2px solid var(--navy);
+  padding: 1.25rem 1rem 1rem;
+  margin-bottom: 2rem;
+}
+
+.chartTitle {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.75rem;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.swatch {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.swatchWcasd {
+  background: var(--gold);
+}
+
+.chart {
+  display: flex;
+  align-items: stretch;
+}
+
+.yearGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.bars {
+  border-bottom: 1.5px solid var(--navy);
+  padding: 1rem 0.25rem 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2px;
+  height: 200px;
+}
+
+.barSlot {
+  flex: 1;
+  max-width: 3.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.barValue {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--navy);
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+}
+
+.bar {
+  width: 100%;
+  min-height: 1px;
+  background: var(--navy);
+}
+
+.yearLabel {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--navy);
+  text-align: center;
+  padding-top: 0.5rem;
+}
+
+/* ── TABLE ── */
+.tableWrap {
+  overflow-x: auto;
+  margin-bottom: 2rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  color: var(--navy);
+}
+
+.tableCaption {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: left;
+  padding-bottom: 0.75rem;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem 0.5rem;
+  min-height: 44px;
+  border-bottom: 1px solid rgba(10, 25, 49, 0.12);
+  text-align: right;
+}
+
+.table thead th {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-bottom: 1.5px solid var(--navy);
+}
+
+.table th:first-child {
+  text-align: left;
+}
+
+.table tbody th,
+.table td {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+/* ── NOTES ── */
+.notes {
+  border-top: 1px solid rgba(10, 25, 49, 0.12);
+  padding-top: 1.25rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #666;
+  font-weight: 300;
+}
+
+.notes p + p {
+  margin-top: 0.5rem;
+}
+
+/* ── SOURCES ── */
+.sources {
+  margin-top: 2rem;
+  border-top: 1px solid rgba(10, 25, 49, 0.12);
+  padding-top: 1.25rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #666;
+  font-weight: 300;
+}
+
+.sourcesHeading {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+}
+
+/* Vertical padding enlarges the inline link's hit area to 44px without
+   changing the paragraph's line spacing. */
+.sourceLink {
+  color: var(--navy);
+  font-weight: 400;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0.8rem 0;
+}
+
+.sourceLink:hover {
+  color: var(--gold);
+}
+
+/* ── SECTIONS ── */
+.section {
+  margin: 0 0 2.5rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--navy);
+}
+
+.section:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.sectionHeading {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--navy);
+  margin-bottom: 1.5rem;
+}
+
+.swatchPeer {
+  background: var(--navy);
+}
+
+/* Label column collapses on mobile (names sit above their bars); --gutter
+   leaves room for the value label to the right of a full-width bar. */
+.hChart {
+  --label-w: 0px;
+  --gutter: 3.5rem;
+  position: relative;
+}
+
+.hRow {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.hLabel {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--navy);
+  padding-top: 0.35rem;
+}
+
+.hLabel span {
+  position: relative;
+  z-index: 1;
+  background: var(--off-white);
+  padding-right: 0.35rem;
+}
+
+.hLabelWcasd {
+  font-weight: 700;
+}
+
+.hPlot {
+  padding-right: var(--gutter);
+}
+
+.hPlotArea {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 1.75rem;
+}
+
+.hBar {
+  height: 1.1rem;
+  min-width: 1px;
+}
+
+.hBarWcasd {
+  background: var(--gold);
+}
+
+.hBarPeer {
+  background: var(--navy);
+}
+
+.hValue {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+/* ── LARGER SCREENS ── */
+@media (min-width: 601px) {
+  .hero {
+    padding: 4rem 2rem 3.5rem;
+  }
+
+  .content {
+    padding: 3rem 2rem 5rem;
+  }
+
+  .filters {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.5rem 2.5rem;
+  }
+
+  .select {
+    width: auto;
+    min-width: 16rem;
+  }
+
+  .chartCard {
+    padding: 1.5rem 1.5rem 1.25rem;
+  }
+
+  .bars {
+    height: 260px;
+    gap: 4px;
+    padding: 1.25rem 0.75rem 0;
+  }
+
+  .barValue {
+    font-size: 0.7rem;
+  }
+
+  .sectionHeading {
+    font-size: 1.75rem;
+  }
+
+  .hChart {
+    --label-w: 12rem;
+  }
+
+  .hRow {
+    grid-template-columns: var(--label-w) 1fr;
+    align-items: center;
+  }
+
+  .hLabel {
+    padding: 0 1rem 0 0;
+  }
+
+  .hPlotArea {
+    height: 2.25rem;
+  }
+}
+
+/* ── BUDGET ── */
+.content {
+  min-width: 0;
+}
+
+/* Wide tables scroll inside .tableWrap, not the page. */
+.table th,
+.table td {
+  white-space: nowrap;
+}
+
+.tableWrap {
+  -webkit-overflow-scrolling: touch;
+}
+
+.subHeading {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0.5rem 0 1rem;
+}
+
+.segNavy {
+  background: var(--navy);
+}
+
+.segGold {
+  background: var(--gold);
+}
+
+.segLight {
+  background: rgba(10, 25, 49, 0.3);
+}
+
+.stack {
+  width: 100%;
+  min-height: 1px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.stack > div {
+  flex-basis: 0;
+  min-height: 1px;
+}
+
+/* Line chart: y-axis labels | plot, with year labels underneath. */
+.lineChart {
+  display: grid;
+  grid-template-columns: 3.75rem 1fr;
+  grid-template-rows: 220px auto;
+}
+
+.lineYAxis,
+.linePlot {
+  position: relative;
+}
+
+.lineYAxis {
+  margin: 0.5rem 0;
+}
+
+.linePlot {
+  margin: 0.5rem 0;
+  border-bottom: 1.5px solid var(--navy);
+}
+
+.lineTick {
+  position: absolute;
+  right: 0.5rem;
+  transform: translateY(50%);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+.lineGrid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px solid rgba(10, 25, 49, 0.1);
+}
+
+.lineSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.line_wcasd {
+  stroke: var(--gold);
+  stroke-width: 3.5;
+}
+
+.line_peer {
+  stroke: var(--navy);
+  stroke-opacity: 0.35;
+  stroke-width: 1.5;
+}
+
+.line_county {
+  stroke: var(--navy);
+  stroke-width: 2.5;
+}
+
+.line_state {
+  stroke: var(--navy);
+  stroke-width: 2;
+  stroke-dasharray: 6 4;
+}
+
+.lineDot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.lineXAxis {
+  grid-column: 2;
+  position: relative;
+  height: 1.5rem;
+}
+
+.lineYear {
+  position: absolute;
+  top: 0.25rem;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+.swatchLineWcasd,
+.swatchLinePeer,
+.swatchLineState,
+.swatchLineCounty {
+  display: inline-block;
+  width: 1.25rem;
+  height: 0;
+}
+
+.swatchLineWcasd {
+  border-top: 3.5px solid var(--gold);
+}
+
+.swatchLinePeer {
+  border-top: 1.5px solid rgba(10, 25, 49, 0.35);
+}
+
+.swatchLineState {
+  border-top: 2px dashed var(--navy);
+}
+
+.swatchLineCounty {
+  border-top: 2.5px solid var(--navy);
+}
+
+/* 100% stacked share bars. */
+.shareChart {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.shareLabel {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--navy);
+  margin-bottom: 0.25rem;
+}
+
+.shareRowWcasd .shareLabel {
+  font-weight: 700;
+}
+
+.shareRowWcasd .shareBar {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.shareBar {
+  display: flex;
+  height: 1.5rem;
+  background: rgba(10, 25, 49, 0.06);
+}
+
+.shareSeg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--white);
+  white-space: nowrap;
+}
+
+.shareSeg.segGold,
+.shareSeg.segLight {
+  color: var(--navy);
+}
+
+/* Footnotes and definitions. */
+.fnMark {
+  font-size: 0.65em;
+  margin-left: 0.15em;
+  color: var(--gold);
+}
+
+.footnotes {
+  margin: -1rem 0 2rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #666;
+  font-weight: 300;
+}
+
+.footnotes p + p {
+  margin-top: 0.35rem;
+}
+
+.definitions {
+  margin: 0 0 2rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #666;
+  font-weight: 300;
+}
+
+.definitions div + div {
+  margin-top: 0.35rem;
+}
+
+.definitions dt,
+.definitions dd {
+  display: inline;
+  margin: 0;
+}
+
+.definitions dt {
+  font-weight: 600;
+  color: var(--navy);
+}
+
+@media (min-width: 601px) {
+  .lineChart {
+    grid-template-columns: 4.5rem 1fr;
+    grid-template-rows: 280px auto;
+  }
+
+  .lineYear {
+    font-size: 0.65rem;
+  }
+
+  .shareRow {
+    display: grid;
+    grid-template-columns: 12rem 1fr;
+    align-items: center;
+  }
+
+  .shareLabel {
+    margin: 0;
+    padding-right: 1rem;
+  }
+}
