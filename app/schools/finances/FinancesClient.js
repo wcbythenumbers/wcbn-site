@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import styles from './budget.module.css';
+import styles from './finances.module.css';
 
 const WCASD_DISTRICT = 'West Chester Area';
 const STATE = 'Pennsylvania';
@@ -1040,7 +1040,7 @@ function AidRatioSection({ data }) {
   );
 }
 
-export default function BudgetClient({ rows = [] }) {
+export default function FinancesClient({ rows = [] }) {
   const data = useBudgetData(rows);
   const hasAny = data.years.some((y) => rows.some((r) => parseNum(r[y]) !== null));
 
@@ -1049,7 +1049,7 @@ export default function BudgetClient({ rows = [] }) {
       <header className={styles.hero}>
         <div className={styles.heroInner}>
           <div className={styles.label}>Schools</div>
-          <h1 className={styles.heading}>WCASD Budget</h1>
+          <h1 className={styles.heading}>WCASD Finances</h1>
           <p className={styles.intro}>
             Audited spending, revenue, taxes, and debt for the West Chester Area School District,
             compared with similar Chester County districts and Pennsylvania. Figures are from the

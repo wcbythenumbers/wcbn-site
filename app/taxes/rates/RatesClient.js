@@ -213,7 +213,7 @@ export default function RatesClient() {
       {/* ── Hero ── */}
       <header className={styles.hero}>
         <div className={styles.heroInner}>
-          <div className={styles.label}>Taxes &amp; Budget</div>
+          <div className={styles.label}>Taxes &amp; Finances</div>
           <h1 className={styles.heading}>Tax Rate Comparisons</h1>
           <p className={styles.intro}>
             Compare local tax rates across the municipalities in the greater

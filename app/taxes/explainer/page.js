@@ -22,7 +22,7 @@ export default function TaxExplainerPage() {
     <main className={styles.main}>
       <header className={styles.hero}>
         <div className={styles.heroInner}>
-          <div className={styles.label}>Taxes &amp; Budget</div>
+          <div className={styles.label}>Taxes &amp; Finances</div>
           <h1 className={styles.heading}>How Local Taxes Work</h1>
           <p className={styles.intro}>
             If you live in West Chester or one of the surrounding townships,
