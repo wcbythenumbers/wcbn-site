@@ -1,5 +1,6 @@
 import { getDemographics, getEnrollment, getStaffing } from '../../../lib/sheets';
 import EnrollmentClient from './EnrollmentClient';
+import DataNote from '../../components/DataNote';
 
 export const revalidate = 3600;
 
@@ -15,5 +16,16 @@ export default async function EnrollmentPage() {
     getDemographics(),
     getStaffing(),
   ]);
-  return <EnrollmentClient enrollment={enrollment} demographics={demographics} staffing={staffing} />;
+  return (
+    <EnrollmentClient
+      enrollment={enrollment}
+      demographics={demographics}
+      staffing={staffing}
+      dataNote={
+        <DataNote>
+          Figures are published by the Pennsylvania Department of Education. Figures labeled calculated, such as students per teacher, were computed by us from those files.
+        </DataNote>
+      }
+    />
+  );
 }

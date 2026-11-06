@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip,
@@ -8,83 +8,84 @@ import {
 } from 'recharts';
 import styles from './rates.module.css';
 
-const MUNICIPALITIES = [
+// Rates (county, municipal, school, eit) come from the TaxRates sheet; see withRates.
+const MUNICIPALITY_INFO = [
   {
     id: 'wc-borough',
     name: 'West Chester Borough',
     shortName: 'WC Borough',
-    county: 5.164,
-    municipal: 8.09,
-    school: 23.38,
-    eit: '1.25%',
+    lst: 52,
   },
   {
     id: 'east-goshen',
     name: 'East Goshen Township',
     shortName: 'East Goshen',
-    county: 5.164,
-    municipal: 1.75,
-    school: 23.38,
-    eit: '1.00%',
+    lst: 52,
   },
   {
     id: 'west-goshen',
     name: 'West Goshen Township',
     shortName: 'West Goshen',
-    county: 5.164,
-    municipal: 2.00,
-    school: 23.38,
-    eit: '1.00%',
+    lst: 52,
   },
   {
     id: 'east-bradford',
     name: 'East Bradford Township',
     shortName: 'East Bradford',
-    county: 5.164,
-    municipal: 2.25,
-    school: 23.38,
-    eit: '1.25%',
+    lst: 52,
   },
   {
     id: 'west-whiteland',
     name: 'West Whiteland Township',
     shortName: 'West Whiteland',
-    county: 5.164,
-    municipal: 2.00,
-    school: 23.38,
-    eit: '1.00%',
+    lst: 52,
   },
   {
     id: 'westtown',
     name: 'Westtown Township',
     shortName: 'Westtown',
-    county: 5.164,
-    municipal: 3.92,
-    school: 23.38,
-    eit: '1.08%',
+    lst: 52,
   },
   {
     id: 'thornbury-chester',
     name: 'Thornbury Twp (Chester Co.)',
     shortName: 'Thornbury (Chester)',
-    county: 5.164,
-    municipal: 0.995,
-    school: 23.38,
-    eit: '1.00%',
+    lst: 52,
   },
   {
     id: 'thornbury-delaware',
     name: 'Thornbury Twp (Delaware Co.)',
     shortName: 'Thornbury (Del. Co.)',
-    county: 3.873,
-    municipal: 0,
+    lst: 0,
+    lstNote: 'Thornbury Township (Delaware Co.) does not levy a local services tax.',
     municipalNote: 'This municipality levies no municipal property tax.',
-    school: 11.36,
-    eit: '1.00%',
   },
 ];
 
-const ALL_IDS = MUNICIPALITIES.map((m) => m.id);
+// "Thornbury Twp (Chester Co.)" and "Thornbury Township (Chester Co.)" match.
+const nameKey = (name) => String(name ?? '').replace(/\bTownship\b/g, 'Twp').trim();
+
+const sumRates = (rows) => +rows.reduce((total, r) => total + r.rate, 0).toFixed(4);
+
+// Adds sheet rates to each municipality, matched by full name (see nameKey). County and
+// municipal are sums of their Property rows (municipal 0 if none); eit is the
+// sum of Earned income rows, shown as a percent with two decimals.
+function withRates(rates) {
+  return MUNICIPALITY_INFO.map((m) => {
+    const rows = rates.filter((r) => nameKey(r.municipality) === nameKey(m.name));
+    const property = rows.filter((r) => r.tax_type === 'Property');
+    const ofType = (type) => property.filter((r) => r.taxing_body_type === type);
+    return {
+      ...m,
+      county: sumRates(ofType('County')),
+      municipal: sumRates(ofType('Municipality')),
+      school: sumRates(ofType('School district')),
+      eit: `${sumRates(rows.filter((r) => r.tax_type === 'Earned income')).toFixed(2)}%`,
+    };
+  });
+}
+
+const ALL_IDS = MUNICIPALITY_INFO.map((m) => m.id);
 
 function getAssessmentRatio(m) {
   return m.id === 'thornbury-delaware' ? 0.85 : 0.35;
@@ -148,7 +149,8 @@ const TOOLTIP_STYLE = {
   borderRadius: 2,
 };
 
-export default function RatesClient() {
+export default function RatesClient({ rates = [] }) {
+  const MUNICIPALITIES = useMemo(() => withRates(rates), [rates]);
   const [selected, setSelected] = useState(new Set(ALL_IDS));
   const [viewMode, setViewMode] = useState('millage');
   const [marketValue, setMarketValue] = useState(400000);
@@ -190,7 +192,7 @@ export default function RatesClient() {
         viewMode === 'millage'
           ? (totalMillage !== null ? +((totalMillage * ratio) / 10).toFixed(4) : null)
           : totalMillage !== null
-          ? millToDollar(totalMillage, assessed) + eitDollar + 52
+          ? millToDollar(totalMillage, assessed) + eitDollar + m.lst
           : null;
       return { id: m.id, name: m.shortName, value };
     })
@@ -398,7 +400,12 @@ export default function RatesClient() {
                             : <span className={styles.tbd}>N/A</span>}
                         </td>
                         <td className={`${styles.tdNum} ${styles.tdSeparatorLeft}`}>{m.eit}</td>
-                        <td className={styles.tdNum}>$52</td>
+                        <td className={styles.tdNum}>
+                          {fmt$(m.lst)}
+                          {m.lstNote && (
+                            <sup className={styles.noteRef} title={m.lstNote}>‡</sup>
+                          )}
+                        </td>
                       </tr>
                     );
                   })}
@@ -426,7 +433,7 @@ export default function RatesClient() {
                     const schoolTax = millToDollar(m.school, assessed);
                     const propTotal = countyTax + muniTax + schoolTax;
                     const eitDollar = (parseFloat(m.eit) / 100) * earnedIncome;
-                    const grandTotal = propTotal + eitDollar + 52;
+                    const grandTotal = propTotal + eitDollar + m.lst;
                     return (
                       <tr key={m.id} className={styles.tr}>
                         <td className={styles.tdMuni}>{m.name}</td>
@@ -440,7 +447,12 @@ export default function RatesClient() {
                         <td className={styles.tdNum}>{fmt$(schoolTax)}</td>
                         <td className={styles.tdNum}>{fmt$(propTotal)}</td>
                         <td className={`${styles.tdNum} ${styles.tdSeparatorLeft}`}>{fmt$(eitDollar)}</td>
-                        <td className={styles.tdNum}>$52</td>
+                        <td className={styles.tdNum}>
+                          {fmt$(m.lst)}
+                          {m.lstNote && (
+                            <sup className={styles.noteRef} title={m.lstNote}>‡</sup>
+                          )}
+                        </td>
                         <td className={`${styles.tdNum} ${styles.tdTotal}`}>
                           {fmt$(grandTotal)}
                         </td>
@@ -467,6 +479,11 @@ export default function RatesClient() {
           {visible.some((m) => m.municipalNote) && (
             <p className={styles.tableFootnote}>
               † Thornbury Township (Delaware Co.) levies no municipal property tax.
+            </p>
+          )}
+          {visible.some((m) => m.lstNote) && (
+            <p className={styles.tableFootnote}>
+              ‡ Thornbury Township (Delaware Co.) does not levy a local services tax.
             </p>
           )}
           <p className={styles.tableFootnote}>

@@ -520,10 +520,9 @@ function PerStudentSection({ data }) {
       <div className={styles.notes}>
         <p>
           Total spending per student is general fund total expenditures divided by average daily
-          membership (ADM). PDE published this figure through 2022-23; 2023-24 and 2024-25 are
-          calculated by West Chester by the Numbers using the same method from PDE&apos;s files.
-          Pennsylvania is the total for all 500 school districts, calculated by West Chester by the
-          Numbers.
+          membership (ADM). PDE published this figure through 2022-23; we calculated 2023-24 and
+          2024-25 using the same method from PDE&apos;s files. Pennsylvania is the total for all 500
+          school districts, which we calculated.
         </p>
       </div>
     </Section>
@@ -969,8 +968,8 @@ function DebtSection({ data }) {
       <div className={styles.notes}>
         <p>
           Debt is outstanding at fiscal year end for governmental funds. Other borrowing includes
-          authority building obligations, leases, and other long-term debt, calculated by West Chester
-          by the Numbers as total governmental debt minus bonds and pension-related liabilities.
+          authority building obligations, leases, and other long-term debt, which we calculated as total
+          governmental debt minus bonds and pension-related liabilities.
           Pension, OPEB, and compensated absences are accounting liabilities reported separately; PDE
           combined them into one category starting in 2022-23, and earlier years are the sum of
           PDE&apos;s separate categories.
@@ -1040,7 +1039,7 @@ function AidRatioSection({ data }) {
   );
 }
 
-export default function FinancesClient({ rows = [] }) {
+export default function FinancesClient({ dataNote, rows = [] }) {
   const data = useBudgetData(rows);
   const hasAny = data.years.some((y) => rows.some((r) => parseNum(r[y]) !== null));
 
@@ -1055,6 +1054,7 @@ export default function FinancesClient({ rows = [] }) {
             compared with similar Chester County districts and Pennsylvania. Figures are from the
             Annual Financial Reports districts file with the Pennsylvania Department of Education.
           </p>
+          {dataNote}
         </div>
       </header>
 
@@ -1086,9 +1086,8 @@ export default function FinancesClient({ rows = [] }) {
                 — Annual Financial Report (AFR) Data: Detailed (expenditures, support services, major
                 object, local, state, federal and other revenue, general fund balance, statement of
                 indebtedness), Average Daily Membership, Selected Data, Aid Ratios, and Real Estate Tax
-                Rates, 2020-21 through 2025-26. Figures are general fund unless noted. Pennsylvania
-                totals and figures labeled calculated are by West Chester by the Numbers from PDE&apos;s
-                files.
+                Rates, 2020-21 through 2025-26. Figures are general fund unless noted. We calculated
+                Pennsylvania totals and figures labeled calculated from PDE&apos;s files.
               </p>
             </section>
           </>

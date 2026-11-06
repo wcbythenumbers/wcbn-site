@@ -456,8 +456,8 @@ function StaffingSection({ rows }) {
         <p>
           Classroom teacher and professional staff counts include full- and part-time staff as
           reported to PDE on October 1. Average years of experience is for full-time classroom
-          teachers. Students per teacher is calculated by West Chester by the Numbers as
-          October 1 enrollment divided by classroom teacher count; it is not a PDE-published
+          teachers. We calculate students per teacher as October 1
+          enrollment divided by classroom teacher count; it is not a PDE-published
           figure.
         </p>
       </div>
@@ -465,7 +465,7 @@ function StaffingSection({ rows }) {
   );
 }
 
-export default function EnrollmentClient({ enrollment = [], demographics = [], staffing = [] }) {
+export default function EnrollmentClient({ dataNote, enrollment = [], demographics = [], staffing = [] }) {
   const hasAny = enrollment.length > 0 || demographics.length > 0 || staffing.length > 0;
 
   return (
@@ -478,6 +478,7 @@ export default function EnrollmentClient({ enrollment = [], demographics = [], s
             Enrollment, student demographics, and staffing for the West Chester Area School
             District, compared with similar Chester County districts and Pennsylvania statewide.
           </p>
+          {dataNote}
         </div>
       </header>
 

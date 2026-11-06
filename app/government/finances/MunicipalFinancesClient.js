@@ -954,7 +954,7 @@ function AllRevenueSection({ data, year }) {
         />
       )}
       <Notes>
-        Categories are grouped by West Chester by the Numbers from DCED&apos;s reported categories.
+        We grouped these categories from DCED&apos;s reported categories.
         Percentages are of revenue excluding other financing sources.
       </Notes>
     </Section>
@@ -1000,16 +1000,16 @@ function AllSpendingSection({ data, year }) {
         format={perResident ? formatDollars : formatPct}
       />
       <Notes>
-        Categories are grouped by West Chester by the Numbers from DCED&apos;s reported categories.
-        Percentages are of spending excluding other financing uses. Per-resident amounts by category are
-        calculated by West Chester by the Numbers using DCED&apos;s population figure; DCED publishes only
+        We grouped these categories from DCED&apos;s reported categories.
+        Percentages are of spending excluding other financing uses. We calculated per-resident amounts by
+        category using DCED&apos;s population figure; DCED publishes only
         total taxes, revenues, and expenditures per resident.
       </Notes>
     </Section>
   );
 }
 
-export default function MunicipalFinancesClient({ rows = [] }) {
+export default function MunicipalFinancesClient({ dataNote, rows = [] }) {
   const data = useMunicipalData(rows);
   const [municipality, setMunicipality] = useState(DEFAULT_MUNICIPALITY);
   const [year, setYear] = useState('');
@@ -1032,6 +1032,7 @@ export default function MunicipalFinancesClient({ rows = [] }) {
             the West Chester Area School District, as reported by each municipality to the Pennsylvania
             Department of Community and Economic Development (DCED).
           </p>
+          {dataNote}
           <p className={styles.heroNotes}>
             Figures are for calendar years (January–December). They cover all of a municipality&apos;s
             funds, including enterprise funds such as sewer and parking. Thornbury Township in Chester
@@ -1094,10 +1095,9 @@ export default function MunicipalFinancesClient({ rows = [] }) {
                   Municipal Statistics
                 </a>{' '}
                 — Statewide Municipal Annual Financial Reports, 2020 through 2024, compiled from each
-                municipality&apos;s Annual Audit and Financial Report (DCED-CLGS-30). Expenditures
-                excluding other financing uses are calculated by West Chester by the Numbers from
-                DCED&apos;s figures. Category groupings and per-resident amounts by category are
-                calculated by West Chester by the Numbers.
+                municipality&apos;s Annual Audit and Financial Report (DCED-CLGS-30). We calculated
+                expenditures excluding other financing uses from DCED&apos;s figures. Category
+                groupings and per-resident amounts by category are ones we calculated.
               </p>
             </section>
           </>

@@ -255,7 +255,7 @@ function PeerComparison({ peers, rows, exam, subject, group, scope }) {
   );
 }
 
-export default function PerformanceClient({ rows, peers = [] }) {
+export default function PerformanceClient({ dataNote, rows, peers = [] }) {
   const [exam, setExam] = useState(EXAMS[0]);
   const [subject, setSubject] = useState('');
   const [group, setGroup] = useState(DEFAULT_GROUP);
@@ -312,6 +312,7 @@ export default function PerformanceClient({ rows, peers = [] }) {
             Share of West Chester Area School District students scoring Proficient or
             Advanced on state exams, compared with Pennsylvania statewide.
           </p>
+          {dataNote}
         </div>
       </header>
 

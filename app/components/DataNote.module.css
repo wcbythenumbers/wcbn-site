@@ -1,0 +1,63 @@
+/* Sits inside the navy page hero, so text uses the hero's light colors. */
+.note {
+  margin-top: 0.75rem;
+}
+
+.summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--white);
+  cursor: pointer;
+  list-style: none;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary:hover {
+  color: var(--gold);
+}
+
+.summary:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* Right-pointing chevron drawn with borders; turns to point down when open. */
+.chevron {
+  display: inline-block;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-right: 1.5px solid var(--gold);
+  border-bottom: 1.5px solid var(--gold);
+  transform: rotate(-45deg);
+  transition: transform 0.15s ease;
+}
+
+.note[open] .chevron {
+  transform: rotate(45deg);
+}
+
+.body {
+  max-width: 600px;
+  margin-top: 0.25rem;
+  padding: 0.25rem 0 0.25rem 0.875rem;
+  border-left: 2px solid var(--gold);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  font-weight: 300;
+  color: rgba(248, 246, 240, 0.7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevron {
+    transition: none;
+  }
+}

@@ -1,5 +1,6 @@
 import { getMunicipalFinances } from '../../../lib/sheets';
 import MunicipalFinancesClient from './MunicipalFinancesClient';
+import DataNote from '../../components/DataNote';
 
 export const revalidate = 3600;
 
@@ -11,5 +12,14 @@ export const metadata = {
 
 export default async function MunicipalFinancesPage() {
   const rows = await getMunicipalFinances();
-  return <MunicipalFinancesClient rows={rows} />;
+  return (
+    <MunicipalFinancesClient
+      rows={rows}
+      dataNote={
+        <DataNote>
+          Figures are as reported by each municipality to the Pennsylvania Department of Community and Economic Development in its Annual Audit and Financial Report. They cover all of a municipality&apos;s funds. Groupings and figures labeled calculated are ones we computed from those reports.
+        </DataNote>
+      }
+    />
+  );
 }

@@ -1,4 +1,7 @@
+import { getTaxRates } from '../../../lib/sheets';
 import RatesClient from './RatesClient';
+
+export const revalidate = 3600;
 
 export const metadata = {
   title: 'Tax Rate Comparisons — West Chester by the Numbers',
@@ -6,6 +9,7 @@ export const metadata = {
     'Compare property tax millage rates, earned income tax rates, and local services tax across municipalities in the greater West Chester area.',
 };
 
-export default function TaxRatesPage() {
-  return <RatesClient />;
+export default async function TaxRatesPage() {
+  const rates = await getTaxRates();
+  return <RatesClient rates={rates} />;
 }
