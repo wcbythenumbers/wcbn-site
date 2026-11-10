@@ -1026,7 +1026,7 @@ export default function MunicipalFinancesClient({ dataNote, rows = [] }) {
       <header className={styles.hero}>
         <div className={styles.heroInner}>
           <div className={styles.label}>Taxes &amp; Finances</div>
-          <h1 className={styles.heading}>Municipal Finances</h1>
+          <h1 className={styles.heading}>Municipal Financials</h1>
           <p className={styles.intro}>
             Revenues, spending, debt, and fund balances for West Chester Borough and the townships in
             the West Chester Area School District, as reported by each municipality to the Pennsylvania

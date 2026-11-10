@@ -355,7 +355,14 @@ function BodyBreakdown({ component, dollars, rows, info }) {
   );
 }
 
-export default function TaxDollarsClient({ dataNote, rates = [], budget = [], bodies = [], settings = [] }) {
+export default function TaxDollarsClient({
+  dataNote,
+  rates = [],
+  budget = [],
+  bodies = [],
+  settings = [],
+  budgetGovIds = {},
+}) {
   const data = useTaxData(rates, budget, bodies, settings);
   const [municipality, setMunicipality] = useState('');
   const [mode, setMode] = useState(MODE_ASSESSED);
@@ -698,6 +705,16 @@ export default function TaxDollarsClient({ dataNote, rates = [], budget = [], bo
                           info={data.bodyInfo.get(c.body)}
                         />
                       ))}
+                      {budgetGovIds[g.government] && (
+                        <p className={styles.fullBudget}>
+                          <a
+                            className={styles.sourceLink}
+                            href={`/taxes/budgets?gov=${encodeURIComponent(budgetGovIds[g.government])}`}
+                          >
+                            See the full {g.government} budget →
+                          </a>
+                        </p>
+                      )}
                     </section>
                   );
                 })}

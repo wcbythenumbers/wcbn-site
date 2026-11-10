@@ -614,6 +614,12 @@
   margin-bottom: 0.75rem;
 }
 
+.fullBudget {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
 .sourceList li + li {
   margin-top: 0.25rem;
 }

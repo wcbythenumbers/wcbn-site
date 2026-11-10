@@ -1048,7 +1048,7 @@ export default function FinancesClient({ dataNote, rows = [] }) {
       <header className={styles.hero}>
         <div className={styles.heroInner}>
           <div className={styles.label}>Schools</div>
-          <h1 className={styles.heading}>WCASD Finances</h1>
+          <h1 className={styles.heading}>WCASD Financials</h1>
           <p className={styles.intro}>
             Audited spending, revenue, taxes, and debt for the West Chester Area School District,
             compared with similar Chester County districts and Pennsylvania. Figures are from the

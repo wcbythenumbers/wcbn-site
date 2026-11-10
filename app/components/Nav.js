@@ -11,8 +11,9 @@ const NAV_ITEMS = [
       { label: 'Tax Explainer', href: '/taxes/explainer' },
       { label: 'Tax Rate Comparisons', href: '/taxes/rates' },
       { label: 'Where Your Tax Dollars Go', href: '/taxes/dollars' },
-      { label: 'WCASD Finances', href: '/schools/finances' },
-      { label: 'Municipal Finances', href: '/government/finances' },
+      { label: 'Budgets', href: '/taxes/budgets' },
+      { label: 'WCASD Financials', href: '/schools/finances' },
+      { label: 'Municipal Financials', href: '/government/finances' },
     ],
   },
   {

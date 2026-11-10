@@ -5,7 +5,7 @@ import DataNote from '../../components/DataNote';
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'Municipal Finances — West Chester by the Numbers',
+  title: 'Municipal Financials — West Chester by the Numbers',
   description:
     'Revenues, spending, debt, and fund balances for West Chester Borough and the townships in the West Chester Area School District, as reported to the Pennsylvania DCED.',
 };
