@@ -33,6 +33,7 @@ const NAV_ITEMS = [
       { label: 'Government Directory', href: '/government/directory' },
       { label: 'Board & Council Meeting Recaps', href: '/recaps' },
       { label: 'Voting Records', href: '/votes' },
+      { label: 'Community Profile', href: '/government/community' },
     ],
   },
   {
