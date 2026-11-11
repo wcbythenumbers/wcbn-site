@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import MunicipalityFilter from '../components/MunicipalityFilter';
 import EntityTag from '../components/EntityTag';
-import { formatDate, isCurrentYear, isTodayOrFuture } from '../../lib/format';
+import { formatDate, isTodayOrFuture } from '../../lib/format';
 import styles from './calendar.module.css';
 
 // "Mon, March 17, 2026" -> "March 2026" grouping key, safe against bad dates.
@@ -27,11 +27,9 @@ export default function CalendarClient({ meetings }) {
   const [selected, setSelected] = useState([]);
   const isAllActive = selected.length === 0;
 
-  // Current-year meetings (past or future) plus any future meeting, so the
-  // calendar doesn't silently drop the rest of this year's past meetings
-  // while still excluding stale meetings from prior years.
+  // Upcoming meetings only: dated today or later.
   const relevant = useMemo(
-    () => meetings.filter((m) => isCurrentYear(m.meeting_date) || isTodayOrFuture(m.meeting_date)),
+    () => meetings.filter((m) => isTodayOrFuture(m.meeting_date)),
     [meetings]
   );
 
