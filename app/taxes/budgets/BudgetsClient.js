@@ -87,9 +87,17 @@ function useGovernments(funds, lines) {
   }, [funds, lines]);
 }
 
+// First non-blank value, or null.
+function firstPresent(values) {
+  const v = values.find((x) => x !== null && x !== undefined);
+  return v === undefined ? null : v;
+}
+
 // Categories -> items -> details. Lines with a detail are grouped under their
-// item; every other line is its own item. Category and item amounts are sums
-// of their lines (null when every line is blank).
+// item; every other line is its own item. Current amounts are sums of their
+// lines (null when every line is blank). Prior amounts fall back to the
+// higher-level item_prior / category_prior columns when the lines below have
+// no amount_prior.
 function buildCategories(lines) {
   const cats = new Map();
   lines.forEach((line) => {
@@ -118,11 +126,18 @@ function buildCategories(lines) {
         return {
           ...item,
           current: sumNullable(rows.map((r) => r.amount_current)),
-          prior: sumNullable(rows.map((r) => r.amount_prior)),
+          prior:
+            sumNullable(rows.map((r) => r.amount_prior)) ??
+            firstPresent(rows.map((r) => r.item_prior)),
         };
       }),
       current: sumNullable(cat.lines.map((l) => l.amount_current)),
-      prior: sumNullable(cat.lines.map((l) => l.amount_prior)),
+    }))
+    .map((cat) => ({
+      ...cat,
+      prior:
+        sumNullable(cat.items.map((item) => item.prior)) ??
+        firstPresent(cat.lines.map((l) => l.category_prior)),
     }))
     .sort((a, b) => (b.current ?? -Infinity) - (a.current ?? -Infinity));
 }
@@ -137,7 +152,7 @@ function filterCategory(cat, query, showZero) {
   const items = [];
   cat.items.forEach((item) => {
     if (item.line) {
-      if (!keepLine(item.line)) return;
+      if (!keepLine(item.line) && !item.prior) return;
       // A category-level line (no item name) matches on the category name.
       if (!textMatch(item.name || cat.name)) return;
       items.push(item);
@@ -387,7 +402,7 @@ function ItemsTable({ cat, gov }) {
                   {item.name || cat.name}
                   {item.line.note && <span className={styles.rowNote}>{item.line.note}</span>}
                 </th>
-                {amountCells(item.line.amount_current, item.line.amount_prior, cat.current)}
+                {amountCells(item.line.amount_current, item.prior, cat.current)}
               </tr>
             ) : (
               [
