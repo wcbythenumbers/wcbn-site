@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getRecaps, getVotes } from '../../../../lib/sheets';
 import EntityTag from '../../../components/EntityTag';
 import { formatDate } from '../../../../lib/format';
+import { recapAnchorId } from '../../../../lib/slug';
 import styles from '../../recaps.module.css';
 
 function splitLines(str) {
@@ -12,102 +13,85 @@ function splitLines(str) {
     .filter(Boolean);
 }
 
-const OUTCOME_STYLES = {
-  Passed: 'outcomePassed',
-  Failed: 'outcomeFailed',
-  Tabled: 'outcomeTabled',
-};
+const GOVERNING_BOARD = 'Governing board';
 
-export async function generateMetadata({ params }) {
-  const { entity, date } = await params;
-  const recaps = await getRecaps();
-  const recap = recaps.find((r) => r.entity_slug === entity && r.meeting_date === date);
-
-  if (!recap) {
-    return { title: 'Recap Not Found — West Chester by the Numbers' };
-  }
-
-  return {
-    title: `${recap.title} — West Chester by the Numbers`,
-    description: recap.summary || undefined,
-  };
+// All published recaps for one government on one date: governing board first,
+// then by meeting type.
+function findRecaps(recaps, entity, date) {
+  return recaps
+    .filter((r) => r.entity_slug === entity && r.meeting_date === date)
+    .sort((a, b) => {
+      const ga = a.body_type === GOVERNING_BOARD ? 0 : 1;
+      const gb = b.body_type === GOVERNING_BOARD ? 0 : 1;
+      if (ga !== gb) return ga - gb;
+      return String(a.meeting_type || '').localeCompare(String(b.meeting_type || ''));
+    });
 }
 
-export default async function RecapDetailPage({ params }) {
-  const { entity, date } = await params;
-  const [recaps, votes] = await Promise.all([getRecaps(), getVotes()]);
+function RecapLinks({ recap, light = false }) {
+  return (
+    <>
+      <div className={styles.linkRow}>
+        {recap.agenda_url && (
+          <a href={recap.agenda_url} target="_blank" rel="noopener noreferrer" className={styles.docLink}>
+            Agenda ↗
+          </a>
+        )}
+        {recap.minutes_url && (
+          <a href={recap.minutes_url} target="_blank" rel="noopener noreferrer" className={styles.docLink}>
+            Minutes ↗
+          </a>
+        )}
+        {recap.video_url && (
+          <a href={recap.video_url} target="_blank" rel="noopener noreferrer" className={styles.docLink}>
+            Video Recording ↗
+          </a>
+        )}
+      </div>
+      {recap.source && (
+        <p className={`${styles.sourceNote} ${light ? styles.sourceNoteLight : ''}`}>{recap.source}</p>
+      )}
+    </>
+  );
+}
 
-  const recap = recaps.find((r) => r.entity_slug === entity && r.meeting_date === date);
-  const meetingVotes = votes.filter((v) => v.entity_slug === entity && v.meeting_date === date);
-
-  if (!recap) {
-    return (
-      <main className={styles.main}>
-        <div className={styles.notFoundWrap}>
-          <p className={styles.notFoundText}>
-            We couldn&apos;t find a published recap for this meeting.
-          </p>
-          <Link href="/recaps" className={styles.backLink}>← Back to all recaps</Link>
-        </div>
-      </main>
-    );
-  }
-
-  const actionItems = splitLines(recap.action_items);
-
+// Summary, Key Discussion and Action Items for one recap. HeadingTag is h2 on
+// a single-meeting page and h3 inside a meeting's section.
+function RecapBody({ recap, HeadingTag = 'h2' }) {
+  const keyDiscussion = splitLines(recap.key_discussion);
   return (
     <main className={styles.main}>
       <header className={styles.detailHero}>
         <div className={styles.heroInner}>
           <EntityTag id={entity} name={recap.entity} />
-          <h1 className={styles.heading}>{recap.title}</h1>
-          <p className={styles.detailMeta}>
-            {recap.meeting_type} · {formatDate(recap.meeting_date)}
-          </p>
-          <div className={styles.linkRow}>
-            {recap.agenda_url && (
-              <a href={recap.agenda_url} target="_blank" rel="noopener noreferrer" className={styles.docLink}>
-                Agenda ↗
-              </a>
-            )}
-            {recap.minutes_url && (
-              <a href={recap.minutes_url} target="_blank" rel="noopener noreferrer" className={styles.docLink}>
-                Minutes ↗
-              </a>
-            )}
-            {recap.video_url && (
-              <a href={recap.video_url} target="_blank" rel="noopener noreferrer" className={styles.docLink}>
-                Video Recording ↗
-              </a>
-            )}
-          </div>
+          {isMulti ? (
+            <h1 className={styles.heading}>Meetings on {formatDate(recap.meeting_date)}</h1>
+          ) : (
+            <>
+              <h1 className={styles.heading}>{recap.title}</h1>
+              <p className={styles.detailMeta}>
+                {recap.meeting_type} · {formatDate(recap.meeting_date)}
+              </p>
+              <RecapLinks recap={recap} light />
+            </>
+          )}
         </div>
       </header>
 
       <div className={styles.content}>
-        {recap.summary && (
-          <section className={styles.section}>
-            <h2 className={styles.sectionHeading}>Summary</h2>
-            <p className={styles.bodyText}>{recap.summary}</p>
-          </section>
-        )}
-
-        {recap.key_discussion && (
-          <section className={styles.section}>
-            <h2 className={styles.sectionHeading}>Key Discussion</h2>
-            <p className={styles.bodyText}>{recap.key_discussion}</p>
-          </section>
-        )}
-
-        {actionItems.length > 0 && (
-          <section className={styles.section}>
-            <h2 className={styles.sectionHeading}>Action Items</h2>
-            <ul className={styles.bulletList}>
-              {actionItems.map((item, i) => (
-                <li key={i}>{item}</li>
-              ))}
-            </ul>
-          </section>
+        {isMulti ? (
+          dayRecaps.map((r, i) => (
+            <section key={i} id={recapAnchorId(r.meeting_type)} className={styles.meetingSection}>
+              <h2 className={styles.meetingTitle}>{r.title}</h2>
+              {r.meeting_type && <p className={styles.meetingTypeText}>{r.meeting_type}</p>}
+              <div className={styles.meetingLinks}>
+                <RecapLinks recap={r} />
+              </div>
+              <RecapBody recap={r} HeadingTag="h3" />
+            </section>
+          ))
+        ) : (
+          <RecapBody recap={recap} />
         )}
 
         <section className={styles.section}>

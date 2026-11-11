@@ -6,13 +6,28 @@ import MunicipalityFilter from '../components/MunicipalityFilter';
 import EntityTag from '../components/EntityTag';
 import { formatDate, isWithinPastYear } from '../../lib/format';
 import { isValidMunicipalityId } from '../../lib/entities';
+import { recapAnchorId } from '../../lib/slug';
 import styles from './recaps.module.css';
+import filterStyles from '../components/FilterButtonGroup.module.css';
+
+const BODY_ALL = 'all';
+const BODY_GOVERNING = 'governing';
+const BODY_OPTIONS = [
+  { id: BODY_ALL, label: 'All meetings' },
+  { id: BODY_GOVERNING, label: 'Governing boards' },
+];
+
+// Blank body_type (including pending rows) counts as a governing board.
+function isGoverningBoard(recap) {
+  return !recap.body_type || recap.body_type === 'Governing board';
+}
 
 export default function RecapsClient({ recaps, votes, pendingRecaps = [], initialEntity }) {
   const [selected, setSelected] = useState(() =>
     isValidMunicipalityId(initialEntity) ? [initialEntity] : []
   );
   const isAllActive = selected.length === 0;
+  const [bodyFilter, setBodyFilter] = useState(BODY_ALL);
 
   const matchesFilter = (entitySlug) => isAllActive || selected.includes(entitySlug);
 
@@ -39,8 +54,9 @@ export default function RecapsClient({ recaps, votes, pendingRecaps = [], initia
     const pending = pendingRecaps.map((r) => ({ ...r, pending: true }));
     return [...published, ...pending]
       .filter((r) => matchesFilter(r.entity_slug))
+      .filter((r) => bodyFilter === BODY_ALL || isGoverningBoard(r))
       .sort((a, b) => (a.meeting_date < b.meeting_date ? 1 : -1));
-  }, [recaps, pendingRecaps, selected]);
+  }, [recaps, pendingRecaps, selected, bodyFilter]);
 
   const hasSummaryData = openMatters.length > 0 || keyDecisions.length > 0;
 
@@ -110,6 +126,28 @@ export default function RecapsClient({ recaps, votes, pendingRecaps = [], initia
           </div>
         </section>
 
+        <div className={filterStyles.filterBar}>
+          <div className={filterStyles.filterHeader}>
+            <div className={filterStyles.filterLabel}>Show</div>
+          </div>
+          <div className={filterStyles.filterGroup} role="group" aria-label="Show meetings">
+            {BODY_OPTIONS.map((option) => {
+              const active = bodyFilter === option.id;
+              return (
+                <button
+                  key={option.id}
+                  type="button"
+                  className={`${filterStyles.filterBtn} ${active ? filterStyles.filterBtnActive : ''}`}
+                  aria-pressed={active}
+                  onClick={() => setBodyFilter(option.id)}
+                >
+                  {option.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         <h2 className={styles.listHeading}>All Recaps</h2>
         {visibleRecaps.length === 0 ? (
           <p className={styles.emptyText}>No recaps published yet. Check back soon.</p>
@@ -129,7 +167,7 @@ export default function RecapsClient({ recaps, votes, pendingRecaps = [], initia
                     <h3 className={styles.recapTitle}>{r.title}</h3>
                     <p className={styles.recapSummary}>{r.summary}</p>
                     <Link
-                      href={`/recaps/${r.entity_slug}/${r.meeting_date}`}
+                      href={`/recaps/${r.entity_slug}/${r.meeting_date}#${recapAnchorId(r.meeting_type)}`}
                       className={styles.readMore}
                     >
                       Read full recap →

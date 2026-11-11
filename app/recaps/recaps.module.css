@@ -293,6 +293,66 @@
   color: #333;
 }
 
+/* ── SOURCE NOTE (under each recap's links) ── */
+.sourceNote {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #666;
+  font-weight: 300;
+  margin-top: 0.75rem;
+}
+
+.sourceNoteLight {
+  color: rgba(248, 246, 240, 0.65);
+}
+
+/* ── MULTIPLE MEETINGS ON ONE DATE ── */
+.meetingSection {
+  margin-bottom: 3rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(10, 25, 49, 0.12);
+  scroll-margin-top: 5rem;
+}
+
+.meetingTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.25;
+}
+
+.meetingTypeText {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+.meetingLinks {
+  margin: 1.25rem 0 2rem;
+}
+
+.meetingLinks .docLink {
+  color: var(--navy);
+}
+
+.meetingLinks .docLink:hover {
+  color: var(--navy);
+}
+
+.subHeading {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--gold);
+}
+
 /* ── VOTES AT THIS MEETING ── */
 .voteList {
   list-style: none;
