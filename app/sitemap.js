@@ -27,6 +27,7 @@ const PAGES = [
   '/calendar',
   '/about',
   '/privacy',
+  '/terms',
 ];
 
 export default async function sitemap() {

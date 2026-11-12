@@ -190,6 +190,7 @@ export default function RecapsClient({ recaps, votes, pendingRecaps = [], initia
             <a href="/calendar">Calendar</a>
             <a href="/subscribe">Subscribe</a>
             <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
           </div>
         </div>
       </footer>

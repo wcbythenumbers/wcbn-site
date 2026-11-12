@@ -108,6 +108,7 @@ export default async function MemberVotesPage({ params }) {
             <a href="/calendar">Calendar</a>
             <a href="/subscribe">Subscribe</a>
             <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
           </div>
         </div>
       </footer>

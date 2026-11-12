@@ -41,6 +41,7 @@ export default function PrivacyPage() {
             <a href="/articles">Articles</a>
             <a href="/subscribe">Subscribe</a>
             <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
           </div>
         </div>
       </footer>
