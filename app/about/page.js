@@ -93,7 +93,7 @@ export default function AboutPage() {
 
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
-          <span>© 2025 West Chester by the Numbers</span>
+          <span>© {new Date().getFullYear()} West Chester by the Numbers</span>
               <div className={styles.footerLinks}>
             <a href="/about">About</a>
                 <a href="/articles">Articles</a>

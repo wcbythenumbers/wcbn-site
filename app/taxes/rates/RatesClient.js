@@ -7,6 +7,7 @@ import {
   ResponsiveContainer, Cell, LabelList,
 } from 'recharts';
 import styles from './rates.module.css';
+import MethodNote from '../../components/MethodNote';
 
 // Rates (county, municipal, school, eit) come from the TaxRates sheet; see withRates.
 const MUNICIPALITY_INFO = [
@@ -575,6 +576,25 @@ export default function RatesClient({ rates = [] }) {
           </p>
         </div>
 
+        <MethodNote summary="About this data">
+          <p>
+            Property tax rates for each county, municipality and WCASD are the
+            adopted rates for 2026 (WCASD: the 2026-27 school year). Earned
+            income tax rates are from the Pennsylvania Department of Community
+            and Economic Development&apos;s local tax register. The local
+            services tax is $52 a year in every municipality shown except
+            Thornbury Township (Delaware Co.), which does not levy it. Estimated
+            totals are calculated by WCBN: total millage × assessed value ÷
+            1,000, plus earned income × the combined earned income tax rate,
+            plus the local services tax. Assessed value is the market value you
+            enter times the county&apos;s approximate assessment ratio (Chester
+            County 35%, Delaware County 85%); the effective rate uses the same
+            ratios. Estimates do not apply the homestead exclusion or other
+            exemptions. Your tax bill is the authoritative amount. Sources are
+            listed under Sources &amp; Additional Information.
+          </p>
+        </MethodNote>
+
         {/* ── Sources & Additional Information ── */}
         <div className={styles.sourcesSection}>
           <button
@@ -626,7 +646,7 @@ export default function RatesClient({ rates = [] }) {
 
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
-          <span>© 2025 West Chester by the Numbers</span>
+          <span>© {new Date().getFullYear()} West Chester by the Numbers</span>
           <div className={styles.footerLinks}>
             <a href="/about">About</a>
             <a href="/calendar">Calendar</a>
