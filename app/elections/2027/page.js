@@ -44,9 +44,10 @@ export default function Running2027Page() {
 
         <h2 className={styles.sectionHeading}>In the meantime</h2>
         <p className={styles.body}>
-          Voter registration and mail-in ballot deadlines still apply for the
-          November 2026 election. Key dates and links are on our voter
-          information page.
+          Voter registration and mail-in ballot deadlines will apply to the May
+          2027 primary and the November 2027 municipal election. Links for
+          registering, checking your registration and requesting a mail-in
+          ballot are on our voter information page.
         </p>
         <a href="/elections/voter-info" className={styles.linkBtn}>
           Voter Information →
