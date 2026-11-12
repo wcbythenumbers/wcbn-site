@@ -108,6 +108,16 @@ const OUTCOME_STYLES = {
   Tabled: 'outcomeTabled',
 };
 
+// Shortens text to at most `max` characters, cutting at a word boundary and
+// dropping any trailing separator punctuation.
+function truncateAtWord(text, max) {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max + 1);
+  const lastSpace = cut.lastIndexOf(' ');
+  const trimmed = lastSpace > 0 ? cut.slice(0, lastSpace) : text.slice(0, max);
+  return trimmed.replace(/[\s;,:]+$/, '');
+}
+
 export async function generateMetadata({ params }) {
   const { entity, date } = await params;
   const recaps = await getRecaps();
@@ -120,8 +130,17 @@ export async function generateMetadata({ params }) {
 
   if (dayRecaps.length > 1) {
     return {
-      title: `${recap.entity} meetings on ${formatDate(recap.meeting_date)}`,
-      description: `Recaps of ${dayRecaps.length} ${recap.entity} meetings held on ${formatDate(recap.meeting_date)}.`,
+      title: `${recap.entity}: ${dayRecaps
+        .map((r) => r.meeting_type)
+        .filter(Boolean)
+        .join(', ')}`,
+      description: truncateAtWord(
+        dayRecaps
+          .map((r) => r.title)
+          .filter(Boolean)
+          .join('; '),
+        160
+      ),
       alternates: { canonical: `/recaps/${entity}/${date}` },
     };
   }
