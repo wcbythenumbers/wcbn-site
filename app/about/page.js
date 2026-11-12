@@ -31,7 +31,7 @@ export default function AboutPage() {
               <ul className={styles.list}>
             <li><strong>Non-partisan.</strong> We cover facts, not sides. We do not endorse candidates, parties, or political positions.</li>
                       <li><strong>Clarity first.</strong> Government data is often dense and inaccessible. Our job is to make it understandable without distorting it.</li>
-                      <li><strong>Cite everything.</strong> Every claim links to a source. Every number identifies where it came from and when it was accessed.</li>
+                      <li><strong>Cite everything.</strong> Every claim links to a source. Every number identifies where it came from.</li>
                       <li><strong>Corrections matter.</strong> When we get something wrong, we correct it promptly and note it on the original post.</li>
           </ul>
           </section>
@@ -62,16 +62,17 @@ export default function AboutPage() {
               <p>We draw primarily from public records and government-published data, including:</p>
               <ul className={styles.list}>
             <li>Pennsylvania Department of Education Annual Financial Reports (AFR)</li>
-                <li>Open Book PA (Pennsylvania Treasury)</li>
                 <li>WCASD adopted budgets and BoardDocs meeting records</li>
-                <li>Borough of West Chester Agenda Center, CAFR, and annual budgets</li>
-                <li>Township meeting minutes, budgets, and CAFR filings for WCASD member municipalities</li>
-                <li>Chester County Open Data, GIS, and Elections Office</li>
+                <li>Borough of West Chester Agenda Center and annual budgets</li>
+                <li>Township meeting minutes and budgets for WCASD member municipalities</li>
+                <li>Chester County Elections Office</li>
                 <li>Delaware County Open Data and Elections Office</li>
-                <li>U.S. Census Bureau / American Community Survey</li>
-                <li>Right-to-Know requests filed under Pennsylvania's RTKL</li>
+                <li>U.S. Census Bureau (American Community Survey)</li>
+                <li>Pennsylvania Department of Community and Economic Development (DCED)</li>
+                <li>Chester County and Delaware County election results</li>
+                <li>Municipal, county and school district meeting recordings and official minutes</li>
           </ul>
-              <p>Data is identified by source and access date on each post. Government agencies periodically revise published data; we note material changes when we become aware of them.</p>
+              <p>Each data page names its sources in its About this data section. Government agencies periodically revise published data; we note material changes when we become aware of them.</p>
           </section>
 
         <section className={styles.disclaimerBox}>
@@ -84,7 +85,7 @@ export default function AboutPage() {
         <section className={styles.section}>
           <h2 className={styles.sectionHeading}>Contact</h2>
               <p>Questions, corrections, tips, or feedback: <a href="mailto:hello@westchesterbythenumbers.com" className={styles.link}>hello@westchesterbythenumbers.com</a></p>
-                    <p>Right-to-Know requests we've filed are available upon request. If you believe something we've published contains a factual error, please reach out and we will review it promptly.</p>
+                    <p>If you believe something we've published contains a factual error, please reach out and we will review it promptly.</p>
           </section>
 
           </div>
