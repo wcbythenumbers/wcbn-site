@@ -2,26 +2,56 @@
 
 import { useState } from 'react';
 import styles from '../elections.module.css';
+import MethodNote from '../../components/MethodNote';
 
 const MEASURES = [
   {
-    id: 'east-whiteland-supervisors-2026',
+    id: 'delaware-county-open-space-2026',
     year: 2026,
-    municipality: 'east-whiteland',
-    municipalityLabel: 'East Whiteland Township',
+    municipalities: ['delaware-county', 'thornbury-delaware'],
+    municipalityLabel:
+      'Delaware County — voted on countywide, including Thornbury Township (Delaware Co.)',
     electionLabel: 'November 2026 General Election',
-    title: 'Board of Supervisors Size Referendum',
+    title: 'Water Quality, Natural Areas, and Wildlife Habitat Protection Referendum',
     election: 'November 3, 2026 General Election',
     whatItAsks:
-      'Should the East Whiteland Township Board of Supervisors be expanded from 3 members to 5 members?',
+      '"Shall debt in the maximum principal amount of up to $120 million be authorized for purposes of financing land conservation, including protecting drinking water sources, water quality in rivers and creeks, wildlife habitat, conserving trees to protect air quality, conserving wetlands to prevent flooding, providing greenways and parks, protecting natural areas from development, and related costs, to be incurred by the County as debt approved by the voters, requiring public disclosure and annual independent audits?"',
     yesOutcome:
-      'The board expands from 3 to 5 elected supervisors. Two additional supervisor seats would be created and filled in a future election.',
-    noOutcome: 'The board remains at 3 supervisors. No change to the current structure.',
+      'Delaware County is authorized to borrow up to $120 million for the land conservation purposes listed in the question, with public disclosure and annual independent audits.',
+    noOutcome: 'Delaware County is not authorized to take on this debt.',
     background:
-      "Residents collected over 500 signatures to place this question on the ballot, motivated in part by community concerns over the township's handling of a proposed data center project on a former Superfund site on the East/West Whiteland township line.",
-    sourceText: 'Source: Philadelphia Inquirer, August 19, 2026',
-    sourceUrl:
-      'https://www.inquirer.com/news/pennsylvania/east-whiteland-board-supervisors-data-center-20260819.html',
+      'Delaware County Council placed this question on the ballot. It appeared on every ballot in Delaware County, including in Thornbury Township (Delaware Co.).',
+    result: {
+      outcome: 'Passed',
+      status: 'Unofficial results — certification pending',
+      rows: [
+        {
+          label: 'Delaware County (all 383 precincts)',
+          yes: 172774,
+          yesPct: '75.69%',
+          no: 55493,
+          noPct: '24.31%',
+        },
+        {
+          label: 'Thornbury Township (Delaware Co.), 5 precincts — calculated by WCBN',
+          yes: 2137,
+          yesPct: '61.76%',
+          no: 1323,
+          noPct: '38.24%',
+        },
+      ],
+    },
+    sources: [
+      {
+        label:
+          'Question text: Delaware County Bureau of Elections, Notice of 2026 General Election',
+        url: 'https://www.delcopa.gov/sites/default/files/2026-08/GE2026-UMOVA-Notice_8-6-2026-update.pdf',
+      },
+      {
+        label: 'Results: Delaware County Election Night Reporting',
+        url: 'https://results.enr.clarityelections.com/PA/Delaware/127482/',
+      },
+    ],
   },
 ];
 
@@ -36,7 +66,6 @@ const MUNICIPALITY_OPTIONS = [
   { id: 'west-goshen', label: 'West Goshen' },
   { id: 'east-bradford', label: 'East Bradford' },
   { id: 'west-whiteland', label: 'West Whiteland' },
-  { id: 'east-whiteland', label: 'East Whiteland' },
   { id: 'westtown', label: 'Westtown' },
   { id: 'thornbury-chester', label: 'Thornbury (Chester Co.)' },
   { id: 'thornbury-delaware', label: 'Thornbury (Delaware Co.)' },
@@ -55,6 +84,49 @@ function groupByElection(measures) {
     groups[indexByLabel.get(measure.electionLabel)].measures.push(measure);
   });
   return groups;
+}
+
+function formatCount(n) {
+  return n.toLocaleString('en-US');
+}
+
+function MeasureResult({ result }) {
+  const passed = result.outcome === 'Passed';
+  return (
+    <div className={styles.measureResult}>
+      <div className={styles.measureFieldLabel}>Result</div>
+      <div
+        className={`${styles.resultOutcome} ${passed ? styles.outcomeYes : styles.outcomeNo}`}
+      >
+        <span className={styles.outcomeTag}>{result.outcome}</span>
+      </div>
+      <p className={styles.resultStatus}>{result.status}</p>
+      <div className={styles.resultTableWrap}>
+        <table className={styles.resultTable}>
+          <thead>
+            <tr>
+              <th scope="col">Area</th>
+              <th scope="col">Yes</th>
+              <th scope="col">No</th>
+            </tr>
+          </thead>
+          <tbody>
+            {result.rows.map((row) => (
+              <tr key={row.label}>
+                <th scope="row">{row.label}</th>
+                <td>
+                  {formatCount(row.yes)} <span className={styles.resultPct}>({row.yesPct})</span>
+                </td>
+                <td>
+                  {formatCount(row.no)} <span className={styles.resultPct}>({row.noPct})</span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 }
 
 function Measure({ measure }) {
@@ -84,22 +156,29 @@ function Measure({ measure }) {
         </div>
       </div>
 
+      {measure.result && <MeasureResult result={measure.result} />}
+
       <div className={styles.measureField}>
         <div className={styles.measureFieldLabel}>Background</div>
         <p className={styles.measureFieldText}>{measure.background}</p>
       </div>
 
-      <p className={styles.measureSource}>
-        {measure.sourceText} —{' '}
-        <a
-          href={measure.sourceUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={styles.measureSourceLink}
-        >
-          read the article ↗
-        </a>
-      </p>
+      {measure.sources && measure.sources.length > 0 && (
+        <ul className={styles.measureSources}>
+          {measure.sources.map((source) => (
+            <li key={source.url} className={styles.measureSource}>
+              <a
+                href={source.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.measureSourceLink}
+              >
+                {source.label} ↗
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
@@ -130,7 +209,8 @@ export default function BallotClient() {
   const visibleMeasures = MEASURES.filter((measure) => {
     const yearMatch = yearsAllActive || selectedYears.includes(measure.year);
     const municipalityMatch =
-      municipalitiesAllActive || selectedMunicipalities.includes(measure.municipality);
+      municipalitiesAllActive ||
+      measure.municipalities.some((id) => selectedMunicipalities.includes(id));
     return yearMatch && municipalityMatch;
   });
 
@@ -154,6 +234,15 @@ export default function BallotClient() {
               className={styles.measureSourceLink}
             >
               Chester County Voter Services
+            </a>{' '}
+            or{' '}
+            <a
+              href="https://www.delcopa.gov/vote"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.measureSourceLink}
+            >
+              Delaware County Elections
             </a>
             .
           </p>
@@ -246,11 +335,31 @@ export default function BallotClient() {
         )}
 
         <p className={styles.pageNote}>
-          Ballot measures are verified against Chester County Voter Services
-          official documents. This page is updated as new measures are
-          confirmed. Not all measures affecting Chester County appear here —
-          only those affecting municipalities within the WCASD area.
+          This page covers ballot questions voted on by residents of the
+          WCASD-area municipalities (West Chester Borough, East Bradford, East
+          Goshen, West Goshen, West Whiteland, Westtown, Thornbury Township in
+          Chester County and Thornbury Township in Delaware County), including
+          countywide questions. In November 2026, the only such question was
+          Delaware County&apos;s open space referendum; Chester County&apos;s
+          three 2026 ballot questions were in East Whiteland, Malvern and
+          Tredyffrin, outside the WCASD area.
         </p>
+
+        <div className={styles.aboutData}>
+          <MethodNote summary="About this data">
+            <p>
+              Question text comes from Delaware County&apos;s official notice
+              of the election. Results come from the county&apos;s election
+              night reporting site and are unofficial until the county
+              certifies them; we will replace them with certified results.
+              Countywide totals are as reported by the county. Thornbury
+              Township (Delaware Co.) totals were calculated by WCBN by adding
+              the township&apos;s five precincts. Percentages are of yes and no
+              votes on the question; ballots left blank on the question are not
+              counted.
+            </p>
+          </MethodNote>
+        </div>
       </div>
 
       <footer className={styles.footer}>

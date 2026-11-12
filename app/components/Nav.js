@@ -39,7 +39,7 @@ const NAV_ITEMS = [
   {
     label: 'Elections',
     items: [
-      { label: "Who's Running (2026)", href: '/elections/2026' },
+      { label: "Who's Running (2027)", href: '/elections/2027' },
       { label: "What's on the Ballot", href: '/elections/ballot' },
       { label: 'Voter Information', href: '/elections/voter-info' },
     ],
