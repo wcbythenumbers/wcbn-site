@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import MunicipalityFilter from '../components/MunicipalityFilter';
 import EntityTag from '../components/EntityTag';
+import AiRecapNote from '../components/AiRecapNote';
 import { formatDate, isWithinPastYear } from '../../lib/format';
 import { isValidMunicipalityId } from '../../lib/entities';
 import { recapAnchorId } from '../../lib/slug';
@@ -148,6 +149,7 @@ export default function RecapsClient({ recaps, votes, pendingRecaps = [], initia
           </div>
         </div>
 
+        <AiRecapNote />
         <h2 className={styles.listHeading}>All Recaps</h2>
         {visibleRecaps.length === 0 ? (
           <p className={styles.emptyText}>No recaps published yet. Check back soon.</p>
@@ -187,6 +189,7 @@ export default function RecapsClient({ recaps, votes, pendingRecaps = [], initia
             <a href="/about">About</a>
             <a href="/calendar">Calendar</a>
             <a href="/subscribe">Subscribe</a>
+            <a href="/privacy">Privacy</a>
           </div>
         </div>
       </footer>

@@ -152,6 +152,7 @@ export default async function Home() {
             <a href="#">Articles</a>
             <a href="#">Data Sources</a>
             <a href="#">Contact</a>
+            <a href="/privacy">Privacy</a>
           </div>
           <div className={styles.footerDisclaimer}>
             westchesterbythenumbers.com · West Chester, PA

@@ -1,0 +1,27 @@
+/* Matches .sourceNote in app/recaps/recaps.module.css. */
+.note {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #666;
+  font-weight: 300;
+  margin-top: 0.75rem;
+  margin-bottom: 1.25rem;
+  max-width: 680px;
+}
+
+.light {
+  color: rgba(248, 246, 240, 0.65);
+  margin-bottom: 0;
+}
+
+.link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+
+.link:hover {
+  color: var(--gold);
+}

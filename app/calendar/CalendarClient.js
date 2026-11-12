@@ -104,6 +104,7 @@ export default function CalendarClient({ meetings }) {
             <a href="/about">About</a>
             <a href="/articles">Articles</a>
             <a href="/subscribe">Subscribe</a>
+            <a href="/privacy">Privacy</a>
           </div>
         </div>
       </footer>

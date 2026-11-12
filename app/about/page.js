@@ -69,7 +69,6 @@ export default function AboutPage() {
                 <li>Chester County Open Data, GIS, and Elections Office</li>
                 <li>Delaware County Open Data and Elections Office</li>
                 <li>U.S. Census Bureau / American Community Survey</li>
-                <li>Chester County Court of Common Pleas public docket</li>
                 <li>Right-to-Know requests filed under Pennsylvania's RTKL</li>
           </ul>
               <p>Data is identified by source and access date on each post. Government agencies periodically revise published data; we note material changes when we become aware of them.</p>
@@ -79,7 +78,6 @@ export default function AboutPage() {
           <h2 className={styles.disclaimerHeading}>Disclaimer</h2>
               <p>All content on West Chester by the Numbers is provided for informational purposes only and does not constitute legal, financial, investment, or professional advice of any kind.</p>
               <p>We make reasonable efforts to ensure accuracy, but we do not warrant that all information is complete, current, or error-free. Data is sourced from public records and third-party government sources; we are not responsible for errors or omissions in those underlying sources.</p>
-              <p>Coverage of litigation and legal matters is based solely on public court records and documented facts. We do not opine on the merits of active cases.</p>
               <p>Nothing on this site should be relied upon as the basis for any legal, financial, or civic decision without independent verification.</p>
           </section>
 
@@ -98,6 +96,7 @@ export default function AboutPage() {
             <a href="/about">About</a>
                 <a href="/articles">Articles</a>
                 <a href="/subscribe">Subscribe</a>
+                <a href="/privacy">Privacy</a>
           </div>
           </div>
           </footer>

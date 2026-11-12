@@ -3,6 +3,8 @@ import { getRecaps, getVotes } from '../../../../lib/sheets';
 import EntityTag from '../../../components/EntityTag';
 import { formatDate } from '../../../../lib/format';
 import { recapAnchorId } from '../../../../lib/slug';
+import AiRecapNote from '../../../components/AiRecapNote';
+import CorrectionNote from '../../../components/CorrectionNote';
 import styles from '../../recaps.module.css';
 
 function splitLines(str) {
@@ -28,7 +30,7 @@ function findRecaps(recaps, entity, date) {
     });
 }
 
-function RecapLinks({ recap, light = false }) {
+function RecapLinks({ recap, light = false, aiNote = false }) {
   return (
     <>
       <div className={styles.linkRow}>
@@ -51,6 +53,7 @@ function RecapLinks({ recap, light = false }) {
       {recap.source && (
         <p className={`${styles.sourceNote} ${light ? styles.sourceNoteLight : ''}`}>{recap.source}</p>
       )}
+      {aiNote && <AiRecapNote light={light} />}
     </>
   );
 }
@@ -59,6 +62,96 @@ function RecapLinks({ recap, light = false }) {
 // a single-meeting page and h3 inside a meeting's section.
 function RecapBody({ recap, HeadingTag = 'h2' }) {
   const keyDiscussion = splitLines(recap.key_discussion);
+  const actionItems = splitLines(recap.action_items);
+  const headingClass = HeadingTag === 'h2' ? styles.sectionHeading : styles.subHeading;
+  return (
+    <>
+      {recap.summary && (
+        <section className={styles.section}>
+          <HeadingTag className={headingClass}>Summary</HeadingTag>
+          <p className={styles.bodyText}>{recap.summary}</p>
+        </section>
+      )}
+
+      {keyDiscussion.length > 0 && (
+        <section className={styles.section}>
+          <HeadingTag className={headingClass}>Key Discussion</HeadingTag>
+          {keyDiscussion.length === 1 ? (
+            <p className={styles.bodyText}>{keyDiscussion[0]}</p>
+          ) : (
+            <ul className={styles.bulletList}>
+              {keyDiscussion.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
+          )}
+        </section>
+      )}
+
+      {actionItems.length > 0 && (
+        <section className={styles.section}>
+          <HeadingTag className={headingClass}>Action Items</HeadingTag>
+          <ul className={styles.bulletList}>
+            {actionItems.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </>
+  );
+}
+
+const OUTCOME_STYLES = {
+  Passed: 'outcomePassed',
+  Failed: 'outcomeFailed',
+  Tabled: 'outcomeTabled',
+};
+
+export async function generateMetadata({ params }) {
+  const { entity, date } = await params;
+  const recaps = await getRecaps();
+  const dayRecaps = findRecaps(recaps, entity, date);
+  const recap = dayRecaps[0];
+
+  if (!recap) {
+    return { title: 'Recap Not Found — West Chester by the Numbers' };
+  }
+
+  if (dayRecaps.length > 1) {
+    return {
+      title: `${recap.entity} meetings on ${formatDate(recap.meeting_date)} — West Chester by the Numbers`,
+    };
+  }
+
+  return {
+    title: `${recap.title} — West Chester by the Numbers`,
+    description: recap.summary || undefined,
+  };
+}
+
+export default async function RecapDetailPage({ params }) {
+  const { entity, date } = await params;
+  const [recaps, votes] = await Promise.all([getRecaps(), getVotes()]);
+
+  const dayRecaps = findRecaps(recaps, entity, date);
+  const recap = dayRecaps[0];
+  const isMulti = dayRecaps.length > 1;
+  const meetingVotes = votes.filter((v) => v.entity_slug === entity && v.meeting_date === date);
+
+  if (!recap) {
+    return (
+      <main className={styles.main}>
+        <div className={styles.notFoundWrap}>
+          <p className={styles.notFoundText}>
+            We couldn&apos;t find a published recap for this meeting.
+          </p>
+          <Link href="/recaps" className={styles.backLink}>← Back to all recaps</Link>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className={styles.main}>
       <header className={styles.detailHero}>
@@ -69,10 +162,11 @@ function RecapBody({ recap, HeadingTag = 'h2' }) {
           ) : (
             <>
               <h1 className={styles.heading}>{recap.title}</h1>
+              <CorrectionNote text={recap.correction} />
               <p className={styles.detailMeta}>
                 {recap.meeting_type} · {formatDate(recap.meeting_date)}
               </p>
-              <RecapLinks recap={recap} light />
+              <RecapLinks recap={recap} light aiNote />
             </>
           )}
         </div>
@@ -83,9 +177,10 @@ function RecapBody({ recap, HeadingTag = 'h2' }) {
           dayRecaps.map((r, i) => (
             <section key={i} id={recapAnchorId(r.meeting_type)} className={styles.meetingSection}>
               <h2 className={styles.meetingTitle}>{r.title}</h2>
+              <CorrectionNote text={r.correction} />
               {r.meeting_type && <p className={styles.meetingTypeText}>{r.meeting_type}</p>}
               <div className={styles.meetingLinks}>
-                <RecapLinks recap={r} />
+                <RecapLinks recap={r} aiNote={i === 0} />
               </div>
               <RecapBody recap={r} HeadingTag="h3" />
             </section>
@@ -137,6 +232,7 @@ function RecapBody({ recap, HeadingTag = 'h2' }) {
             <a href="/about">About</a>
             <a href="/calendar">Calendar</a>
             <a href="/subscribe">Subscribe</a>
+            <a href="/privacy">Privacy</a>
           </div>
         </div>
       </footer>

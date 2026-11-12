@@ -892,6 +892,7 @@ export default function DirectoryClient({ initialEntity } = {}) {
             <a href="/about">About</a>
             <a href="/calendar">Calendar</a>
             <a href="/subscribe">Subscribe</a>
+            <a href="/privacy">Privacy</a>
           </div>
         </div>
       </footer>
