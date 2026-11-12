@@ -5,9 +5,10 @@ import DataNote from '../../components/DataNote';
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'Enrollment & Staffing — West Chester by the Numbers',
+  title: 'Enrollment & Staffing',
   description:
     'Enrollment, student demographics, and staffing for WCASD compared with similar Chester County districts and Pennsylvania statewide.',
+  alternates: { canonical: '/schools/enrollment' },
 };
 
 export default async function EnrollmentPage() {

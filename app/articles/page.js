@@ -1,8 +1,10 @@
 import styles from '../coming-soon.module.css';
 
 export const metadata = {
-      title: 'Articles — West Chester by the Numbers',
+      title: 'Articles',
       description: 'Data-driven articles on West Chester Borough and WCASD governance. Coming soon.',
+      alternates: { canonical: '/articles' },
+      robots: { index: false },
 };
 
 export default function ArticlesPage() {

@@ -1,9 +1,11 @@
 import styles from '../../coming-soon.module.css';
 
 export const metadata = {
-  title: 'Election Results & Turnout — West Chester by the Numbers',
+  title: 'Election Results & Turnout',
   description:
     'Results and turnout data for local elections in the greater West Chester area. Coming soon.',
+  alternates: { canonical: '/elections/results' },
+  robots: { index: false },
 };
 
 export default function ResultsPage() {

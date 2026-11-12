@@ -10,7 +10,11 @@ export async function generateMetadata({ params }) {
   const { matchedName } = votesForMember(votes, member);
 
   return {
-    title: `${matchedName || 'Voting Record'} — West Chester by the Numbers`,
+    title: matchedName || 'Voting Record',
+    description: matchedName
+      ? `Recorded votes cast by ${matchedName} on local boards and councils in the greater West Chester area.`
+      : 'Recorded votes cast by members of local boards and councils in the greater West Chester area.',
+    alternates: { canonical: `/votes/${member}` },
   };
 }
 

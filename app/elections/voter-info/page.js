@@ -1,9 +1,10 @@
 import styles from '../elections.module.css';
 
 export const metadata = {
-  title: 'Voter Information — West Chester by the Numbers',
+  title: 'Voter Information',
   description:
     'Where to register, request a mail-in ballot, and find election administration information for the greater West Chester area.',
+  alternates: { canonical: '/elections/voter-info' },
 };
 
 export default function VoterInfoPage() {

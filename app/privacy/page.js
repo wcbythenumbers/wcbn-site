@@ -1,8 +1,9 @@
 import styles from '../about/about.module.css';
 
 export const metadata = {
-  title: 'Privacy Policy — West Chester by the Numbers',
+  title: 'Privacy Policy',
   description: 'How West Chester by the Numbers handles information.',
+  alternates: { canonical: '/privacy' },
 };
 
 export default function PrivacyPage() {

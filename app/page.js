@@ -7,8 +7,31 @@ import EntityTag from './components/EntityTag';
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'West Chester by the Numbers',
+  title: { absolute: 'West Chester by the Numbers' },
   description: 'Local government, by the numbers. Data-driven coverage of WCASD and its member municipalities.',
+  alternates: { canonical: '/' },
+};
+
+const SITE_URL = 'https://www.westchesterbythenumbers.com';
+
+const JSON_LD = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      name: 'West Chester by the Numbers',
+      url: SITE_URL,
+      publisher: { '@id': `${SITE_URL}/#organization` },
+    },
+    {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
+      name: 'West Chester by the Numbers',
+      url: SITE_URL,
+      email: 'hello@westchesterbythenumbers.com',
+    },
+  ],
 };
 
 export default async function Home() {
@@ -20,6 +43,10 @@ export default async function Home() {
 
   return (
     <main className={styles.main}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+      />
 <section className={styles.hero}>
         <div className={styles.heroGrid}>
           <div className={styles.heroLeft}>

@@ -1,8 +1,9 @@
 import styles from './about.module.css';
 
 export const metadata = {
-      title: 'About — West Chester by the Numbers',
+      title: 'About',
       description: 'About West Chester by the Numbers — a data-driven, non-partisan publication covering WCASD and its member municipalities.',
+      alternates: { canonical: '/about' },
 };
 
 export default function AboutPage() {

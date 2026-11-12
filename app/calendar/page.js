@@ -4,8 +4,9 @@ import CalendarClient from './CalendarClient';
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'Meeting Calendar — West Chester by the Numbers',
+  title: 'Meeting Calendar',
   description: 'Upcoming public meetings for WCASD, West Chester Borough, and all member townships.',
+  alternates: { canonical: '/calendar' },
 };
 
 export default async function CalendarPage() {

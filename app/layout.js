@@ -2,14 +2,23 @@ import './globals.css';
 import Nav from './components/Nav';
 import DisclaimerBanner from './components/DisclaimerBanner';
 
+const SITE_DESCRIPTION =
+  'Facts and figures on local government, taxes, schools and public meetings in the West Chester Area School District communities.';
+
 export const metadata = {
-  title: 'West Chester by the Numbers',
-  description: 'Data-driven coverage of West Chester Borough and WCASD governance. Non-partisan. Clarity-first.',
+  metadataBase: new URL('https://www.westchesterbythenumbers.com'),
+  title: {
+    default: 'West Chester by the Numbers',
+    template: '%s | West Chester by the Numbers',
+  },
+  description: SITE_DESCRIPTION,
   openGraph: {
-    title: 'West Chester by the Numbers',
-    description: 'Local government, by the numbers.',
-    url: 'https://westchesterbythenumbers.com',
     siteName: 'West Chester by the Numbers',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
   },
 };
 

@@ -5,8 +5,9 @@ import DataNote from '../../components/DataNote';
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'School Performance — West Chester by the Numbers',
+  title: 'School Performance',
   description: 'PSSA and Keystone proficiency results for WCASD compared with Pennsylvania statewide.',
+  alternates: { canonical: '/schools/performance' },
 };
 
 export default async function PerformancePage() {

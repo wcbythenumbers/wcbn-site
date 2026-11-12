@@ -5,9 +5,10 @@ import DataNote from '../../components/DataNote';
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'Budgets — West Chester by the Numbers',
+  title: 'Budgets',
   description:
     'Adopted budgets for the governments that tax West Chester-area residents, with every fund and line item as printed in each budget.',
+  alternates: { canonical: '/taxes/budgets' },
 };
 
 export default async function BudgetsPage() {

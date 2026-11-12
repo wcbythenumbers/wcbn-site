@@ -2,9 +2,10 @@ import styles from './explainer.module.css';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'How Local Taxes Work — West Chester by the Numbers',
+  title: 'How Local Taxes Work',
   description:
     'A plain-language guide to the local taxes paid by residents of West Chester and the surrounding area — property tax, EIT, LST, and more.',
+  alternates: { canonical: '/taxes/explainer' },
 };
 
 const TOC = [

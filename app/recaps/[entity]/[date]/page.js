@@ -115,18 +115,23 @@ export async function generateMetadata({ params }) {
   const recap = dayRecaps[0];
 
   if (!recap) {
-    return { title: 'Recap Not Found — West Chester by the Numbers' };
+    return { title: 'Recap Not Found', robots: { index: false } };
   }
 
   if (dayRecaps.length > 1) {
     return {
-      title: `${recap.entity} meetings on ${formatDate(recap.meeting_date)} — West Chester by the Numbers`,
+      title: `${recap.entity} meetings on ${formatDate(recap.meeting_date)}`,
+      description: `Recaps of ${dayRecaps.length} ${recap.entity} meetings held on ${formatDate(recap.meeting_date)}.`,
+      alternates: { canonical: `/recaps/${entity}/${date}` },
     };
   }
 
   return {
-    title: `${recap.title} — West Chester by the Numbers`,
-    description: recap.summary || undefined,
+    title: recap.title,
+    description:
+      recap.summary ||
+      `Recap of the ${recap.entity} ${recap.meeting_type || 'meeting'} on ${formatDate(recap.meeting_date)}.`,
+    alternates: { canonical: `/recaps/${entity}/${date}` },
   };
 }
 

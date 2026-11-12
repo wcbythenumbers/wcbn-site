@@ -5,9 +5,10 @@ import DataNote from '../../components/DataNote';
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'Where Your Tax Dollars Go — West Chester by the Numbers',
+  title: 'Where Your Tax Dollars Go',
   description:
     'See what you pay in property taxes to Chester or Delaware County, your municipality, and the West Chester Area School District, and how each government budgets that money.',
+  alternates: { canonical: '/taxes/dollars' },
 };
 
 export default async function TaxDollarsPage() {

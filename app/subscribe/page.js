@@ -1,8 +1,10 @@
 import styles from '../coming-soon.module.css';
 
 export const metadata = {
-    title: 'Subscribe — West Chester by the Numbers',
+    title: 'Subscribe',
     description: 'Subscribe to West Chester by the Numbers. Free data-driven coverage of West Chester Borough and WCASD governance.',
+    alternates: { canonical: '/subscribe' },
+    robots: { index: false },
 };
 
 export default function SubscribePage() {

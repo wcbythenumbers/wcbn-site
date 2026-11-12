@@ -1,9 +1,10 @@
 import styles from '../elections.module.css';
 
 export const metadata = {
-  title: "Who's Running (2027) — West Chester by the Numbers",
+  title: "Who's Running (2027)",
   description:
     'Local races in the greater West Chester area for the November 2027 municipal election.',
+  alternates: { canonical: '/elections/2027' },
 };
 
 export default function Running2027Page() {

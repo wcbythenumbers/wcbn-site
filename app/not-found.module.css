@@ -1,0 +1,21 @@
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+@media (max-width: 600px) {
+  .link {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

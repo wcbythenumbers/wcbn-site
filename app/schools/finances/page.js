@@ -5,9 +5,10 @@ import DataNote from '../../components/DataNote';
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'WCASD Financials — West Chester by the Numbers',
+  title: 'WCASD Financials',
   description:
     'Audited spending, revenue, taxes, and debt for WCASD compared with similar Chester County districts and Pennsylvania.',
+  alternates: { canonical: '/schools/finances' },
 };
 
 export default async function FinancesPage() {

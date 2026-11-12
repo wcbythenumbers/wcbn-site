@@ -2,9 +2,10 @@ import { getRecaps, getVotes, getMeetings } from '../../lib/sheets';
 import RecapsClient from './RecapsClient';
 
 export const metadata = {
-  title: 'Meeting Recaps — West Chester by the Numbers',
+  title: 'Meeting Recaps',
   description:
     'Meeting recaps and key votes for every local government entity in the greater West Chester area.',
+  alternates: { canonical: '/recaps' },
 };
 
 export default async function RecapsPage({ searchParams }) {

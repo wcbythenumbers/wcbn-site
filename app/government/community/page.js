@@ -6,9 +6,10 @@ import styles from './community.module.css';
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'Community Profile — West Chester by the Numbers',
+  title: 'Community Profile',
   description:
     'Census Bureau estimates for each municipality, shown next to the school district, the county and Pennsylvania.',
+  alternates: { canonical: '/government/community' },
 };
 
 export default async function CommunityPage() {

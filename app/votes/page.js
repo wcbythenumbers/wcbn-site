@@ -2,9 +2,10 @@ import { getRecaps, getVotes } from '../../lib/sheets';
 import VotesClient from './VotesClient';
 
 export const metadata = {
-  title: 'Voting Records — West Chester by the Numbers',
+  title: 'Voting Records',
   description:
     'A record of every formal vote taken by elected boards and councils in the greater West Chester area.',
+  alternates: { canonical: '/votes' },
 };
 
 export default async function VotesPage({ searchParams }) {
