@@ -28,6 +28,7 @@ const PAGES = [
   '/about',
   '/privacy',
   '/terms',
+  '/accessibility',
 ];
 
 export default async function sitemap() {
