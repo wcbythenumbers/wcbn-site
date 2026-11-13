@@ -1,4 +1,5 @@
 import './globals.css';
+import { Analytics } from '@vercel/analytics/next';
 import { playfairDisplay, sourceSerif4, ibmPlexMono } from './fonts';
 import Nav from './components/Nav';
 import DisclaimerBanner from './components/DisclaimerBanner';
@@ -33,6 +34,7 @@ export default function RootLayout({ children }) {
         <Nav />
         {children}
         <DisclaimerBanner />
+        <Analytics />
       </body>
     </html>
   );

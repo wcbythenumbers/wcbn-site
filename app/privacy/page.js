@@ -18,9 +18,11 @@ export default function PrivacyPage() {
       <div className={styles.content}>
         <section className={styles.section}>
           <p>
-            West Chester by the Numbers does not use cookies, analytics or
-            advertising trackers, and does not sell or share personal
-            information. If you dismiss the site&apos;s notice banner, your
+            West Chester by the Numbers does not use cookies or advertising
+            trackers, and does not sell or share personal information. We use
+            Vercel Web Analytics to count page views and see which websites
+            send visitors to us. It uses no cookies, and we see only totals
+            that don&apos;t identify individual visitors. If you dismiss the site&apos;s notice banner, your
             browser stores that choice on your own device. Our site is hosted
             by Vercel, which keeps standard server logs (such as IP addresses)
             for security and operations, and our fonts load from Google Fonts.
