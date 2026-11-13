@@ -8,6 +8,7 @@ import {
 } from 'recharts';
 import styles from './rates.module.css';
 import MethodNote from '../../components/MethodNote';
+import { ibmPlexMono } from '../../fonts';
 
 // Rates (county, municipal, school, eit) come from the TaxRates sheet; see withRates.
 const MUNICIPALITY_INFO = [
@@ -142,7 +143,7 @@ const SOURCES = [
 ];
 
 const TOOLTIP_STYLE = {
-  fontFamily: 'IBM Plex Mono, monospace',
+  fontFamily: ibmPlexMono.style.fontFamily,
   fontSize: '0.72rem',
   background: '#0A1931',
   border: 'none',
@@ -517,7 +518,7 @@ export default function RatesClient({ rates = [] }) {
                   <XAxis
                     type="number"
                     domain={[0, maxValue * 1.02]}
-                    tick={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: 10, fill: '#555' }}
+                    tick={{ fontFamily: ibmPlexMono.style.fontFamily, fontSize: 10, fill: '#555' }}
                     axisLine={false}
                     tickLine={false}
                     tickFormatter={labelFormatter}
@@ -526,7 +527,7 @@ export default function RatesClient({ rates = [] }) {
                     type="category"
                     dataKey="name"
                     width={128}
-                    tick={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: 11, fill: '#0A1931' }}
+                    tick={{ fontFamily: ibmPlexMono.style.fontFamily, fontSize: 11, fill: '#0A1931' }}
                     axisLine={false}
                     tickLine={false}
                   />
@@ -547,7 +548,7 @@ export default function RatesClient({ rates = [] }) {
                       position="right"
                       formatter={labelFormatter}
                       style={{
-                        fontFamily: 'IBM Plex Mono, monospace',
+                        fontFamily: ibmPlexMono.style.fontFamily,
                         fontSize: 11,
                         fill: '#0A1931',
                       }}

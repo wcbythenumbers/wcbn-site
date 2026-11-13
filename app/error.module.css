@@ -1,0 +1,5 @@
+/* Lets a <button> match the .btn links: no browser background, pointer cursor. */
+.button {
+  background: transparent;
+  cursor: pointer;
+}

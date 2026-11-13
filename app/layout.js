@@ -1,4 +1,5 @@
 import './globals.css';
+import { playfairDisplay, sourceSerif4, ibmPlexMono } from './fonts';
 import Nav from './components/Nav';
 import DisclaimerBanner from './components/DisclaimerBanner';
 
@@ -24,7 +25,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${playfairDisplay.variable} ${sourceSerif4.variable} ${ibmPlexMono.variable}`}
+    >
       <body>
         <Nav />
         {children}
